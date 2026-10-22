@@ -1,0 +1,40 @@
+{
+  "px-font-size": {
+    "components/nle/ClipManager.tsx": 7,
+    "components/nle/MetadataPanel.tsx": 3,
+    "components/nle/SegmentLanes.tsx": 2,
+    "components/nle/SegmentTable.tsx": 3,
+    "components/renderer/RenderingAnimation.tsx": 2,
+    "components/renderer/templates/ArtifactCards.tsx": 3,
+    "components/renderer/templates/AudioWaveform.tsx": 3,
+    "components/renderer/templates/ChartInteractive.tsx": 1,
+    "components/renderer/templates/DataTable.tsx": 3,
+    "components/renderer/templates/DocumentViewer.tsx": 4,
+    "components/renderer/templates/GenericPreview.tsx": 5,
+    "components/renderer/templates/ImageAnnotated.tsx": 2,
+    "components/renderer/templates/ManifestRouter.tsx": 4,
+    "components/renderer/templates/NleTimeline.tsx": 13,
+    "components/renderer/templates/VideoAnnotations.tsx": 11,
+    "components/renderer/templates/VideoMarkers.tsx": 1
+  },
+  "raw-colour-fn": {},
+  "px-radius": {
+    "components/nle/ClipManager.tsx": 2,
+    "components/nle/MetadataPanel.tsx": 1,
+    "components/nle/SegmentLanes.tsx": 3,
+    "components/nle/SegmentTable.tsx": 1,
+    "components/renderer/RenderingAnimation.tsx": 3,
+    "components/renderer/templates/ArtifactCards.tsx": 1,
+    "components/renderer/templates/AudioWaveform.tsx": 2,
+    "components/renderer/templates/ChartInteractive.tsx": 3,
+    "components/renderer/templates/GenericPreview.tsx": 3,
+    "components/renderer/templates/ImageAnnotated.tsx": 3,
+    "components/renderer/templates/ManifestRouter.tsx": 1,
+    "components/renderer/templates/NleTimeline.tsx": 8,
+    "components/renderer/templates/VideoAnnotations.tsx": 11
+  },
+  "raw-font-family": {
+    "components/nle/ClipManager.tsx": 2,
+    "components/nle/SegmentTable.tsx": 1
+  }
+}

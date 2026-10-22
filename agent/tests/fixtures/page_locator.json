@@ -1,0 +1,4 @@
+{
+  "_comment": "Cross-pin of the document page-locator stride. Read by both the agent (ingestion.documents.PAGE_STRIDE_MS, agent/tests/test_ingestion_pdf.py) and the SPA (ui/src/shared/pageLocator.ts, its vitest) so the span encoding and the UI page decode never drift. See ingestion/documents.py.",
+  "pageStrideMs": 10000
+}

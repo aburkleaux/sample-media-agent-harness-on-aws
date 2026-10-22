@@ -1,0 +1,11 @@
+# Knowledge-graph Lambda image (agent/graph.Dockerfile) — x86_64, glibc >= 2.39 ONLY.
+#
+# PINNED TOGETHER, deliberately: lance-graph 0.5.4 embeds the lance 1.0.1 crate, which cannot decode
+# Lance file format 2.2 (pylance 13's default). The writer therefore writes format 2.1
+# (project_graph/layout.py STORAGE_VERSION) and tests/test_project_graph_lance_graph.py asserts the
+# round trip. Upgrade pylance and lance-graph only together, and only with that test green.
+lance-graph==0.5.4
+pylance==13.0.0
+pyarrow==25.0.1
+boto3==1.43.70
+awslambdaric==4.2.0

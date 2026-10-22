@@ -1,0 +1,427 @@
+/*
+ * Theme foundation — "graphite & signal".
+ *
+ * Two first-class themes, switched by `html[data-theme]` from Settings →
+ * General and re-applied before first paint in `main.tsx`.
+ *
+ * Design stance: this is an operator console whose neighbours on screen are
+ * video frames and waveforms, so the neutrals are COOL graphite rather than
+ * warm paper — a warm chrome shifts how you read the media beside it. One
+ * interactive hue (`signal`, continuous with the previous blue) and four state
+ * hues that behave like channel-strip indicators: desaturated, so a failed node
+ * reads as information rather than alarm.
+ *
+ * RULE: no raw hex in components. Every chrome colour resolves from a variable
+ * here so both themes stay in step; `scripts/check-no-raw-hex.mjs` enforces it.
+ * Media rendering (`components/nle/**`, `components/renderer/**`) is exempt —
+ * speaker identity colours, waveforms and syntax highlighting are CONTENT, not
+ * chrome, and must not flip with the theme.
+ */
+
+:root {
+  /* --- Light: cool paper, not cream --- */
+  --color-primary: #1F5FE0;
+  --color-primary-hover: #1A4FBD;
+  /*
+   * Label colour ON a filled primary. A token because it is not always white:
+   * the dark-kirocrew theme's mint primary needs a DARK label (white on #22E39A
+   * is ~1.5:1). Every filled button reads this instead of hardcoding #fff.
+   */
+  --color-on-primary: #FFFFFF;
+  /*
+   * Code. Inline code is a neutral chip here and in `dark`; dark-kirocrew makes
+   * it mint, which is one of that theme's defining traits. Blocks keep their own
+   * pair because a block is a surface, not a chip.
+   */
+  --color-code: #1A1D23;
+  --color-code-bg: #EEF0F4;
+  --color-code-block-bg: #1E2126;
+  --color-code-block-text: #D8DCE3;
+  --color-accent: #C8871F;
+  --color-text: #1A1D23;
+  --color-text-secondary: #4A5261;
+  --color-text-tertiary: #6B7280;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FFFFFF;
+  /*
+   * Neutral wash for a fill that is not a state: skeletons, table headers,
+   * read-only field grounds, inline chips. Distinct from --color-active-bg on
+   * purpose — that one is SELECTED and carries the theme's hue, so using it for
+   * neutral furniture tints the whole app (dark-kirocrew turned every card mint
+   * before this token existed).
+   */
+  --color-surface-subtle: #F2F4F7;
+  --color-background: #F7F8FA;
+  --color-border: #E3E6EB;
+  --color-border-strong: #CBD1DA;
+  --color-success: #2F7D57;
+  --color-error: #C24C42;
+  --color-warning: #A66E14;
+  --color-active-bg: #EAF1FF;
+  --color-sidebar-bg: #F2F4F7;
+  --color-sidebar-text: #1A1D23;
+  --color-sidebar-text-secondary: #6B7280;
+  --color-sidebar-active-bg: #E3E9F5;
+  --color-sidebar-accent: #1F5FE0;
+  --color-accent-subtle: #EAF1FF;
+  --color-primary-subtle: #EAF1FF;
+  --color-section-border: #1F5FE022;
+  --color-sidebar-hairline: #E3E6EB;
+  --color-sidebar-hover: rgba(26,29,35,0.05);
+  --color-primary-gradient: linear-gradient(135deg, #3B7BF0, #1F5FE0);
+  --color-overlay: rgba(26,29,35,0.42);
+  --elevation-flat: 0 0 0 1px #E3E6EB;
+  --elevation-subtle: 0 1px 3px rgba(26,29,35,0.07);
+  --elevation-elevated: 0 6px 20px rgba(26,29,35,0.12);
+
+  /*
+   * IBM Plex was drawn for technical products: more character than the system
+   * stack without losing legibility at 11–13px, and Sans/Mono are metrically
+   * related so mixed rows do not jitter. System stack remains the fallback, so
+   * a blocked font request degrades to exactly the previous appearance.
+   */
+  /* The MEDIA stage: what a picture, a video frame or a preview sits on. Dark in EVERY theme on purpose
+   * (media reads best on dark, and it is content, not chrome), so these are declared once here and never flip. */
+  --color-media-stage: #0E1116;
+  --color-media-stage-2: #1A1F27;
+  --color-media-scrim: rgba(9, 12, 18, .78);
+  --color-media-text: #FFFFFF;
+  --color-media-text-dim: #A8B0BB;
+  --color-media-icon: #D5DAE1;
+  --color-media-chip: rgba(0, 0, 0, .62);
+  --color-media-glass: rgba(255, 255, 255, .12);
+  --color-media-glass-hover: rgba(255, 255, 255, .2);
+  --color-media-line: rgba(255, 255, 255, .18);
+  --color-media-play: rgba(255, 255, 255, .92);
+  --color-media-play-glyph: #111111;
+  --color-media-audio-a: #1B2333;
+  --color-media-audio-b: #2A3550;
+  --color-media-audio-fg: #9DB7FF;
+  --color-media-error: #F2B8B5;
+  --color-media-tooltip: #1A1D23;
+
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Media cards and the preview (chat assets): a softer corner than panels, and a full pill for chips. */
+  --radius-card: 12px;
+  --radius-pill: 999px;
+  --radius-panel: 8px;
+  /* Keep in step with `theme.radius.button` in styles/tokens.ts — see the note
+     there for why this is 4 rather than 6. `chat/ArtifactLink.css` reads it. */
+  --radius-button: 4px;
+  /* The inline-code chip and small pills. Mirrors `theme.radius.badge`. */
+  --radius-badge: 3px;
+  --spacing-unit: 4px;
+  --transition-hover: 200ms ease;
+  --transition-slide: 250ms ease-out;
+  --font-size-base: 14px;
+  /*
+   * Type scale derived from --font-size-base so the General → Font Size control
+   * (which only sets --font-size-base via html[data-font-size]) actually
+   * cascades to every sized element. Ratios are anchored to the medium base
+   * (14px) so these reproduce the previous fixed px ladder exactly at the
+   * default — no visual change at medium, but small/large now rescale the
+   * whole UI. Components and the `theme.typography.sizes` tokens reference
+   * these instead of hardcoded px.
+   */
+  --fs-2xl: calc(var(--font-size-base) * 1.429); /* 20 @ 14 — page titles */
+  --fs-xl:  calc(var(--font-size-base) * 1.214); /* 17 @ 14 */
+  --fs-lg:  calc(var(--font-size-base) * 1.143); /* 16 @ 14 — panel/tab titles */
+  --fs-md:  var(--font-size-base);               /* 14 @ 14 — labels */
+  --fs-sm:  calc(var(--font-size-base) * 0.929); /* 13 @ 14 — body/inputs/rows */
+  --fs-xs:  calc(var(--font-size-base) * 0.857); /* 12 @ 14 — subtitles/descriptions */
+  --fs-2xs: calc(var(--font-size-base) * 0.786); /* 11 @ 14 — meta/section headers */
+  /*
+   * Badge/count tier. Added because it already existed in practice and only in
+   * fixed px: `fontSize: 10` was the second most common literal in the app (76
+   * sites) — every state badge, count pill and chevron. Without a token for it,
+   * those all sat outside the Font Size setting, which is why count pills stayed
+   * put while their row labels grew.
+   */
+  --fs-3xs: calc(var(--font-size-base) * 0.714); /* 10 @ 14 — badges, counts, glyphs */
+
+  /*
+   * Document scale — rendered PROSE (a SKILL.md, a markdown agent reply), not
+   * chrome. Separate rungs because a document needs a wider hierarchy than UI
+   * furniture does: an h1 at the chrome scale's top rung reads as a panel title,
+   * not a document title.
+   *
+   * Two frozen prose scales existed before this — `markdown.css` at 13/15/16 and
+   * `SkillDetailsView`'s at 13.5/25/18/15 — so headings in a chat reply and in the
+   * skill viewer disagreed, and neither responded to Font Size. These ratios
+   * reproduce every one of those values exactly at the 14px base, so unifying
+   * them changes nothing on screen; it only means prose now scales too.
+   */
+  --fs-doc-h1:    calc(var(--font-size-base) * 1.786); /* 25   @ 14 */
+  --fs-doc-h2:    calc(var(--font-size-base) * 1.286); /* 18   @ 14 */
+  --fs-doc-h3:    calc(var(--font-size-base) * 1.071); /* 15   @ 14 */
+  --fs-doc-body:  calc(var(--font-size-base) * 0.964); /* 13.5 @ 14 */
+  --fs-doc-table: calc(var(--font-size-base) * 0.893); /* 12.5 @ 14 */
+
+  /* Knowledge graph (Sigma.js WebGL needs resolved colours; read by components/projects/graph/graphTheme.ts).
+     One colour per node type, in schema order: Project User Tag Asset Scene Shot Person Location
+     Organization Topic Session Job. */
+  --graph-type-1: #1F5FE0;
+  --graph-type-2: #7A5AF8;
+  --graph-type-3: #C8871F;
+  --graph-type-4: #D9480F;
+  --graph-type-5: #2F80ED;
+  --graph-type-6: #8A94A6;
+  --graph-type-7: #D6336C;
+  --graph-type-8: #0CA678;
+  --graph-type-9: #9C36B5;
+  --graph-type-10: #E8A10C;
+  --graph-type-11: #0B7285;
+  --graph-type-12: #5C7CFA;
+  --graph-edge: #C9CED6;
+  --graph-edge-active: #5B6B85;
+  --graph-label: #1A1D23;
+  --graph-dim: #E9ECF1;
+}
+
+html[data-font-size="small"] { --font-size-base: 12px; }
+html[data-font-size="medium"] { --font-size-base: 14px; }
+html[data-font-size="large"] { --font-size-base: 17px; }
+
+html[data-theme="dark"] {
+  /* --- Dark: cool graphite. Not pure black — #000 next to video reads as a
+     hole, and hairlines disappear against it. --- */
+  --color-primary: #4C8DFF;
+  --color-primary-hover: #6BA1FF;
+  --color-on-primary: #FFFFFF;
+  --color-code: #E9ECF1;
+  --color-code-bg: rgba(255,255,255,0.07);
+  --color-code-block-bg: #12141A;
+  --color-code-block-text: #D8DCE3;
+  --color-accent: #D79B3C;
+  --color-text: #E9ECF1;
+  --color-text-secondary: #A8B0BB;
+  --color-text-tertiary: #7C8494;
+  --color-surface: #1E2126;
+  --color-surface-raised: #24282E;
+  --color-surface-subtle: #23272E;
+  --color-background: #16181C;
+  --color-border: #2A2E35;
+  --color-border-strong: #3A404A;
+  --color-success: #3E9E6E;
+  --color-error: #D2564B;
+  --color-warning: #C8871F;
+  --color-active-bg: rgba(76,141,255,0.18);
+  --color-sidebar-bg: #1A1D22;
+  --color-sidebar-text: #E9ECF1;
+  --color-sidebar-text-secondary: #8B93A0;
+  --color-sidebar-active-bg: rgba(255,255,255,0.07);
+  --color-sidebar-accent: #4C8DFF;
+  --color-accent-subtle: rgba(76,141,255,0.18);
+  --color-primary-subtle: rgba(76,141,255,0.18);
+  --color-section-border: #4C8DFF44;
+  --color-sidebar-hairline: rgba(255,255,255,0.08);
+  --color-sidebar-hover: rgba(255,255,255,0.06);
+  --color-primary-gradient: linear-gradient(135deg, #6BA1FF, #4C8DFF);
+  --color-overlay: rgba(0,0,0,0.58);
+  --elevation-flat: 0 0 0 1px #2A2E35;
+  --elevation-subtle: 0 1px 3px rgba(0,0,0,0.35);
+  --elevation-elevated: 0 6px 20px rgba(0,0,0,0.48);
+
+  /* Knowledge graph — see :root. */
+  --graph-type-1: #4C8DFF;
+  --graph-type-2: #A78BFA;
+  --graph-type-3: #F2B84B;
+  --graph-type-4: #FF8A4C;
+  --graph-type-5: #7AA2FF;
+  --graph-type-6: #5B667A;
+  --graph-type-7: #FF6F91;
+  --graph-type-8: #4FD1A5;
+  --graph-type-9: #C08CFF;
+  --graph-type-10: #FFD166;
+  --graph-type-11: #38D9D9;
+  --graph-type-12: #91A7FF;
+  --graph-edge: #2E3442;
+  --graph-edge-active: #8FA6D8;
+  --graph-label: #CFD5E3;
+  --graph-dim: #232835;
+}
+
+/*
+ * dark-kirocrew — a third theme, modelled on the KiroCrew client.
+ *
+ * Additive, not a replacement: `dark` (graphite & signal) stays the cool-neutral
+ * option and this is the near-black one. Its character is monochrome plus a
+ * single bright mint, so the accent carries every interactive meaning — active
+ * nav, primary action, links, focus, status dots — and nothing else is coloured.
+ *
+ * Two things it does differently from `dark`, both taken from the reference:
+ *
+ *   The mint primary takes a DARK label (`--color-on-primary`). White on #22E39A
+ *   is about 1.5:1; the bright fill only works with dark text on it.
+ *
+ *   The page is near-black with panels lifted a clear step, so cards read as
+ *   objects. `dark`'s #16181C → #1E2126 is a subtler ramp on purpose; this one
+ *   is meant to have visible separation.
+ */
+html[data-theme="dark-kirocrew"] {
+  --color-primary: #22E39A;
+  --color-primary-hover: #45EAAD;
+  /* Near-black label so the bright fill is legible — the inverse of the other themes. */
+  --color-on-primary: #06120D;
+  /* Accent follows primary: the reference is monochrome + one green, so a second
+     hue here would read as a mistake rather than an accent. */
+  --color-accent: #22E39A;
+  /* Identifiers in prose read mint here — `code`, `spawn_run`, `web_fetch` — on
+     a barely-there chip, which is what gives this theme its terminal character. */
+  --color-code: #22E39A;
+  --color-code-bg: rgba(34,227,154,0.10);
+  --color-code-block-bg: #0F1210;
+  --color-code-block-text: #D8DCDA;
+  --color-text: #E6E9E7;
+  --color-text-secondary: #8E9894;
+  --color-text-tertiary: #6B7570;
+  --color-surface: #131614;
+  --color-surface-raised: #1A1E1B;
+  /* Deliberately neutral, NOT a mint tint — this is furniture, not selection. */
+  --color-surface-subtle: #191D1A;
+  --color-background: #0A0C0B;
+  --color-border: #1F2421;
+  --color-border-strong: #2E352F;
+  /* Green IS the success signal in this palette; a separate green would collide. */
+  --color-success: #22E39A;
+  --color-error: #E06054;
+  --color-warning: #D9A13A;
+  --color-active-bg: rgba(34,227,154,0.14);
+  --color-sidebar-bg: #0D100E;
+  --color-sidebar-text: #E6E9E7;
+  --color-sidebar-text-secondary: #7E8884;
+  /* Faint green cast rather than plain white, matching the reference's active row. */
+  --color-sidebar-active-bg: rgba(34,227,154,0.10);
+  --color-sidebar-accent: #22E39A;
+  --color-accent-subtle: rgba(34,227,154,0.14);
+  --color-primary-subtle: rgba(34,227,154,0.14);
+  --color-section-border: rgba(34,227,154,0.28);
+  --color-sidebar-hairline: rgba(255,255,255,0.07);
+  --color-sidebar-hover: rgba(255,255,255,0.05);
+  --color-primary-gradient: linear-gradient(135deg, #45EAAD, #22E39A);
+  --color-overlay: rgba(0,0,0,0.62);
+  --elevation-flat: 0 0 0 1px #1F2421;
+  --elevation-subtle: 0 1px 3px rgba(0,0,0,0.45);
+  --elevation-elevated: 0 6px 20px rgba(0,0,0,0.60);
+
+  /* Knowledge graph — see :root. */
+  --graph-type-1: #22E39A;
+  --graph-type-2: #A78BFA;
+  --graph-type-3: #F2B84B;
+  --graph-type-4: #FF8A4C;
+  --graph-type-5: #7AA2FF;
+  --graph-type-6: #5B667A;
+  --graph-type-7: #FF6F91;
+  --graph-type-8: #4FD1A5;
+  --graph-type-9: #C08CFF;
+  --graph-type-10: #FFD166;
+  --graph-type-11: #38D9D9;
+  --graph-type-12: #91A7FF;
+  --graph-edge: #2E3442;
+  --graph-edge-active: #8FE3C1;
+  --graph-label: #D7DCE6;
+  --graph-dim: #1E232D;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+/*
+ * The numeric spine — the signature of this theme.
+ *
+ * Versions, ids, durations, counts and timecodes set in Plex Mono with TABULAR
+ * figures, so digits share one advance width and a column of `v1 / v35 / v207`
+ * or `00:09.000` lines up down the page instead of shifting. Drawn from
+ * timecode, and useful here rather than decorative: these lists are mostly
+ * numbers the operator compares vertically.
+ */
+.numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'zero' 1;
+  letter-spacing: 0;
+}
+
+/*
+ * Scrollbars, themed. Previously a hardcoded #d0d0d0 thumb with no dark
+ * variant, so dark mode showed pale bars on a near-black pane.
+ *
+ * `scrollbar-gutter: stable` reserves the track on scroll containers, so a list
+ * crossing the overflow threshold no longer shifts its contents sideways.
+ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 5px;
+  /* Inset via a transparent border so the thumb reads as part of the pane
+     rather than a bar stuck to its edge. */
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox has no pseudo-elements for this; these two properties are the whole API. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+/* Respect the OS setting — the app has spinners, slide-ins and reveals. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keyboard focus must stay visible in both themes. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Pulsing dot for the Jobs tab when jobs are running (replaces the layout-shifting progress strip). */
+@keyframes jobsPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.75); }
+}

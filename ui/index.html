@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Agent Harness</title>
+    <!--
+      IBM Plex Sans + Mono. `preconnect` first so the CSS request does not pay
+      DNS+TLS, and `display=swap` so a slow or blocked font request renders in
+      the system fallback rather than holding the first paint — the stacks in
+      global.css are ordered so that degradation looks like the previous UI.
+      Weights are limited to the four actually used (400/500/600 sans, 400 mono).
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
+    <style>@keyframes gwspin{to{transform:rotate(360deg)}}</style>
+</head>
+  <body style="margin: 0">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "captions": [],
+  "clips": [],
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "duration": 30.03,
+  "id": "fixture",
+  "markers": [
+    {
+      "category": "black",
+      "endTime": 0.968,
+      "id": "m-0",
+      "label": "0",
+      "time": 0.0
+    },
+    {
+      "category": "content",
+      "endTime": 5.172,
+      "id": "m-1",
+      "label": "1",
+      "time": 1.001
+    },
+    {
+      "category": "content",
+      "endTime": 9.176,
+      "id": "m-2",
+      "label": "2",
+      "time": 5.205
+    }
+  ],
+  "metadata": {
+    "actual_duration_sec": 30.03,
+    "actual_frame_count": 900,
+    "n_shots": 9
+  },
+  "mimeType": "video/mp4",
+  "renderSkill": "render-shot-segmentation",
+  "src": "https://cdn.example/proxy/segment_0000.mp4",
+  "template": "nle-timeline",
+  "tracks": [
+    {
+      "end": 30.03,
+      "id": "video-segment_0000",
+      "label": "segment_0000",
+      "src": "https://cdn.example/proxy/segment_0000.mp4",
+      "start": 0.0,
+      "type": "video"
+    }
+  ]
+}

@@ -1,0 +1,8653 @@
+{
+ "_provenance": {
+  "deliberately_excluded": "tool arguments, tool results, status messages, goal text, S3 URIs (args+results are sensitive \u2014 OURS-4; the messages are simply not needed here)",
+  "fields_included": "ordered span name + status.code + durationNano/1e6, per session",
+  "query": "fields @timestamp, attributes.session.id as sid, attributes.aws.local.service as svc, name, status.code as status, durationNano | filter sid like /^<session-id prefix>/ | sort @timestamp asc | limit 10000",
+  "regenerate": "cd agent && AWS_PROFILE=megs-staging uv run python scripts/refresh_async_lifecycle_fixture.py",
+  "sessions": "the three ground-truth sessions for the async-lifecycle facets (V-02a/b/c); NOT golden-set members",
+  "source": "CloudWatch Logs Insights over the `aws/spans` log group, staging (100000000002, us-west-2), read-only StartQuery/GetQueryResults",
+  "why_committed": "REQ-017 needs real fixtures, and no single harvest window contains all three sessions"
+ },
+ "sessions": {
+  "23a1fa24": {
+   "session_id": "23a1fa24-1c97-4595-8d42-41112cfa549a",
+   "spans": [
+    {
+     "duration_ms": 48,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 285,
+     "name": "Bedrock.ListInferenceProfiles",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 54,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 401,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 102,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 107,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 68,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 372,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 123,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 72,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 70,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 53,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 75,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 54,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 39,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 93,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 93,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12448,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12461,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12742,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12553,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 15860,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 51,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 47,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 75,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 59,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 63,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 103,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5051,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5053,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "execute_tool skills",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 106,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 88,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5338,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4061,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4062,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6516,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 56,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 45,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 321,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 328,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 175,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 103,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 50,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 116,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 46,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 32,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1622,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1639,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10617,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10622,
+     "name": "execute_tool staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12263,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4025,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4026,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10522,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10525,
+     "name": "execute_tool staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10677,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10679,
+     "name": "execute_tool staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10844,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10848,
+     "name": "execute_tool staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 20988,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 20990,
+     "name": "execute_tool staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 25018,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12871,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12870,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 50156,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12872,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 52074,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 58549,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 111,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 62907,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6414,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6416,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 95,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 74955,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6514,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 75565,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 43,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 46,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 21,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 76,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 102,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5957,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5959,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 107,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 39,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2416,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2417,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1675,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1677,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1692,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4113,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1694,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3004,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3003,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 446,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 448,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 467,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 469,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3475,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4170,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4171,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 206,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 209,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 246,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4421,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 248,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4965,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4966,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 299,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 301,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 302,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 304,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5272,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 14567,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14568,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 14570,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 31855,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 31980,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 32074,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 38311,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4722,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4723,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 93,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 43312,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4820,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 44009,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 45,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 66,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 69,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 75,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6765,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6767,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 118,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3751,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3752,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 102,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 105,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 226,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 228,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 855,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4610,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 857,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3966,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3967,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 152,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 154,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 161,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 163,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 231,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4204,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 235,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3818,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3819,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 232,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 234,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 403,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4226,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 404,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10176,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10179,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10178,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 23221,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 23324,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23428,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 101,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 104,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30497,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2604,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2606,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2693,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 33351,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 33996,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 45,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 37,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 123,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 74,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 111,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 97,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3119,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3122,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 81,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 847,
+     "name": "Bedrock AgentCore.StartCodeInterpreterSession",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 976,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 67,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4341,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2503,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2505,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1270,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1273,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4038,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 18965,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 18963,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 75,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1970,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1972,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 81,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 21178,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3547,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3549,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 136,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 138,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 125,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3989,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5283,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5285,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 552,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 554,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 84,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6099,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3289,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3287,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 73,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 47,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 81,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 114,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 41,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 300,
+     "name": "execute_tool artifact",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3831,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5891,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5893,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 96,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5992,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 43,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 126,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6451,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 53,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 67,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 165,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 54,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 56520,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 57273,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 47,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 295,
+     "name": "Bedrock.ListInferenceProfiles",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 71,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 67,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3226,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 391,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 190,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 88,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 383,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 128,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 47,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 27,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 39,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 41,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 66,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 59,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 77,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 67,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 155,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3512,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3498,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 122,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "execute_tool skills",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 113,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3850,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3451,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3453,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3728,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2059,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2061,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 84,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2340,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2722,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2725,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 68,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 48,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 51,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 39,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 41,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 217,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 74,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3177,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2980,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2983,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 20,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 19,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3367,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 121,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 62519,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 62516,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 75,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 77,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.UpdateItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 91,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 62862,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10857,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10860,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 97,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10962,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 90555,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 88,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 97657,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 50,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 39,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 47,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 41,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 69,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 116,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 204,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18240,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18242,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6545,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 50,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 62,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3037,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 353,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 186,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 55,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 385,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 143,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 103,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 26,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2856,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2869,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7,
+     "name": "execute_tool skills",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 25656,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 25660,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 25663,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 25663,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 28538,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2733,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2731,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 413,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 415,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3149,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4381,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4382,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 380,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 382,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 589,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 591,
+     "name": "execute_tool staging-graph-analysis-tools___video_entity",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4976,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5109,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5107,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 776,
+     "name": "Bedrock AgentCore.StartCodeInterpreterSession",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1780,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2642,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7753,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 22151,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22152,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1065,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1067,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 23222,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 11709,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 11711,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 11713,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 79356,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 84870,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 91388,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 109909,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3937,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3940,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 154,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 288,
+     "name": "execute_tool artifact",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4501,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 9503,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 9501,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 9597,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 46,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 268,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6435,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 45,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 77,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 166,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 55,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 43,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 131301,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 132295,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 32,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 43,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 21,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 20,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 40,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 32,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 118,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 212,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 81,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 93,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3253,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3256,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 19,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 20,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 47,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 39,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 36,
+     "name": "DynamoDB.TransactWriteItems",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 20,
+     "name": "DynamoDB.TransactWriteItems",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 19,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 35,
+     "name": "S3.DeleteObjects",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 46,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 57,
+     "name": "S3.DeleteObjects",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 490,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4011,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4926,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4929,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 96,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5030,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 103,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 9324,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10349,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 51,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 50,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 21,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 68,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 124,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 361,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 70,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 70,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3231,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3233,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 48,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 47,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 43,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 175,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 84,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3670,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4502,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4505,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 34,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 99,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 67,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4855,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 57214,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 57217,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 96,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 60,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.UpdateItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 74,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 93,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 57573,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6836,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6833,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 77,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6918,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 73253,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 74239,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 63,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 45,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 72,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 148,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 273,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 78,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3484,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3486,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 21,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 20,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 13,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 63,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 40,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 11,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 68,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 20,
+     "name": "DynamoDB.TransactWriteItems",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "DynamoDB.TransactWriteItems",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "S3.DeleteObjects",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 59,
+     "name": "S3.DeleteObjects",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 508,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 99,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4346,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 152,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3962,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3965,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 8572,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4055,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 9672,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 45,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 46,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 32,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 74,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 70,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 159,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 287,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 84,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6374,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6376,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 88,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 135,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1403,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1404,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 159,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 161,
+     "name": "execute_tool staging-graph-analysis-tools___video_explore",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1567,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4600,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6170,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4601,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4602,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6281,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6396,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 101,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 13060,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4357,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4360,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4452,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 17681,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 18785,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 48,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 19,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 72,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 70,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 142,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 278,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 97,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 88,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 98,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6131,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6134,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 128,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 122,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2304,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2303,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 209,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 211,
+     "name": "execute_tool staging-graph-analysis-tools___graph_list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 220,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 222,
+     "name": "execute_tool staging-graph-analysis-tools___graph_list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2528,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10133,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10134,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10135,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12664,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12770,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12881,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 19308,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 68,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6392,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6389,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6479,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26058,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 27510,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 52,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 52,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 69,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 67,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 157,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 238,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 113,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 115,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 11945,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 11948,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 69,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12231,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12021,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 13326,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 48,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 72,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 165,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 313,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 115,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15342,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15344,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 124,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2665,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2664,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1367,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1369,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2791,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2793,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3464,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3467,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6137,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2442,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2441,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 286,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2732,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 288,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2759,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2760,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 149,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2912,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 151,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4017,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4018,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 722,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 724,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4744,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 21431,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 21429,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 297,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 299,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 21732,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12875,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12876,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 12878,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 51139,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 51239,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 51351,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 66958,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2800,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2802,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 48,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 23,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 123,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 198,
+     "name": "execute_tool artifact",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 84,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3255,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7376,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7379,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 84,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7468,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 56,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 738,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 115,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 67,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 70,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 78939,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80122,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 62,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 40,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 72,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 56,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 176,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 275,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 131,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 99,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 19806,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 19804,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 78,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 56,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 51,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 53,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 226,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 20279,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 68834,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 68837,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 66,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.UpdateItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 80,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 69177,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 78,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16098,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 16095,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 351,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18288,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 18287,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18292,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2,
+     "name": "execute_tool code_interpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 14672,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14673,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 64,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 14745,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 69,
+     "name": "execute_tool code_interpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 2312,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2340,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 790,
+     "name": "Bedrock AgentCore.StartCodeInterpreterSession",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 878,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3220,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 13609,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 13612,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1211,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1213,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 14827,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4396,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4399,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4398,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 55487,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 55589,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 55928,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 75,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 72279,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2475,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2472,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 95,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 21,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 136,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 202,
+     "name": "execute_tool artifact",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 96,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2956,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10524,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10521,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10609,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 32,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 39,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 34,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 739,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 128,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 59,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 63,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 37,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 176732,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 107,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 177926,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 70,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 75,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 152,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 316,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 173,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 107,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3425,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3428,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 97,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 13,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 64,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 13,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 40,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 40,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "DynamoDB.TransactWriteItems",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 19,
+     "name": "DynamoDB.TransactWriteItems",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.DeleteObjects",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 47,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 54,
+     "name": "S3.DeleteObjects",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 472,
+     "name": "execute_tool lab_asset",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 68,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 100,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4172,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5652,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5655,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 109,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5769,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10233,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 11623,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 50,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 48,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 59,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 41,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 37,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 78,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 167,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 301,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 218,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 78,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15502,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15505,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 120,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2595,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2596,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2074,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2076,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2094,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2096,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4694,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3460,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3461,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 299,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 301,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 314,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3780,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 317,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4799,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4800,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 206,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 206,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 209,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 209,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5012,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 24786,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24788,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 50,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 53,
+     "name": "execute_tool code_interpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 24844,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2124,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2125,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 796,
+     "name": "Bedrock AgentCore.StartCodeInterpreterSession",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 903,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3031,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 18110,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18112,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 27,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 18145,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 31,
+     "name": "execute_tool code_interpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 2515,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2517,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1250,
+     "name": "Bedrock AgentCore.StartCodeInterpreterSession",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 139,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1476,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3995,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 17768,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17770,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1352,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1355,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 19127,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10140,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10139,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10142,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 92778,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 92875,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 92983,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 108761,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2454,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2457,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 48,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 20,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 174,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 246,
+     "name": "execute_tool artifact",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 101,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2983,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 8515,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 8517,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 115,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 8637,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 52,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 262,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 123,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 63,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 66,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 121193,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 122536,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 34,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 72,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 51,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 21,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 18,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 161,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 348,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 200,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 8482,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 8485,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 96,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2405,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2406,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1997,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2000,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2101,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2103,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4511,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2719,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2721,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2720,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7234,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7334,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7417,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 74,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16183,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 110,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3735,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3738,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3821,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 20260,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 21635,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 46,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 43,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 76,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 68,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 165,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 273,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 240,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15012,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15015,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 72,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 126,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2508,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2507,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1480,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1482,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1505,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1507,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4018,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2229,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2230,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 177,
+     "name": "mcp tools/call staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 178,
+     "name": "execute_tool staging-graph-analysis-tools___video_search",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2410,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2882,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2880,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 139,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 141,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 181,
+     "name": "mcp tools/call staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 183,
+     "name": "execute_tool staging-graph-analysis-tools___graph_neighbors",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3067,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 28048,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28049,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 56,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 60,
+     "name": "execute_tool code_interpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 28111,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2209,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2207,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2,
+     "name": "execute_tool code_interpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 2213,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 19884,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 19885,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 64,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 67,
+     "name": "execute_tool code_interpreter",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 19955,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1952,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1954,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 817,
+     "name": "Bedrock AgentCore.StartCodeInterpreterSession",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 144,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3007,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1050,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 21300,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 21298,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1216,
+     "name": "Bedrock AgentCore.InvokeCodeInterpreter",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22521,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1218,
+     "name": "execute_tool code_interpreter",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10757,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10755,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10759,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 96067,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 96167,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 96282,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 111549,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2163,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2166,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 72,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 46,
+     "name": "S3.HeadObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 19,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 130,
+     "name": "S3.CopyObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 198,
+     "name": "execute_tool artifact",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 109,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2631,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7797,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7800,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 93,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7898,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 51,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 32,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 32,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 304,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 128,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 66,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 69,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 52,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 39,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 78,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 123127,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 124388,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    }
+   ],
+   "why": "V-02a: 11 dispatches over 3h, retrieved nothing, results returned inline; PASS",
+   "window": {
+    "end": "2026-08-22T00:00:00Z",
+    "start": "2026-08-21T19:00:00Z"
+   }
+  },
+  "36fafeb7": {
+   "session_id": "36fafeb7-90e0-4e4e-8e68-9c4e28298e5b",
+   "spans": [
+    {
+     "duration_ms": 47,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 311,
+     "name": "Bedrock.ListInferenceProfiles",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 37,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 67,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 73,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3213,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 405,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 157,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 77,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 396,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 138,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 98,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 34,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 53,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 51,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 59,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 38,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 103,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 190,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 91,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2149,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2167,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 98,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "execute_tool skills",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 96,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2469,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 27834,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27835,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 99,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27938,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 30593,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 37890,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 8,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 63,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 96,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 63,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 74,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 95,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 106,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12661,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 12663,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 97,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6508,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 37,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 57,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 402,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 225,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 142,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 77,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 216,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 273,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 74,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 27,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16518,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16536,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4092,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 23,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4141,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4290,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 26,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4338,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5865,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 25,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5906,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6085,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 25,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6129,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6905,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 27,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6952,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7083,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 24,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7125,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 23666,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 16977,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16984,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 16981,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 40653,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 42810,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49334,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 103,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 105,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 62311,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10140,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10137,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 118,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16888,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16889,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2974,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 24,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 697,
+     "name": "GET",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 118,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 35,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4103,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5098,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 23,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 389,
+     "name": "GET",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 39,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5769,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5775,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 22,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 714,
+     "name": "GET",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 103,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6835,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 13289,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 25,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 13436,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 326,
+     "name": "GET",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 129,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 319,
+     "name": "GET",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14607,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 14612,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 16226,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 36,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 336,
+     "name": "GET",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 52,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 23,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 16884,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 33780,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7351,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7353,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7354,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 102,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7937,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 45,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 66,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 155,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 50,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 35,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49407,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 49520,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49627,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 111,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 60066,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6841,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6839,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 129518,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6935,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 130305,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    }
+   ],
+   "why": "V-02a: dispatched twice, retrieved nothing, results returned inline; FAIL",
+   "window": {
+    "end": "2026-08-27T21:00:00Z",
+    "start": "2026-08-27T19:00:00Z"
+   }
+  },
+  "74b0a063": {
+   "session_id": "74b0a063-4bb7-4e0f-8c3b-5e9485695b4b",
+   "spans": [
+    {
+     "duration_ms": 53,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 301,
+     "name": "Bedrock.ListInferenceProfiles",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 72,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 65,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 9,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3380,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 380,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 120,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 83,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 561,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 143,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 104,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 36,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 60,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 54,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 38,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 120,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 83,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 81,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 114,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2069,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2082,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 81,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "execute_tool skills",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2348,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7557,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7558,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 81,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 8546,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 56,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 70,
+     "name": "Secrets Manager.GetSecretValue",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 229,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 61,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 119,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 76,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 51,
+     "name": "POST",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 144,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 70,
+     "name": "mcp tools/list",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4803,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4820,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3063,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 563,
+     "name": "GET",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 97,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 32,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 40,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4104,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5139,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 32,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 298,
+     "name": "GET",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 67,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5778,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___run_model",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 10601,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2084,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2086,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2089,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1,
+     "name": "execute_tool skills",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1777,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 1778,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1,
+     "name": "execute_tool skills",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 1781,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 8849,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 8851,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 8852,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 105,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7983,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 63,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 164,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 54,
+     "name": "S3.HeadObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 41,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31671,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 33342,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 41851,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 104,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 49686,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4622,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4624,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 101,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4728,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 56963,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 64217,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 54,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 57,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 22,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 17,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 66,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 65,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 73,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 9644,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 9642,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 93,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5430,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 13991,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5542,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10715,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 59,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "KMS.Sign",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 51,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 65,
+     "name": "S3.PutObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.PutItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "DynamoDB.UpdateItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 26,
+     "name": "DynamoDB.UpdateItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.UpdateItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 35920,
+     "name": "execute_tool plan_and_execute_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 45847,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4416,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4418,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 107,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 50554,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4528,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 51216,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 35,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 76,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 46,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 24,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 71,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 15,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 64,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 64,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 89,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 88,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3311,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3313,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 79,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 33,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 69,
+     "name": "execute_tool list_my_jobs",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3658,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3036,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3038,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 70,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.GetObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 37,
+     "name": "S3.GetObject",
+     "status": "ERROR"
+    },
+    {
+     "duration_ms": 53,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 190,
+     "name": "execute_tool get_plan_results",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 85,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3477,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 7586,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7588,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 40,
+     "name": "execute_tool get_job",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 84,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 94,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 7895,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6621,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6619,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 82,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 21920,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6707,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 22645,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 31,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 5,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 44,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 42,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 28,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 25,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 29,
+     "name": "S3.GetObject",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 14,
+     "name": "S3.ListObjectsV2",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 64,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 116,
+     "name": "Bedrock AgentCore.ListEvents",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 100,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 92,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2593,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2595,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 30,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 27,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 65,
+     "name": "execute_tool get_job",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 86,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 75,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2919,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 3844,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3846,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 87,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 395,
+     "name": "Bedrock AgentCore.InvokeAgentRuntime",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 35,
+     "name": "DynamoDB.Query",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2854,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2852,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 831,
+     "name": "mcp tools/call usr-8ddf64af24be45c894a7a8c1f254c83f___get_job_result",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 33,
+     "name": "DynamoDB.GetItem",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 3745,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 890,
+     "name": "execute_tool usr-8ddf64af24be45c894a7a8c1f254c83f___get_job_result",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2188,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 2189,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 2190,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 5937,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 6080,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 6462,
+     "name": "execute_tool dispatch_tool",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 90,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 10573,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 4494,
+     "name": "chat global.anthropic.claude-opus-4-8",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4497,
+     "name": "chat",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 80,
+     "name": "Bedrock AgentCore.CreateEvent",
+     "status": "UNSET"
+    },
+    {
+     "duration_ms": 4581,
+     "name": "execute_event_loop_cycle",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 18270,
+     "name": "invoke_agent Strands Agents",
+     "status": "OK"
+    },
+    {
+     "duration_ms": 18969,
+     "name": "POST /invocations",
+     "status": "UNSET"
+    }
+   ],
+   "why": "V-02c: retrieved early (get_job/get_job_result) then left a LATE dispatch unpaired at the session's end; PASS",
+   "window": {
+    "end": "2026-08-27T13:30:00Z",
+    "start": "2026-08-27T12:00:00Z"
+   }
+  }
+ }
+}

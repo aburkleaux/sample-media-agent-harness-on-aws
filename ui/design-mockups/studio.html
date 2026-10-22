@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Studio — Agent Studio mockup</title>
+<style>
+  :root{
+    --bg:#0d0f12; --panel:#15181d; --panel2:#1b1f26; --rail:#101317;
+    --border:#252b34; --border2:#333b47; --tx:#dfe4ec; --tx2:#8b93a3; --tx3:#5b6473;
+    --accent:#ff6a3d; --accent2:#4cc2ff; --ok:#3ddc97; --warn:#ffcb47;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace; --sans:"Inter",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:13px}
+  .app{display:grid;grid-template-rows:44px 1fr 232px;height:100vh}
+  /* top tab/transport bar */
+  .bar{display:flex;align-items:center;gap:2px;background:var(--rail);border-bottom:1px solid var(--border);padding:0 10px}
+  .bar .logo{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--accent),var(--warn));margin-right:10px}
+  .tab{padding:8px 14px;font-size:12.5px;color:var(--tx2);border-radius:8px 8px 0 0;cursor:pointer;position:relative;top:1px}
+  .tab.on{background:var(--panel);color:var(--tx);border:1px solid var(--border);border-bottom-color:var(--panel)}
+  .tab.add{color:var(--tx3)}
+  .bar .sp{flex:1}
+  .bar .chip{font-family:var(--mono);font-size:11px;color:var(--tx2);border:1px solid var(--border);padding:4px 9px;border-radius:6px;margin-left:6px}
+  .bar .chip.rec{color:var(--warn);border-color:rgba(255,203,71,.4)}
+  /* middle: chat | inspector */
+  .mid{display:grid;grid-template-columns:1fr 300px;min-height:0}
+  .chat{display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--border)}
+  .chatscroll{flex:1;overflow:auto;padding:20px 22px}
+  .m{max-width:720px;margin:0 0 18px}
+  .who{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--tx3);text-transform:uppercase;margin-bottom:6px}
+  .u{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px}
+  .a{font-size:14px;line-height:1.65}
+  .steps{margin:9px 0;font-family:var(--mono);font-size:12px}
+  .step{color:var(--tx2);padding:2px 0}.step .c{color:var(--ok)}
+  .composer{border-top:1px solid var(--border);padding:12px 16px;display:flex;gap:10px;align-items:center;background:var(--rail)}
+  .composer input{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--tx);font-size:14px;outline:none}
+  .composer .send{width:36px;height:36px;border-radius:9px;border:none;background:var(--accent);color:#111;font-weight:700;cursor:pointer}
+  .insp{background:var(--panel);overflow:auto}
+  .insp .h{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);
+    padding:14px 16px 8px;border-bottom:1px solid var(--border)}
+  .insp .body{padding:14px 16px}
+  .kv{display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;color:var(--tx2);border-bottom:1px solid var(--border)}
+  .kv b{color:var(--tx);font-weight:500;font-family:var(--mono)}
+  .job{display:flex;align-items:center;gap:9px;font-size:12.5px;padding:7px 0;color:var(--tx2)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+  .dot.run{background:var(--warn);animation:p 1.3s infinite}@keyframes p{50%{opacity:.35}}
+  /* bottom: timeline dock */
+  .dock{background:var(--panel);border-top:1px solid var(--border2);display:flex;flex-direction:column}
+  .dockh{height:36px;display:flex;align-items:center;gap:14px;padding:0 14px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--tx2)}
+  .dockh b{color:var(--tx)}
+  .dockh .transport{margin-left:auto;display:flex;gap:8px}
+  .tbtn{width:26px;height:22px;border-radius:5px;border:1px solid var(--border2);background:var(--panel2);color:var(--tx2);cursor:pointer;font-size:11px}
+  .ruler{height:20px;background:repeating-linear-gradient(90deg,transparent,transparent 59px,var(--border) 59px,var(--border) 60px);
+    border-bottom:1px solid var(--border);position:relative}
+  .play{position:absolute;top:0;bottom:0;left:120px;width:2px;background:var(--accent2);box-shadow:0 0 8px var(--accent2)}
+  .tracks{flex:1;overflow:auto}
+  .row{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid var(--border);align-items:center}
+  .row .name{padding:0 12px;font-family:var(--mono);font-size:11px;color:var(--tx2)}
+  .lane{position:relative;height:44px;padding:7px 8px}
+  .clip{position:absolute;top:8px;bottom:8px;border-radius:6px;border:1px solid var(--border2)}
+  .clip.a0{left:8px;width:44%;background:linear-gradient(180deg,rgba(255,106,61,.5),rgba(255,106,61,.2))}
+  .clip.a1{left:48%;width:40%;background:linear-gradient(180deg,rgba(76,194,255,.5),rgba(76,194,255,.2))}
+  .clip.sub{top:12px;bottom:12px;border-radius:4px;font-size:10px;color:var(--tx);display:flex;align-items:center;padding:0 8px;background:rgba(255,255,255,.06)}
+  .clip.s0{left:8px;width:44%}.clip.s1{left:48%;width:40%}
+  .wave{position:absolute;inset:0;opacity:.5;background:repeating-linear-gradient(90deg,transparent 0 2px,rgba(255,255,255,.35) 2px 3px)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <div class="logo"></div>
+    <div class="tab on">Diarization test</div>
+    <div class="tab">Q3 revenue</div>
+    <div class="tab">Podcast stems</div>
+    <div class="tab add">＋</div>
+    <div class="sp"></div>
+    <div class="chip">◆ Sonnet 4.6</div>
+    <div class="chip rec">● 1 job running</div>
+    <div class="chip">⌘K</div>
+  </div>
+
+  <div class="mid">
+    <div class="chat">
+      <div class="chatscroll">
+        <div class="m"><div class="who">You</div>
+          <div class="u">Run a speech diarization on speech.wav and show me who spoke.</div></div>
+        <div class="m"><div class="who">Agent · orchestrator</div>
+          <div class="a">Dispatched the diarization and composed a multi-track timeline below.
+            <div class="steps">
+              <div class="step"><span class="c">✓</span> dispatch → task_agent</div>
+              <div class="step"><span class="c">✓</span> diarize_speech → SUCCEEDED (2 speakers)</div>
+              <div class="step"><span class="c">✓</span> render → nle-timeline</div>
+            </div>
+            Two speakers over 10.7s. Scrub the timeline or open the inspector →
+          </div></div>
+      </div>
+      <div class="composer">
+        <input placeholder="Message the agent…"/>
+        <button class="send">↑</button>
+      </div>
+    </div>
+
+    <div class="insp">
+      <div class="h">Inspector</div>
+      <div class="body">
+        <div class="kv"><span>Clip</span><b>SPEAKER_00</b></div>
+        <div class="kv"><span>In</span><b>00:00.000</b></div>
+        <div class="kv"><span>Out</span><b>00:05.337</b></div>
+        <div class="kv"><span>Lang</span><b>en · 99.9%</b></div>
+      </div>
+      <div class="h">Jobs</div>
+      <div class="body">
+        <div class="job"><span class="dot"></span> diarize_speech · done</div>
+        <div class="job"><span class="dot run"></span> separate_stems · running</div>
+      </div>
+      <div class="h">Sessions</div>
+      <div class="body">
+        <div class="job">Diarization test</div>
+        <div class="job" style="color:var(--tx3)">Q3 revenue analysis</div>
+        <div class="job" style="color:var(--tx3)">Podcast stems</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dock">
+    <div class="dockh">TIMELINE · <b>media-timeline.json</b> · 00:00:10:21
+      <div class="transport"><button class="tbtn">⏮</button><button class="tbtn">▶</button><button class="tbtn">⏭</button></div>
+    </div>
+    <div class="ruler"><div class="play"></div></div>
+    <div class="tracks">
+      <div class="row"><div class="name">SPEAKER_00</div><div class="lane"><div class="clip a0"><div class="wave"></div></div></div></div>
+      <div class="row"><div class="name">SPEAKER_01</div><div class="lane"><div class="clip a1"><div class="wave"></div></div></div></div>
+      <div class="row"><div class="name">SUBTITLES</div><div class="lane">
+        <div class="clip sub s0">Hello, this is Speaker 1…</div>
+        <div class="clip sub s1">Thank you for listening…</div></div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

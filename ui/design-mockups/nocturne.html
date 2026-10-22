@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Nocturne — Agent Studio mockup</title>
+<style>
+  :root{
+    --bg:#0a0b10; --bg2:#0e1017; --panel:rgba(22,24,34,.72); --panel-solid:#14161f;
+    --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
+    --tx:#e7e9f0; --tx2:#9aa0b4; --tx3:#616779;
+    --accent:#7c5cff; --accent2:#22d3ee; --ok:#34d399; --warn:#fbbf24;
+    --radius:14px; --mono:ui-monospace,"SF Mono",Menlo,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;height:100vh;overflow:hidden;font-family:var(--sans);color:var(--tx);
+    background:radial-gradient(1200px 700px at 80% -10%,rgba(124,92,255,.18),transparent 60%),
+               radial-gradient(900px 600px at -10% 110%,rgba(34,211,238,.12),transparent 55%),var(--bg);}
+  .app{display:grid;grid-template-columns:56px 260px 1fr 380px;height:100vh}
+  /* icon rail */
+  .rail{display:flex;flex-direction:column;align-items:center;gap:14px;padding:14px 0;
+    border-right:1px solid var(--border);background:rgba(10,11,16,.6)}
+  .logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    box-shadow:0 0 20px rgba(124,92,255,.5)}
+  .ricon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--tx2);
+    cursor:pointer;font-size:16px}
+  .ricon:hover{background:var(--border);color:var(--tx)}
+  .ricon.on{background:var(--border2);color:#fff}
+  .rail .sp{flex:1}
+  /* sessions column */
+  .nav{border-right:1px solid var(--border);background:var(--panel);backdrop-filter:blur(20px);
+    display:flex;flex-direction:column;overflow:hidden}
+  .nav h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin:18px 16px 8px}
+  .newbtn{margin:12px 12px 4px;padding:9px 12px;border-radius:10px;border:1px solid var(--border2);
+    background:linear-gradient(180deg,rgba(124,92,255,.22),rgba(124,92,255,.08));color:#fff;font-size:13px;
+    font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px}
+  .sess{margin:2px 8px;padding:10px 12px;border-radius:10px;cursor:pointer}
+  .sess:hover{background:var(--border)}
+  .sess.on{background:linear-gradient(90deg,rgba(124,92,255,.18),transparent);border:1px solid var(--border2)}
+  .sess .t{font-size:13px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sess .p{font-size:11px;color:var(--tx3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .jobs{margin-top:auto;border-top:1px solid var(--border);padding:12px 16px}
+  .jobchip{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--tx2);padding:6px 0}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+  .dot.run{background:var(--warn);box-shadow:0 0 10px var(--warn);animation:pulse 1.4s infinite}
+  @keyframes pulse{50%{opacity:.4}}
+  /* center */
+  .main{display:flex;flex-direction:column;min-width:0}
+  .cmd{height:52px;display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid var(--border)}
+  .cmd .title{font-weight:600;font-size:14px}
+  .cmd .badge{font-size:10px;padding:3px 8px;border-radius:999px;background:rgba(52,211,153,.14);color:var(--ok);
+    border:1px solid rgba(52,211,153,.25)}
+  .cmd .k{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--tx3);border:1px solid var(--border2);
+    padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.02)}
+  .chat{flex:1;overflow:auto;padding:26px 22px}
+  .msg{max-width:760px;margin:0 auto 22px}
+  .msg .who{font-size:11px;color:var(--tx3);margin-bottom:6px;letter-spacing:.05em}
+  .bubble.user{background:linear-gradient(180deg,rgba(124,92,255,.16),rgba(124,92,255,.06));
+    border:1px solid var(--border2);padding:12px 15px;border-radius:14px 14px 4px 14px;font-size:14px}
+  .bubble.ai{font-size:14px;line-height:1.65;color:var(--tx)}
+  .steps{margin:10px 0;border-left:2px solid var(--border2);padding-left:14px}
+  .step{font-size:12.5px;color:var(--tx2);padding:3px 0;display:flex;gap:8px;align-items:center}
+  .step .c{color:var(--ok)}
+  .composer{margin:14px 22px 22px;border:1px solid var(--border2);border-radius:16px;background:var(--panel);
+    backdrop-filter:blur(20px);padding:12px 14px;display:flex;align-items:center;gap:12px}
+  .composer input{flex:1;background:none;border:none;color:var(--tx);font-size:14px;outline:none}
+  .composer .send{width:34px;height:34px;border-radius:10px;border:none;cursor:pointer;color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent2))}
+  .composer .model{font-size:12px;color:var(--tx2);border:1px solid var(--border2);padding:6px 10px;border-radius:8px}
+  /* renderer */
+  .render{border-left:1px solid var(--border);background:var(--panel);backdrop-filter:blur(20px);
+    display:flex;flex-direction:column;overflow:hidden}
+  .render .rh{height:52px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid var(--border);
+    font-size:12px;font-weight:600;letter-spacing:.04em}
+  .render .rh .tag{margin-left:auto;font-size:10px;color:var(--accent2);border:1px solid rgba(34,211,238,.3);
+    padding:2px 7px;border-radius:6px}
+  .tl{padding:16px}
+  .track{margin-bottom:12px}
+  .track .lab{font-size:11px;color:var(--tx3);font-family:var(--mono);margin-bottom:5px}
+  .track .bar{height:34px;border-radius:8px;position:relative;overflow:hidden;
+    background:linear-gradient(90deg,rgba(124,92,255,.35),rgba(34,211,238,.25));border:1px solid var(--border2)}
+  .track.sub .bar{background:rgba(255,255,255,.04);display:flex;align-items:center;padding:0 10px;font-size:11px;color:var(--tx2);height:auto;min-height:34px}
+  .insp{margin:8px 16px 16px;border:1px solid var(--border);border-radius:12px;padding:14px;background:rgba(255,255,255,.02)}
+  .insp h4{margin:0 0 10px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3)}
+  .kv{display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;color:var(--tx2)}
+  .kv b{color:var(--tx);font-weight:500}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="rail">
+    <div class="logo"></div>
+    <div class="ricon on">💬</div>
+    <div class="ricon">🧩</div>
+    <div class="ricon">🔌</div>
+    <div class="ricon">📊</div>
+    <div class="sp"></div>
+    <div class="ricon">⚙️</div>
+    <div class="ricon">🧑</div>
+  </div>
+
+  <div class="nav">
+    <button class="newbtn">＋ New session</button>
+    <h2>Sessions</h2>
+    <div class="sess on"><div class="t">Speaker diarization test</div><div class="p">2 speakers · transcript ready</div></div>
+    <div class="sess"><div class="t">Q3 revenue analysis</div><div class="p">chart rendered · 12 msgs</div></div>
+    <div class="sess"><div class="t">Stem separation — podcast</div><div class="p">4 stems · 00:42:11</div></div>
+    <div class="sess"><div class="t">PDF cover-page edit</div><div class="p">draft saved</div></div>
+    <div class="jobs">
+      <h2 style="margin:0 0 6px">Jobs</h2>
+      <div class="jobchip"><span class="dot"></span> diarize_speech · done</div>
+      <div class="jobchip"><span class="dot run"></span> separate_stems · running</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="cmd">
+      <span class="title">Speaker diarization test</span>
+      <span class="badge">● Active</span>
+      <span class="k">⌘K</span>
+    </div>
+    <div class="chat">
+      <div class="msg"><div class="who">You</div>
+        <div class="bubble user">Run a speech diarization on speech.wav and show me who spoke.</div></div>
+      <div class="msg"><div class="who">Agent</div>
+        <div class="bubble ai">
+          I'll dispatch the diarization and stream the result.
+          <div class="steps">
+            <div class="step"><span class="c">✓</span> Dispatching to task agent</div>
+            <div class="step"><span class="c">✓</span> Calling diarize_speech</div>
+            <div class="step"><span class="c">✓</span> Job SUCCEEDED · 2 speakers</div>
+            <div class="step"><span class="c">✓</span> Rendered artifacts</div>
+          </div>
+          Done — <b>2 distinct speakers</b> over a 10.7s clip. The transcript and per-speaker audio are in the renderer →
+        </div></div>
+    </div>
+    <div class="composer">
+      <span class="model">◆ Claude Sonnet 4.6</span>
+      <input placeholder="Message the agent…  (⌘K for commands)"/>
+      <button class="send">↑</button>
+    </div>
+  </div>
+
+  <div class="render">
+    <div class="rh">Session Renderer <span class="tag">NLE · media</span></div>
+    <div class="tl">
+      <div class="track"><div class="lab">SPEAKER_00 · audio</div><div class="bar"></div></div>
+      <div class="track"><div class="lab">SPEAKER_01 · audio</div><div class="bar"></div></div>
+      <div class="track sub"><div class="lab">SUBTITLES</div>
+        <div class="bar">“Hello, this is Speaker 1 testing speech diarization…”</div></div>
+    </div>
+    <div class="insp">
+      <h4>Inspector · active sentence</h4>
+      <div class="kv"><span>Speaker</span><b>SPEAKER_00</b></div>
+      <div class="kv"><span>Time range</span><b>00:00.000 → 00:05.337</b></div>
+      <div class="kv"><span>Turn</span><b>1 of 3</b></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

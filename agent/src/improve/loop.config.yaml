@@ -1,0 +1,50 @@
+# improvement-loop config — drives every stage (implementation-plan REQ-009).
+# Values under `judge` were chosen by measured experiment (tests/evaluation/
+# experiments/FINDINGS.md), not asserted.
+version: 1
+
+# observe_and_score = OBSERVE + EVALUATE only (a run can FAIL). No proposer. (M1)
+# propose_only / closed_loop are M2/M3.
+mode: observe_and_score
+
+observe:
+  dataset: golden
+  memory_id: mediaworks_harness_conversation_memory-hvhTmA58za
+
+judge:
+  model: global.anthropic.claude-sonnet-5
+  goal_source: full_conversation          # only stable source on multi-turn sessions (Finding 1)
+  input_set: [goal, response, trajectory, plan]   # richest/most accurate (Finding 2)
+  pass_threshold: 0.7                      # stable boundary; 0.9 over-sensitive (Finding 4)
+  runs: 3                                  # average to damp LLM variance (Finding 4)
+
+evaluate:
+  # These two keys describe the CONVERSATIONAL workload class only, which is what they were
+  # written for: `dispatch_correct` and `results_delivered` are meaningless for an invocation
+  # that carried no user request. Every other class is routed by `improve/classify.py`
+  # (EVALUATORS_BY_CLASS / GATING_BY_CLASS) and ignores these.
+  #
+  # Applying this list to the whole population was a real defect, not a hypothetical: on the
+  # 50-session harvest it ran `goal_judge` against session warm-up, Lab operations and plan
+  # sub-sessions, and its honest "no conversation is available" answer became a FAIL. 30 of
+  # 35 FAILs were that.
+  evaluators: [goal_judge, AsyncJobFlowValidator, DagCompletionValidator]
+  # Both tiers gate: overall FAILs if the agent misrouted (dispatch) OR the usable
+  # result never arrived (delivery). Per-tier scores stay visible in the verdict so
+  # it's unambiguous WHICH failed. (Real harvested failures are delivery failures —
+  # a crashed node / pending results — which this correctly surfaces as overall FAIL.)
+  gating_evaluators: [dispatch_correct, results_delivered]
+  # Absent evidence on a gating evaluator is UNSCORED, not FAIL: "we could not measure" and
+  # "we measured a failure" have different owners, and only the second is mineable. UNSCORED
+  # is still never PASS, which is the half of can-show-RED that matters. Enforced structurally
+  # in `evaluate.gate`, not read from here; kept as documentation of the invariant.
+  no_data_is: UNSCORED
+
+# Calibration: AgentCore's lenient GoalSuccessRate maps to our dispatch_correct
+# tier, so that is the tier we cross-check against the reference (not overall).
+calibration:
+  reference: agentcore_goal_success
+  compare_tier: dispatch_correct
+
+overall_gate:
+  pass_rate_threshold: 0.85

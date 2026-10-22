@@ -1,0 +1,140 @@
+/*
+ * Markdown rendering styles for agent responses.
+ *
+ * Tokenized. These rules used to hardcode a light-grey inline-code chip, light
+ * table rules and a light header fill, which stayed light in every theme — while
+ * the code-block colours were separately pinned dark. So light mode showed a dark
+ * block and dark mode showed a light chip. The earlier colour migration missed
+ * this file because it only scanned .ts/.tsx; the linter now covers CSS too.
+ */
+
+.markdown-body pre {
+  background: var(--color-code-block-bg);
+  color: var(--color-code-block-text);
+  padding: 12px;
+  border-radius: var(--radius-button);
+  max-width: 100%;
+  overflow-x: auto;
+  /* Wrap long unbroken tokens (S3 URIs, ARNs, job ids) instead of letting
+     them push the message bubble past the window edge. Indentation is kept
+     via pre-wrap; break-word/anywhere wraps the long tokens themselves. */
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+
+/*
+ * Inline code. `--color-code` is the accent in dark-kirocrew, where identifiers
+ * in prose read as mint — a defining trait of that theme rather than a tweak,
+ * so it gets a token instead of being baked in here.
+ */
+.markdown-body code {
+  background: var(--color-code-bg);
+  color: var(--color-code);
+  padding: 1px 5px;
+  border-radius: var(--radius-badge);
+  font-size: var(--fs-sm);
+  /* Inline code (e.g. an S3 URI in prose) also wraps rather than overflowing. */
+  overflow-wrap: anywhere;
+}
+
+/* Inside a block the chip treatment would double up. */
+.markdown-body pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.markdown-body h2,
+.markdown-body h3 {
+  margin: 12px 0 6px;
+  font-size: var(--fs-doc-h3);
+}
+
+.markdown-body h2 {
+  font-size: var(--fs-lg);
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 20px;
+  margin: 6px 0;
+}
+
+.markdown-body p {
+  margin: 6px 0;
+}
+
+/* A table never squeezes its columns to fit a narrow chat pane: each column keeps a readable minimum and a
+   table wider than the pane scrolls sideways. Squeezed, a 4-column hit table wrapped one character per line
+   and grew to ~1,900 px — the "tall chat" (Lab 2, a 449 px pane). */
+.markdown-body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: var(--fs-sm);
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--color-border);
+  padding: 4px 8px;
+  min-width: 4.5em;
+}
+
+.markdown-body th {
+  /* Furniture, not a selected row — see --color-surface-subtle in global.css. */
+  background: var(--color-surface-subtle);
+}
+
+/* Chat answers use blockquotes for asides (a reflection question, a tip). A bar in the theme's strong border
+   reads as an aside in every theme; a bare indent read as a layout glitch. */
+.markdown-body blockquote {
+  margin: 8px 0;
+  padding: 4px 12px;
+  border-left: 3px solid var(--color-border-strong);
+  color: var(--color-text-secondary);
+}
+
+.markdown-body blockquote p {
+  margin: 2px 0;
+}
+
+
+/* Links and citations. Nothing styled them, so a citation rendered in the browser's default #00E link
+   colour — near-invisible on the dark themes (Lab 2's hit tables). The theme's primary reads in every theme. */
+.markdown-body a,
+.markdown-body .mh-citation {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body .mh-citation:hover {
+  text-decoration: underline;
+}
+
+/* A citation wraps like text (a long file name breaks anywhere). Holding it on one line made its column the
+   only wide one and collapsed every other column in a table. */
+.markdown-body .mh-citation {
+  overflow-wrap: anywhere;
+}
+
+/* The citation pill (opens the cited moment in the chat's preview). Still inline text that may wrap — a pill
+   that refused to wrap is what blew tables out to thousands of px — so the shape is cloned onto each line. */
+.markdown-body a.mh-citation {
+  display: inline; padding: 1px 8px 1px 6px; border-radius: var(--radius-pill); font-size: var(--fs-sm); font-weight: 500;
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent); cursor: zoom-in;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.markdown-body a.mh-citation:hover { text-decoration: none; background: color-mix(in srgb, var(--color-primary) 18%, transparent); }
+.markdown-body a.mh-citation svg { vertical-align: -2px; margin-right: 4px; }
+
+.markdown-body .mh-citation-badge {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-xs);
+}

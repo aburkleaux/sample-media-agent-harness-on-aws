@@ -1,0 +1,8 @@
+{
+  "app": "npx ts-node lib/app.ts",
+  "context": {
+    "projectName": "mediaworks-harness",
+    "@aws-cdk/customresources:installLatestAwsSdkDefault": true,
+    "createBuckets": true
+  }
+}

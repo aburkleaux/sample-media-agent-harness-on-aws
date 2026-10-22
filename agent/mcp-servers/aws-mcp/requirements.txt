@@ -1,0 +1,6 @@
+mcp>=1.9.0
+# Pinned to 1.6.4 — the version used in every AWS MCP Server client example in
+# the official AWS documentation. This proxy runtime only just started working,
+# so an unpinned floor (>=1.0.0) risks a future rebuild silently pulling a
+# different version and regressing it.
+mcp-proxy-for-aws==1.6.4

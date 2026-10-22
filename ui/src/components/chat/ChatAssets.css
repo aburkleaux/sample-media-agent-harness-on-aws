@@ -1,0 +1,123 @@
+/* The chat's asset card + preview (ChatAssetCard, AssetPreviewModal). Theme variables only, so Light, Dark and
+   KiroCrew follow; the preview itself is a dark stage in every theme (media reads best on dark). */
+
+/* ---------------- card ---------------- */
+/* A block of its own (flex, not inline-flex): a card never shares a line with the sentence that names it. */
+.cap-card {
+  display: flex; flex-direction: column; width: min(100%, 380px); margin: 8px 0 12px;
+  border: 1px solid var(--color-border); border-radius: var(--radius-card); overflow: hidden; background: var(--color-surface);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.cap-card:hover { border-color: var(--color-border-strong); box-shadow: var(--elevation-subtle); }
+.cap-media {
+  position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9; overflow: hidden;
+  background: var(--color-media-stage); cursor: zoom-in;
+}
+/* `.cap-card` raises the specificity above the markdown's `.lab-md img { height: auto }`, which otherwise wins by
+   source order and draws the picture at its natural height. Images fit whole (a contact sheet is 8:1); a video's
+   first frame fills the frame. */
+.cap-card .cap-media > img, .cap-card .cap-media > video {
+  position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; display: block;
+}
+.cap-card .cap-media > img { object-fit: contain; }
+.cap-badge {
+  position: absolute; left: 10px; bottom: 10px; background: var(--color-media-chip); color: var(--color-media-text);
+  font-size: var(--fs-2xs); font-weight: 600; padding: 3px 8px; border-radius: var(--radius-pill); letter-spacing: .02em;
+}
+.cap-play {
+  position: absolute; width: 46px; height: 46px; border-radius: var(--radius-pill); background: var(--color-media-play);
+  display: grid; place-items: center; box-shadow: var(--elevation-elevated);
+}
+.cap-play::after {
+  content: ""; border-left: 14px solid var(--color-media-play-glyph); border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 4px;
+}
+.cap-tile { position: absolute; inset: 0; display: grid; place-items: center; }
+.cap-tile--audio { background: linear-gradient(135deg, var(--color-media-audio-a), var(--color-media-audio-b)); color: var(--color-media-audio-fg); }
+.cap-tile--doc { background: linear-gradient(180deg, var(--color-surface-subtle), var(--color-border)); }
+.cap-sheet {
+  width: 34%; height: 76%; background: var(--color-surface); border-radius: var(--radius-panel); box-shadow: var(--elevation-elevated);
+  padding: 12% 5%; box-sizing: border-box; display: flex; flex-direction: column; gap: 6%;
+}
+.cap-sheet i { display: block; height: 5%; background: var(--color-border); border-radius: var(--radius-badge); }
+.cap-sheet i:nth-child(1) { width: 70%; height: 7%; background: color-mix(in srgb, var(--color-primary) 30%, var(--color-border)); }
+.cap-sheet i:nth-child(4), .cap-sheet i:nth-child(7) { width: 60%; }
+.cap-skeleton { position: absolute; inset: 0; background: linear-gradient(90deg, var(--color-media-stage), var(--color-media-stage-2), var(--color-media-stage)); }
+.cap-consent {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: var(--radius-pill); border: 0;
+  background: var(--color-media-glass); color: var(--color-media-text); font: inherit; font-size: var(--fs-sm); font-weight: 600; cursor: pointer;
+}
+.cap-consent:hover { background: var(--color-media-glass-hover); }
+/* Audio: one row over an inline player; no 16:9 stage. */
+.cap-card--audio { width: min(100%, 420px); }
+.cap-audio-glyph {
+  flex-shrink: 0; width: 32px; height: 32px; border-radius: var(--radius-panel); display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--color-media-audio-a), var(--color-media-audio-b)); color: var(--color-media-audio-fg);
+}
+.cap-audio { display: block; width: calc(100% - 20px); height: 36px; margin: 0 10px 10px; }
+.cap-audio--loading { border-radius: var(--radius-pill); background: var(--color-surface-subtle); }
+.cap-foot { display: flex; align-items: center; gap: 10px; padding: 9px 10px 9px 12px; }
+.cap-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cap-name {
+  font-size: var(--fs-sm); font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cap-sub { font-size: var(--fs-xs); color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cap-acts { display: inline-flex; gap: 2px; flex-shrink: 0; }
+.cap-icon {
+  position: relative; width: 30px; height: 30px; border-radius: var(--radius-panel); border: 0; background: transparent;
+  color: var(--color-text-secondary); display: grid; place-items: center; cursor: pointer;
+}
+.cap-icon:hover { background: var(--color-surface-subtle); color: var(--color-text); }
+.cap-icon:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+.cap-icon[data-tip]:hover::after {
+  content: attr(data-tip); position: absolute; bottom: 36px; right: 0; white-space: nowrap; pointer-events: none;
+  background: var(--color-media-tooltip); color: var(--color-media-text); font-size: var(--fs-2xs); font-weight: 500; padding: 4px 8px; border-radius: var(--radius-panel); z-index: 2;
+}
+
+/* ---------------- preview ---------------- */
+.cap-backdrop {
+  position: fixed; inset: 0; z-index: 1000; background: var(--color-media-scrim); backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box;
+  animation: cap-fade .15s ease;
+}
+/* Shrink-wrapped to the media, so the title and actions sit on the media's own top edge, not at the corners
+   of a fixed-width column. The width caps live on the media (a % here would be circular). */
+.cap-preview { display: flex; flex-direction: column; width: fit-content; max-width: 100%; max-height: 100%; }
+.cap-preview-bar { display: flex; align-items: center; gap: 10px; padding: 0 2px 10px; min-width: 0; }
+.cap-name--light { color: var(--color-media-text); font-size: var(--fs-md); }
+.cap-sub--light { color: var(--color-media-text-dim); }
+.cap-pill {
+  font-size: var(--fs-xs); font-weight: 600; color: var(--color-media-text); background: var(--color-media-glass); padding: 3px 10px;
+  border-radius: var(--radius-pill); white-space: nowrap;
+}
+.cap-btn {
+  height: 30px; padding: 0 12px; border-radius: var(--radius-panel); border: 1px solid var(--color-media-line); background: transparent;
+  color: var(--color-media-text); font: inherit; font-size: var(--fs-xs); font-weight: 600; display: inline-flex; align-items: center; gap: 7px;
+  cursor: pointer; white-space: nowrap;
+}
+.cap-btn:hover { background: var(--color-media-glass); }
+.cap-move-status { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-xs); color: var(--color-media-text-dim); white-space: nowrap; }
+.cap-btn-light {
+  height: 28px; padding: 0 10px; border-radius: var(--radius-panel); border: 1px solid var(--color-border-strong);
+  background: var(--color-surface); color: var(--color-primary); font: inherit; font-size: var(--fs-xs); font-weight: 600;
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap;
+}
+.cap-btn-light:hover { background: var(--color-surface-subtle); }
+.cap-move-status--light { color: var(--color-text-secondary); }
+.cap-move-status--light button { color: var(--color-primary); }
+.cap-move-status button { border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: var(--color-media-text); cursor: pointer; }
+.cap-icon--light { color: var(--color-media-icon); }
+.cap-icon--light:hover { background: var(--color-media-glass); color: var(--color-media-text); }
+.cap-preview-stage { display: flex; align-items: center; justify-content: center; min-height: 0; }
+.cap-preview-media {
+  display: block; max-width: min(1400px, calc(100vw - 48px)); max-height: calc(100vh - 110px); object-fit: contain; border-radius: var(--radius-card); background: var(--color-media-stage);
+}
+.cap-preview-doc { width: min(1100px, calc(100vw - 48px)); height: calc(100vh - 110px); border: 0; border-radius: var(--radius-card); background: var(--color-surface); }
+.cap-preview-audio {
+  display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 48px 56px; border-radius: var(--radius-card);
+  background: linear-gradient(135deg, var(--color-media-audio-a), var(--color-media-audio-b)); color: var(--color-media-audio-fg);
+}
+.cap-preview-audio audio { width: min(520px, 70vw); }
+.cap-preview-loading { display: block; width: min(60vw, 640px); height: min(50vh, 360px); border-radius: var(--radius-card); background: var(--color-media-stage-2); }
+.cap-preview-error { color: var(--color-media-error); background: var(--color-media-glass); padding: 18px 22px; border-radius: var(--radius-card); font-size: var(--fs-md); }
+@keyframes cap-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .cap-backdrop { animation: none; } }

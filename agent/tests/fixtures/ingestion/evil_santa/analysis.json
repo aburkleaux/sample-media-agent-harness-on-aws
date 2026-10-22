@@ -1,0 +1,63 @@
+{
+ "overall_content_type": "Movies/Feature Films",
+ "top_3_genres": [
+  "Horror",
+  "Holiday",
+  "Thriller"
+ ],
+ "audio_segments": [
+  {
+   "start_id": 0,
+   "end_id": 10,
+   "sentiment": "dramatic",
+   "tone": "ominous",
+   "conversation_type": "narration",
+   "segment_topic": "Evil Santa movie trailer narration",
+   "named_entities": [
+    "Santa",
+    "North Pole",
+    "AWS M&E",
+    "Amazon Nova Studios",
+    "Evil Santa"
+   ],
+   "key_events": [
+    "Narrator reframes classic Christmas poem with a horror twist",
+    "Santa portrayed as a killer targeting everyone",
+    "Character warns someone away from the fireplace",
+    "Santa depicted going to hell rather than the North Pole",
+    "Film title and production credits revealed"
+   ],
+   "discourse_facts": [
+    {
+     "kind": "threat_of_violence",
+     "cue_id": 1,
+     "quote": "Santa's checking a different kind of list, and everyone's been marked for death"
+    },
+    {
+     "kind": "threat_of_violence",
+     "cue_id": 7,
+     "quote": "He's coming to make you pay"
+    }
+   ],
+   "reasoning": "The entire transcript is a single continuous movie trailer for 'Evil Santa,' featuring uninterrupted narrator voiceover building tension and culminating in the title card and studio credits. There are no topic shifts or speaker changes that would warrant separate segments.",
+   "start_time": "00:00:02.743",
+   "end_time": "00:00:46.061"
+  }
+ ],
+ "segments_gap": [],
+ "provenance": {
+  "prompt": {
+   "category": "conversation-analysis",
+   "version": "default",
+   "source_md5": "b0c61df565090837a022481ca51f54ea"
+  },
+  "model_chain": [
+   "anthropic.claude-sonnet-4-6"
+  ],
+  "transcript_s3uri": "s3://m2cv6-0e0000000002-100000000002-us-west-2-proxy/micro-workflow/speech-diarization/5abab328-dd47-5783-88bb-34a2640f270d/transcripts/final_transcript.json",
+  "transcript_format": "diarization-json",
+  "chunk_count": 1,
+  "history_scope": "asset.video_08765c1a3635",
+  "tool_version": "alpha.20260904b"
+ }
+}

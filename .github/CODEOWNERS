@@ -1,0 +1,12 @@
+# Code owners — auto-request review when matching files change.
+# Replace the placeholder team/handle below before enabling on the public repo.
+# See: https://docs.github.com/articles/about-code-owners
+
+# Default owner for everything in the repo
+*                       @REPLACE_WITH_YOUR_TEAM
+
+# Area owners (adjust to your org structure)
+/agent/                 @REPLACE_WITH_YOUR_TEAM
+/ui/                    @REPLACE_WITH_YOUR_TEAM
+/infra/                 @REPLACE_WITH_YOUR_TEAM
+/docs/                  @REPLACE_WITH_YOUR_TEAM

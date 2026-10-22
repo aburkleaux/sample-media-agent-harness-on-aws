@@ -1,0 +1,39 @@
+{
+  "calibration": {
+    "compare_tier": "dispatch_correct",
+    "reference": "agentcore_goal_success"
+  },
+  "evaluate": {
+    "evaluators": [
+      "goal_judge",
+      "AsyncJobFlowValidator",
+      "DagCompletionValidator"
+    ],
+    "gating_evaluators": [
+      "dispatch_correct",
+      "results_delivered"
+    ],
+    "no_data_is": "UNSCORED"
+  },
+  "judge": {
+    "goal_source": "full_conversation",
+    "input_set": [
+      "goal",
+      "response",
+      "trajectory",
+      "plan"
+    ],
+    "model": "global.anthropic.claude-sonnet-5",
+    "pass_threshold": 0.7,
+    "runs": 3
+  },
+  "mode": "observe_and_score",
+  "observe": {
+    "dataset": "golden",
+    "memory_id": "mediaworks_harness_conversation_memory-hvhTmA58za"
+  },
+  "overall_gate": {
+    "pass_rate_threshold": 0.85
+  },
+  "version": 1
+}

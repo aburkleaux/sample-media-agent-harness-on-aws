@@ -1,0 +1,1645 @@
+{
+ "_provenance": {
+  "deliberately_excluded": "status messages, goal text, tool arguments, tool results (args+results are sensitive \u2014 OURS-4)",
+  "fields_included": "session id, traceId, span name, status.code, aws.local.service, durationNano \u2014 the harvester's own projection",
+  "queries": {
+   "pairs": "fields traceId as trace, attributes.session.id as sid | filter attributes.aws.local.service like /mediaworks_harness/ | filter ispresent(trace) and ispresent(sid) | stats count() as n by trace, sid | limit 20000",
+   "rows": "fields @timestamp, attributes.session.id as sid, attributes.aws.local.service as svc, name, status.code as status, durationNano, traceId as trace | filter <session-id filter> | sort @timestamp asc | limit 10000"
+  },
+  "regenerate": "cd agent && AWS_PROFILE=megs-staging uv run python scripts/refresh_trace_fixtures.py",
+  "row_selection": "every span of each sub-session; for the parent, the first span of each trace it appears in (the join reads only the session/trace association)",
+  "sessions": "the 2 requests with the most plan sub-sessions in the last 14 days, chosen by shape (not by id, which retention rots)",
+  "source": "CloudWatch Logs Insights over the `aws/spans` log group, staging (100000000002, us-west-2), read-only StartQuery/GetQueryResults",
+  "why_committed": "REQ-017 needs real fixtures, and no other committed fixture holds a sub-session with a sibling, a parent, or a traceId at all"
+ },
+ "groups": {
+  "fanout_1": {
+   "insights_span_rows": [
+    {
+     "@timestamp": "2026-08-20 16:26:58.996",
+     "durationNano": "45430148",
+     "name": "S3.ListObjectsV2",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a872acc123772a157ae267d0ef09ce4"
+    },
+    {
+     "@timestamp": "2026-08-20 16:42:31.811",
+     "durationNano": "33930319",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a872e77475a35bb7c78d5b61d229b8f"
+    },
+    {
+     "@timestamp": "2026-08-20 16:43:22.512",
+     "durationNano": "4571362",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:07.302",
+     "durationNano": "17612507013",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787244223",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:07.303",
+     "durationNano": "17626642919",
+     "name": "chat",
+     "sid": "plan-session-1787244223",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:07.304",
+     "durationNano": "17628675076",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787244223",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:07.304",
+     "durationNano": "17627580264",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787244223",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:07.457",
+     "durationNano": "67959328",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787244223",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:07.521",
+     "durationNano": "30946157",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787244223",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:25.656",
+     "durationNano": "12528793856",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787244223",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:25.657",
+     "durationNano": "12543073130",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787244223",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:25.657",
+     "durationNano": "12544201632",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787244223",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:25.657",
+     "durationNano": "12542150922",
+     "name": "chat",
+     "sid": "plan-session-1787244223",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:25.812",
+     "durationNano": "72983920",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787244223",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:44:25.876",
+     "durationNano": "31841591",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787244223",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a872eaa231158bd3daadca761e3fac1"
+    },
+    {
+     "@timestamp": "2026-08-20 16:49:54.309",
+     "durationNano": "33164921",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a873032507a7d5e120f78720ce4cace"
+    },
+    {
+     "@timestamp": "2026-08-20 16:52:49.961",
+     "durationNano": "33642663",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a8730e12350837a147c7373789fd33b"
+    },
+    {
+     "@timestamp": "2026-08-20 16:53:25.097",
+     "durationNano": "4573679",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a8731053797f563088b9220443cc210"
+    },
+    {
+     "@timestamp": "2026-08-20 16:55:10.674",
+     "durationNano": "50792767",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:15.249",
+     "durationNano": "27399422675",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787244940",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:15.250",
+     "durationNano": "27413993218",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787244940",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:15.250",
+     "durationNano": "27413063442",
+     "name": "chat",
+     "sid": "plan-session-1787244940",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:15.250",
+     "durationNano": "27415083412",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787244940",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:15.403",
+     "durationNano": "68239720",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787244940",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:15.471",
+     "durationNano": "34876182",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787244940",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:43.311",
+     "durationNano": "22189754592",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787244940",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:43.311",
+     "durationNano": "22203957452",
+     "name": "chat",
+     "sid": "plan-session-1787244940",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:43.312",
+     "durationNano": "22206227561",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787244940",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:43.312",
+     "durationNano": "22204942448",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787244940",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:43.465",
+     "durationNano": "68723444",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787244940",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 16:56:43.549",
+     "durationNano": "51066522",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787244940",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87316e1d421af4351b259a1f54468c"
+    },
+    {
+     "@timestamp": "2026-08-20 18:55:25.248",
+     "durationNano": "42101238",
+     "name": "S3.ListObjectsV2",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:11.445",
+     "durationNano": "22091552405",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787252143",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:11.445",
+     "durationNano": "22104981310",
+     "name": "chat",
+     "sid": "plan-session-1787252143",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:11.446",
+     "durationNano": "22106974941",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787252143",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:11.446",
+     "durationNano": "22105887602",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787252143",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:11.603",
+     "durationNano": "72486522",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787252143",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:11.663",
+     "durationNano": "27023110",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787252143",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:39.548",
+     "durationNano": "20760495692",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787252143",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:39.549",
+     "durationNano": "20778032348",
+     "name": "chat",
+     "sid": "plan-session-1787252143",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:39.550",
+     "durationNano": "20779262247",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787252143",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:39.550",
+     "durationNano": "20780681555",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787252143",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:39.731",
+     "durationNano": "67566026",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787252143",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 18:56:39.810",
+     "durationNano": "34819824",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787252143",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a874d960e34a92f4e5ee8d50e7219d7"
+    },
+    {
+     "@timestamp": "2026-08-20 19:47:08.269",
+     "durationNano": "57468234",
+     "name": "S3.ListObjectsV2",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a8759b374b52d3d24a769147bfa89f4"
+    },
+    {
+     "@timestamp": "2026-08-20 19:49:10.813",
+     "durationNano": "38278044",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a875a362fb1e15b5d26ce302c44a825"
+    },
+    {
+     "@timestamp": "2026-08-20 19:51:17.873",
+     "durationNano": "39595351",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a875ab556fbee093b10145006353a84"
+    },
+    {
+     "@timestamp": "2026-08-20 19:52:18.537",
+     "durationNano": "7518696",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:52:58.782",
+     "durationNano": "20037275491",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787255552",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:52:58.783",
+     "durationNano": "20052228808",
+     "name": "chat",
+     "sid": "plan-session-1787255552",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:52:58.783",
+     "durationNano": "20053203405",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787255552",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:52:58.783",
+     "durationNano": "20054508070",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787255552",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:52:58.947",
+     "durationNano": "76818210",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787255552",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:52:59.017",
+     "durationNano": "34723144",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787255552",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:53:23.132",
+     "durationNano": "18049669815",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787255552",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:53:23.133",
+     "durationNano": "18064083340",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787255552",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:53:23.133",
+     "durationNano": "18063126173",
+     "name": "chat",
+     "sid": "plan-session-1787255552",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:53:23.134",
+     "durationNano": "18065220681",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787255552",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:53:23.281",
+     "durationNano": "65162478",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787255552",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 19:53:23.343",
+     "durationNano": "28682902",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787255552",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875af2342a39051b1272a0643e47bb"
+    },
+    {
+     "@timestamp": "2026-08-20 20:00:53.799",
+     "durationNano": "35650003",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:02:29.224",
+     "durationNano": "53290975271",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787256089",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:02:29.225",
+     "durationNano": "53304496551",
+     "name": "chat",
+     "sid": "plan-session-1787256089",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:02:29.226",
+     "durationNano": "53306533015",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787256089",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:02:29.226",
+     "durationNano": "53305463340",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787256089",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:02:29.377",
+     "durationNano": "67766627",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787256089",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:02:29.445",
+     "durationNano": "34628824",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787256089",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:03:18.398",
+     "durationNano": "43291874635",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787256089",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:03:18.398",
+     "durationNano": "43305893570",
+     "name": "chat",
+     "sid": "plan-session-1787256089",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:03:18.399",
+     "durationNano": "43306962388",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787256089",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:03:18.399",
+     "durationNano": "43308247874",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787256089",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:03:18.556",
+     "durationNano": "73833442",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787256089",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:03:18.621",
+     "durationNano": "32184851",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787256089",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a875cf5022629837f8df3c50b1a5c7f"
+    },
+    {
+     "@timestamp": "2026-08-20 20:14:40.509",
+     "durationNano": "36790621",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a8760303d1b45cb3fdfac6635b871ae"
+    },
+    {
+     "@timestamp": "2026-08-20 20:16:13.678",
+     "durationNano": "6022705",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:16:47.470",
+     "durationNano": "12231729323",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787256988",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:16:47.471",
+     "durationNano": "12247615800",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787256988",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:16:47.471",
+     "durationNano": "12246476995",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787256988",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:16:47.471",
+     "durationNano": "12245579685",
+     "name": "chat",
+     "sid": "plan-session-1787256988",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:16:47.627",
+     "durationNano": "70947542",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787256988",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:16:47.698",
+     "durationNano": "30797433",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787256988",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:17:05.116",
+     "durationNano": "10822763732",
+     "name": "chat",
+     "sid": "plan-session-1787256988",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:17:05.116",
+     "durationNano": "10808579950",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1787256988",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:17:05.117",
+     "durationNano": "10824816656",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1787256988",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:17:05.117",
+     "durationNano": "10823684788",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1787256988",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:17:05.291",
+     "durationNano": "90734439",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1787256988",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:17:05.352",
+     "durationNano": "28160049",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1787256988",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a87608d11bcf0fa44961f2f7f21b48b"
+    },
+    {
+     "@timestamp": "2026-08-20 20:17:53.302",
+     "durationNano": "36253379",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a8760f13bbd15bb54a465ad77301d15"
+    },
+    {
+     "@timestamp": "2026-08-20 20:23:34.465",
+     "durationNano": "39976302",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a876246422a0530289c155e3af63947"
+    },
+    {
+     "@timestamp": "2026-08-20 20:24:45.582",
+     "durationNano": "5643573",
+     "name": "DynamoDB.Query",
+     "sid": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a87628d7519584d3ef795b348898d0b"
+    }
+   ],
+   "parent_session": "154b5b07-f288-44cb-8888-4f97f3aa5477",
+   "sub_sessions": [
+    "plan-session-1787244223",
+    "plan-session-1787244940",
+    "plan-session-1787252143",
+    "plan-session-1787255552",
+    "plan-session-1787256089",
+    "plan-session-1787256988"
+   ],
+   "why": "one request that fanned out into 6 plan sub-session(s); the parent appears in 18 trace(s)",
+   "window": {
+    "end": "2026-08-20T23:16:28+00:00",
+    "start": "2026-08-20T15:43:43+00:00"
+   }
+  },
+  "fanout_2": {
+   "insights_span_rows": [
+    {
+     "@timestamp": "2026-08-30 12:55:49.466",
+     "durationNano": "42864959",
+     "name": "S3.ListObjectsV2",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_render_agent.DEFAULT",
+     "trace": "6a94284e6621cc125740c93d37d44cc1"
+    },
+    {
+     "@timestamp": "2026-08-30 12:55:49.620",
+     "durationNano": "39812992",
+     "name": "S3.ListObjectsV2",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94284e33d13e2d328726a117615b59"
+    },
+    {
+     "@timestamp": "2026-08-30 12:58:28.639",
+     "durationNano": "3021964503",
+     "name": "mcp tools/list",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "OK",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a9428f155f1fb8342bc463f37d65f34"
+    },
+    {
+     "@timestamp": "2026-08-30 13:18:59.391",
+     "durationNano": "43822614",
+     "name": "S3.ListObjectsV2",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a942dbc5b3837485f95e0e8229aa6bd"
+    },
+    {
+     "@timestamp": "2026-08-30 13:19:49.983",
+     "durationNano": "4173114",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a942df5432f227d6b3c088a044ad666"
+    },
+    {
+     "@timestamp": "2026-08-30 13:25:05.831",
+     "durationNano": "34544671",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a942f31246247a25073feca3267701b"
+    },
+    {
+     "@timestamp": "2026-08-30 13:28:50.089",
+     "durationNano": "34192857",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94301163206097094a6b950abaf10c"
+    },
+    {
+     "@timestamp": "2026-08-30 13:34:10.295",
+     "durationNano": "33760573",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94315235c2de621f74502674696bfc"
+    },
+    {
+     "@timestamp": "2026-08-30 13:34:35.350",
+     "durationNano": "5432569",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:02.340",
+     "durationNano": "11039248434",
+     "name": "chat",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:02.340",
+     "durationNano": "11025400234",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:02.341",
+     "durationNano": "11040145306",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:02.341",
+     "durationNano": "11041205642",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:02.486",
+     "durationNano": "63090179",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:02.545",
+     "durationNano": "26614448",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:17.365",
+     "durationNano": "9148135595",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:17.366",
+     "durationNano": "9162147828",
+     "name": "chat",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:17.366",
+     "durationNano": "9164242387",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:17.366",
+     "durationNano": "9163094048",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:17.521",
+     "durationNano": "68687589",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:35:17.584",
+     "durationNano": "28595952",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94316b68d2ca122e61b28841952f74"
+    },
+    {
+     "@timestamp": "2026-08-30 13:40:08.904",
+     "durationNano": "34766137",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a9432b816e9ffd458e305e5101fd79e"
+    },
+    {
+     "@timestamp": "2026-08-30 13:42:07.271",
+     "durationNano": "29244324",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94332f0ac576435355ef0f2b2873c0"
+    },
+    {
+     "@timestamp": "2026-08-30 13:44:03.952",
+     "durationNano": "31727760",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:45:31.559",
+     "durationNano": "58693555354",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:45:31.560",
+     "durationNano": "58707163757",
+     "name": "chat",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:45:31.561",
+     "durationNano": "58709334869",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:45:31.561",
+     "durationNano": "58708165053",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:45:31.715",
+     "durationNano": "71765190",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:45:31.781",
+     "durationNano": "32900819",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:46:17.083",
+     "durationNano": "39767778030",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:46:17.084",
+     "durationNano": "39781679458",
+     "name": "chat",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:46:17.085",
+     "durationNano": "39784036566",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:46:17.085",
+     "durationNano": "39782814529",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:46:17.252",
+     "durationNano": "76005163",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:46:17.314",
+     "durationNano": "27632920",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a9433a34a29b1a274fa1b70653b4c59"
+    },
+    {
+     "@timestamp": "2026-08-30 13:52:52.808",
+     "durationNano": "29896426",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a9435b400d04ec971b895175cfa2d76"
+    },
+    {
+     "@timestamp": "2026-08-30 14:06:48.602",
+     "durationNano": "34047388",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a9438f8242000557b90d3f15b2756a3"
+    },
+    {
+     "@timestamp": "2026-08-30 14:08:27.146",
+     "durationNano": "30383802",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:03.422",
+     "durationNano": "66283607487",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:03.422",
+     "durationNano": "66297758087",
+     "name": "chat",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:03.423",
+     "durationNano": "66299900902",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:03.423",
+     "durationNano": "66298782925",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:03.573",
+     "durationNano": "67195766",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:03.639",
+     "durationNano": "33169484",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:57.336",
+     "durationNano": "48045099675",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:57.337",
+     "durationNano": "48059270485",
+     "name": "chat",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:57.337",
+     "durationNano": "48061477774",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:57.337",
+     "durationNano": "48060315209",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:57.477",
+     "durationNano": "58127104",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:10:57.535",
+     "durationNano": "25708489",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94395b1670898c6cf8cbad645a5d16"
+    },
+    {
+     "@timestamp": "2026-08-30 14:22:36.897",
+     "durationNano": "32118737",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a943cac01eded681aebb21d5e6d9e35"
+    },
+    {
+     "@timestamp": "2026-08-30 14:25:25.180",
+     "durationNano": "31828720",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a943d551cbf6e3d5b39ab2f766cdcf4"
+    },
+    {
+     "@timestamp": "2026-08-30 19:21:17.055",
+     "durationNano": "39959148",
+     "name": "S3.ListObjectsV2",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a9482a602bb5a67122833a8717c3542"
+    },
+    {
+     "@timestamp": "2026-08-30 19:24:35.233",
+     "durationNano": "27789955",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a948373469a385a0fe28be216ddd7e2"
+    },
+    {
+     "@timestamp": "2026-08-30 19:27:42.881",
+     "durationNano": "29921585",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:29:26.704",
+     "durationNano": "43561812388",
+     "name": "chat",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:29:26.704",
+     "durationNano": "43547518981",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:29:26.705",
+     "durationNano": "43562842099",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:29:26.705",
+     "durationNano": "43563984358",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:29:26.880",
+     "durationNano": "78971037",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:29:26.947",
+     "durationNano": "33802723",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:30:07.075",
+     "durationNano": "34564172027",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:30:07.076",
+     "durationNano": "34579493812",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:30:07.076",
+     "durationNano": "34578414222",
+     "name": "chat",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:30:07.076",
+     "durationNano": "34580686618",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:30:07.223",
+     "durationNano": "65065272",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 19:30:07.289",
+     "durationNano": "32855399",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94842e1766b8dc63c366bb35cf61a5"
+    },
+    {
+     "@timestamp": "2026-08-30 21:40:04.038",
+     "durationNano": "54954462",
+     "name": "S3.ListObjectsV2",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94a32b5ea8bce955dea7c07d58054f"
+    },
+    {
+     "@timestamp": "2026-08-30 21:47:52.424",
+     "durationNano": "37126390",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94a5081aca26a4319bed3a5e78e2f9"
+    },
+    {
+     "@timestamp": "2026-08-30 21:49:48.844",
+     "durationNano": "34176373",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94a57c2a1676912f386e313813c6d9"
+    },
+    {
+     "@timestamp": "2026-08-30 22:22:21.783",
+     "durationNano": "44626951",
+     "name": "S3.ListObjectsV2",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:23:57.766",
+     "durationNano": "49276685080",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:23:57.767",
+     "durationNano": "49291505461",
+     "name": "chat",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:23:57.767",
+     "durationNano": "49292508951",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:23:57.767",
+     "durationNano": "49293680784",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "OK",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:23:57.912",
+     "durationNano": "63064139",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:23:57.975",
+     "durationNano": "30459974",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_planning_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:24:44.921",
+     "durationNano": "41302675832",
+     "name": "chat",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:24:44.921",
+     "durationNano": "41288347772",
+     "name": "chat global.anthropic.claude-sonnet-5",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:24:44.922",
+     "durationNano": "41304940639",
+     "name": "invoke_agent Strands Agents",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:24:44.922",
+     "durationNano": "41303748474",
+     "name": "execute_event_loop_cycle",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "OK",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:24:45.062",
+     "durationNano": "57690212",
+     "name": "S3.PutObject",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:24:45.124",
+     "durationNano": "29032326",
+     "name": "DynamoDB.PutItem",
+     "sid": "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_design_agent.DEFAULT",
+     "trace": "6a94ad1675e8d9fc335b6f9554ea3e5a"
+    },
+    {
+     "@timestamp": "2026-08-30 22:38:33.982",
+     "durationNano": "44517309",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94b0e92973d3621bd9e03c46ccc59b"
+    },
+    {
+     "@timestamp": "2026-08-30 22:38:47.661",
+     "durationNano": "4786381",
+     "name": "DynamoDB.Query",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94b0f73535fec438d772fb1bae420b"
+    },
+    {
+     "@timestamp": "2026-08-30 23:53:52.216",
+     "durationNano": "44565620",
+     "name": "S3.ListObjectsV2",
+     "sid": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+     "status": "UNSET",
+     "svc": "mediaworks_harness_main_agent.DEFAULT",
+     "trace": "6a94c28a581d414b04db1fc44c01f8ee"
+    }
+   ],
+   "parent_session": "7cf83ef3-8a4e-4e60-bf44-b35370bb21b4",
+   "sub_sessions": [
+    "plan-session-1788096885-5911628071484a748c7571a79a78cebb",
+    "plan-session-1788097466-af59da31c2e740d78e4bb1e1d1e63222",
+    "plan-session-1788098931-ade2d2d532ea43a08cac7928e3498b80",
+    "plan-session-1788118117-7c58ee0f63654488b6299945ee7af11f",
+    "plan-session-1788128582-18275380c9864c1ebb1ee2e0c24d621b"
+   ],
+   "why": "one request that fanned out into 5 plan sub-session(s); the parent appears in 27 trace(s)",
+   "window": {
+    "end": "2026-08-31T01:23:02+00:00",
+    "start": "2026-08-30T12:34:45+00:00"
+   }
+  }
+ }
+}

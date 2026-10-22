@@ -1,0 +1,97 @@
+/* ArtifactLink — inline media, download chips, and links in chat.
+   Uses the app's design tokens (--color-*, --radius-button) so it matches the theme
+   (incl. any dark mode) rather than hardcoding colors. */
+
+.artifact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin: 3px 0;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: var(--radius-button, 4px);
+  background: var(--color-surface, #fff);
+  color: var(--color-text, #111827);
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-hover, border-color 0.15s ease, background 0.15s ease);
+}
+.artifact-chip:hover {
+  border-color: var(--color-primary, #2563eb);
+  background: var(--color-primary-subtle, #eff4ff);
+}
+.artifact-chip:focus-visible {
+  outline: 2px solid var(--color-primary, #2563eb);
+  outline-offset: 1px;
+}
+
+.artifact-icon { flex: none; opacity: 0.7; }
+.artifact-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artifact-btn {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--color-primary, #2563eb);
+  font: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-button, 4px);
+  cursor: pointer;
+  transition: var(--transition-hover, background 0.15s ease);
+}
+.artifact-btn:hover { background: var(--color-primary-subtle, #eff4ff); }
+
+/* Plain (non-media) links in the theme primary color. */
+.artifact-plain-link {
+  color: var(--color-primary, #2563eb);
+  text-decoration: underline;
+}
+.artifact-plain-link:hover { text-decoration: none; }
+
+/* Inline media */
+.artifact-figure { display: block; margin: 6px 0; max-width: 420px; }
+.artifact-media {
+  display: block;
+  max-width: 100%;
+  max-height: 360px;
+  /* Panel, not button: a media block is a surface, not a control. The old 10px
+     fallback shows the intent was the larger radius, so this keeps it there
+     rather than letting inline media inherit the button's 4px corners. */
+  border-radius: var(--radius-panel, 8px);
+  border: 1px solid var(--color-border, #e5e7eb);
+  background: var(--color-background, #fafafa);
+}
+.artifact-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: var(--fs-xs);
+  color: var(--color-text-secondary, #6b7280);
+}
+.artifact-caption .artifact-name { flex: 1 1 auto; }
+.artifact-audio { width: 280px; max-width: 100%; vertical-align: middle; }
+
+/* Compact copy-chip for internal identifiers (ARNs, s3:// URIs, job-ids) that leak into prose.
+   The end user sees a short label ("⧉ job"); the full value is copied on click / shown in title. */
+.id-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 0 6px; margin: 0 2px;
+  font-size: var(--fs-2xs); line-height: 1.6;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-badge);
+  background: var(--color-surface-subtle);
+  color: var(--color-text-secondary);
+  cursor: pointer; font-family: var(--font-mono);
+  vertical-align: baseline;
+}
+.id-chip:hover { border-color: var(--color-primary); color: var(--color-text); }

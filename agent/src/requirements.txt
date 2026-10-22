@@ -1,0 +1,28 @@
+# Runtime dependencies for the AgentCore agent PACKAGE. THIS is the file the CDK
+# zip-packager pip-downloads into the deployment package that every runtime installs
+# (agentSrcDir/requirements.txt — see infra/lib/agent-infra-stack.ts). It is NOT
+# agent/requirements.txt (that one is only used by the CI pytest jobs). Keep the pins here
+# in lockstep with pyproject.toml / uv.lock so the DEPLOYED runtime matches what we test.
+#
+# INCIDENT 2026-09-08: mcp was absent here and strands-agents was a loose floor
+# (>=1.13.0), so the prod deploy build resolved a transitive mcp < 1.8.0 — which no longer
+# exports mcp.client.streamable_http.streamablehttp_client (imported at module scope by
+# main.py/task_agent.py -> mcp_manager.py:23). Every runtime crashed at import (~1s after
+# start). Pin the SDKs and bound mcp so the resolution is deterministic and always has the
+# symbol.
+strands-agents==1.55.1
+strands-agents-tools==0.8.7
+bedrock-agentcore==1.18.1
+mcp>=2.1.1,<2.2
+boto3>=1.43.64
+httpx>=0.27.0
+python-dotenv>=1.0.0
+# Security floors (pip-audit, 2026-10; mirrored in pyproject.toml [tool.uv]
+# constraint-dependencies). The runtimes serve HTTP through bedrock-agentcore's Starlette app.
+starlette>=1.3.1
+python-multipart>=0.0.31
+urllib3>=2.8.0
+requests>=2.33.0
+aiohttp>=3.14.4
+cryptography>=50.0.0
+PyJWT>=2.15.0

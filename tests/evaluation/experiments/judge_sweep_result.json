@@ -1,0 +1,611 @@
+{
+  "reference": {
+    "e2cb300b": 1.0,
+    "1b42d744": 1.0,
+    "abc839ca": 1.0,
+    "6309f154": 1.0,
+    "ffab73f8": 1.0
+  },
+  "results": [
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response",
+      "session": "e2cb300b",
+      "score": 0.1,
+      "outcome": "FAIL",
+      "reason": "The user asked to check on an existing workflow's status, but the agent instead "
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent ignored the user's request to render the PDF and instead dispatched a "
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response",
+      "session": "abc839ca",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent dispatched an unrelated media processing job instead of generating a P"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response",
+      "session": "6309f154",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent did not retrieve or read the specified execution's result files nor pr"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response",
+      "session": "ffab73f8",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's response is about a media processing task and does not address retri"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "e2cb300b",
+      "score": 0.4,
+      "outcome": "FAIL",
+      "reason": "The user asked to check status of an existing workflow, but the agent's response"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The user pointed out the agent incorrectly processed a video instead of renderin"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "abc839ca",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent instead dispatched a new media-processing transcode job and did not ge"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "6309f154",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response only describes dispatching a new plan to process a vi"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "ffab73f8",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response is about dispatching a new process_media job, not a s"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "e2cb300b",
+      "score": 0.35,
+      "outcome": "FAIL",
+      "reason": "The agent's reply describes starting a brand-new workflow rather than reporting "
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The user pointed out the agent mistakenly rendered a video instead of a PDF, but"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "abc839ca",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent dispatched a new media processing (proxy transcode) job instead of gen"
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "6309f154",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent dispatched a new plan/execution instead of retrieving and summarizing "
+    },
+    {
+      "goal_source": "first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "ffab73f8",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response describes dispatching a new process_media job rather "
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response",
+      "session": "e2cb300b",
+      "score": 0.5,
+      "outcome": "FAIL",
+      "reason": "The agent correctly set up and kicked off the requested multi-step workflow (ste"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The user explicitly complained the agent rendered a video instead of the request"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response",
+      "session": "abc839ca",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response only dispatches a new proxy generation job and does n"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response",
+      "session": "6309f154",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched a plan and promised to surface results later, but neve"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response",
+      "session": "ffab73f8",
+      "score": 0.2,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched the new 30s proxy extraction job but never retrieved/r"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory",
+      "session": "e2cb300b",
+      "score": 0.5,
+      "outcome": "FAIL",
+      "reason": "The agent correctly kicked off the multi-step workflow as requested, but the fin"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory",
+      "session": "1b42d744",
+      "score": 0.1,
+      "outcome": "FAIL",
+      "reason": "The agent's final response only restates a new video-trimming task instead of ad"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory",
+      "session": "abc839ca",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response only discusses dispatching a video proxy job and neve"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory",
+      "session": "6309f154",
+      "score": 0.1,
+      "outcome": "FAIL",
+      "reason": "The final response only announces a dispatched plan without providing any actual"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory",
+      "session": "ffab73f8",
+      "score": 0.2,
+      "outcome": "FAIL",
+      "reason": "The agent's final response merely states it is 'dispatching now' for the 30s pro"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "e2cb300b",
+      "score": 1.0,
+      "outcome": "PASS",
+      "reason": "All DAG steps (stem separation, diarization, Spanish and French translation) com"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The user asked why the PDF wasn't rendered, but the agent instead dispatched a n"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "abc839ca",
+      "score": 0.1,
+      "outcome": "FAIL",
+      "reason": "The agent's final response only describes dispatching a video proxy job and neve"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "6309f154",
+      "score": 0.1,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched the plan and t2 (face recognition) failed, so no resul"
+    },
+    {
+      "goal_source": "all_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "ffab73f8",
+      "score": 0.2,
+      "outcome": "FAIL",
+      "reason": "The final response only acknowledges dispatching the 30s/480p proxy job without "
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response",
+      "session": "e2cb300b",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The agent only initiated a background plan for the requested workflow without co"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched a single process_media trim job instead of launching t"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response",
+      "session": "abc839ca",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only ran a media transcoding/proxy job, not the four requested analysi"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response",
+      "session": "6309f154",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched a plan and promised future results but did not confirm"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response",
+      "session": "ffab73f8",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only performed a trim/resize operation and did not perform diarization"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory",
+      "session": "e2cb300b",
+      "score": 0.4,
+      "outcome": "FAIL",
+      "reason": "The agent only kicked off a background plan for stem separation, diarization, an"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched a single process_media trim/proxy job instead of launc"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory",
+      "session": "abc839ca",
+      "score": 0.1,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched a single generic proxy transcoding job (mark_in_out/mp"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory",
+      "session": "6309f154",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The agent only reports dispatching a plan and promises to surface results later,"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory",
+      "session": "ffab73f8",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response describes only a trim/resize/proxy operation and does"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "e2cb300b",
+      "score": 0.9,
+      "outcome": "FAIL",
+      "reason": "All four workflow steps (stem separation, diarization, Spanish translation, Fren"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response only dispatched a single trim/proxy process_media job"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "abc839ca",
+      "score": 0.9,
+      "outcome": "FAIL",
+      "reason": "The DAG shows all four analysis jobs (diarize, faces, shots, stems) completed, i"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "6309f154",
+      "score": 0.2,
+      "outcome": "FAIL",
+      "reason": "The proxy generation step completed but the face recognition step (t2) failed, s"
+    },
+    {
+      "goal_source": "plan_state",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "ffab73f8",
+      "score": 0.1,
+      "outcome": "FAIL",
+      "reason": "Despite extensive tool activity across diarization, translation, synthesis, and "
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response",
+      "session": "e2cb300b",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The agent only planned/kicked off the workflow asynchronously without confirming"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched a single trimming/proxy job instead of four independen"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response",
+      "session": "abc839ca",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only ran a media transcoding/proxy job instead of the four required as"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response",
+      "session": "6309f154",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched a plan and did not report actual completion or results"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response",
+      "session": "ffab73f8",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only performed a trim/resize/proxy operation and did not diarize speak"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "e2cb300b",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The agent only reports having kicked off a background plan for stem separation, "
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent dispatched only a single process_media trimming job instead of four in"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "abc839ca",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent only submitted a single video trimming/transcoding job (proxy generati"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "6309f154",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The agent only reports dispatching a plan and promises to surface results later,"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory",
+      "session": "ffab73f8",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response describes a simple trim/resize proxy operation, compl"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "e2cb300b",
+      "score": 0.9,
+      "outcome": "FAIL",
+      "reason": "The plan's steps (stem separation, diarization, and both Spanish and French tran"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "1b42d744",
+      "score": 0.0,
+      "outcome": "FAIL",
+      "reason": "The agent's final response only describes dispatching a single video-trim proces"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "abc839ca",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The DAG shows all four analysis jobs (diarize, faces, shots, stems) completed, b"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "6309f154",
+      "score": 0.2,
+      "outcome": "FAIL",
+      "reason": "The proxy generation (t1) succeeded but the face recognition step (t2) failed, s"
+    },
+    {
+      "goal_source": "plan_or_first_user",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "ffab73f8",
+      "score": 0.1,
+      "outcome": "FAIL",
+      "reason": "The agent's final response describes an unrelated video trimming/resizing task i"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response",
+      "session": "e2cb300b",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The workflow was only initiated and stem separation completed, but diarization a"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response",
+      "session": "1b42d744",
+      "score": 0.95,
+      "outcome": "FAIL",
+      "reason": "The agent successfully generated the proxy, ran all four analyses, produced a co"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response",
+      "session": "abc839ca",
+      "score": 0.9,
+      "outcome": "FAIL",
+      "reason": "The overall session successfully fulfilled the user's requests, generating a pro"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response",
+      "session": "6309f154",
+      "score": 0.2,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched a new plan without waiting for or reporting the actual"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response",
+      "session": "ffab73f8",
+      "score": 0.7,
+      "outcome": "FAIL",
+      "reason": "The pipeline eventually diarized (finding only one speaker), translated, and syn"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory",
+      "session": "e2cb300b",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "Stem separation completed and translations reportedly succeeded, but diarization"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory",
+      "session": "1b42d744",
+      "score": 1.0,
+      "outcome": "PASS",
+      "reason": "The full session progressed through proxy generation, analysis extraction, PDF s"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory",
+      "session": "abc839ca",
+      "score": 0.9,
+      "outcome": "FAIL",
+      "reason": "The agent successfully submitted the proxy job with correct parameters and retur"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory",
+      "session": "6309f154",
+      "score": 0.3,
+      "outcome": "FAIL",
+      "reason": "The agent only dispatched the proxy+face-recognition plan for the new uploaded v"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory",
+      "session": "ffab73f8",
+      "score": 0.75,
+      "outcome": "FAIL",
+      "reason": "The end-to-end goal (30s proxy extraction, single-speaker diarization, French tr"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "e2cb300b",
+      "score": 0.9,
+      "outcome": "FAIL",
+      "reason": "The plan eventually completed all four steps (stem separation, diarization, and "
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "1b42d744",
+      "score": 1.0,
+      "outcome": "PASS",
+      "reason": "The agent successfully generated the proxy, ran all four analyses, produced accu"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "abc839ca",
+      "score": 1.0,
+      "outcome": "PASS",
+      "reason": "The full session shows the agent successfully generated the proxy, ran the analy"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "6309f154",
+      "score": 0.2,
+      "outcome": "FAIL",
+      "reason": "The user asked to generate a 30s/480p proxy and identify people in it, but the D"
+    },
+    {
+      "goal_source": "full_conversation",
+      "input_set": "goal+response+trajectory+plan",
+      "session": "ffab73f8",
+      "score": 0.75,
+      "outcome": "FAIL",
+      "reason": "The user's overall goal of extracting speakers, translating to French, and synth"
+    }
+  ]
+}

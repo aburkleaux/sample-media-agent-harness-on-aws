@@ -1,0 +1,1560 @@
+{
+  "control_layer": [
+    {
+      "blast_radius": "global",
+      "component_id": "planner-highlevel",
+      "data_or_code": "DATA (prompt)",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "owner": "US",
+      "source_location": "planning_agent.py:43-254",
+      "type": "planner",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "plan-mode-router",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "notes": "'direct' skips Design Agent + validator + DAG + Plan Chainer on one model token.",
+      "owner": "US",
+      "source_location": "plan_and_execute_tool.py:573-588",
+      "type": "routing",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "changed_in_delta": [
+        "A second pass landed: validate_node_kinds (dag_schema.py:229-296). Critically, executable_kinds() is ENVIRONMENT-DEPENDENT (gated on DYNAMIC_FANOUT_ENABLED), so THE SAME PLAN validates in one env and is rejected in another \u2014 and no run record says which side of the flag the run was on. `branch` is a KNOWN, validated kind that is never in executable_kinds: declarable, validated, permanently rejected."
+      ],
+      "component_id": "plan-validator",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "fails OPEN on empty catalog \u2014 hallucination detection off"
+      ],
+      "mutability": "LOCKED_TODAY",
+      "owner": "US",
+      "revalidated": "2026-08-21 at 93840d4",
+      "source_location": "agent/src/validator.py:24 (validate_plan)",
+      "type": "validator",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "validate-retry-loop",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "validation_errors never read by design_agent \u2014 retry is byte-identical (D-02)"
+      ],
+      "mutability": "LOCKED_TODAY",
+      "owner": "US",
+      "source_location": "plan_and_execute_tool.py:1046-1086",
+      "type": "recovery",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "chainer-readiness-rule",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": true,
+      "fixed_2026_08_21": [
+        "was \"a failed node's downstream sits pending forever AND the plan never settles (D-01)\". Now a transitive-closure pass marks dependents \"skipped\" with reason \"upstream dependency failed\" (_mark_node_skipped, handler.py:1607) IN THE SAME pass, and \"skipped\" was added to the terminal set (:468) so the plan settles FAILED."
+      ],
+      "hot_swappable": false,
+      "known_failure_modes": [],
+      "mutability": "LOCKED",
+      "owner": "US",
+      "revalidated": "2026-08-21 at 93840d4",
+      "see_also": [
+        "downstream-skip-cascade",
+        "dispatch-gateway-gate"
+      ],
+      "source_location": "infra/lib/lambdas/plan-chainer/handler.py:432-470",
+      "type": "scheduler",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "chainer-settle-rule",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": true,
+      "fixed_2026_08_21": [
+        "was \"'pending' absent from all_terminal => stalled plan never reports (D-01)\". \"skipped\" joined the terminal set, so the plan settles. _mark_run_complete also now writes the plan-state PLAN row (Key={\"session_id\":\u2026,\"node_id\":\"PLAN\"}), so the flow view no longer reads a permanently \"pending\" parent (commit c00fbc7).",
+        "NEW guard in the same area: _has_pending_gateway_job (:103) DEFERS completion while a spawned SFN execution is still running \u2014 the F2 premature-completion fix (ed7eb26)."
+      ],
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "collapses to binary SUCCEEDED/FAILED; partial success unrepresentable"
+      ],
+      "mutability": "LOCKED",
+      "owner": "US",
+      "revalidated": "2026-08-21 at 93840d4",
+      "source_location": "infra/lib/lambdas/plan-chainer/handler.py:466-481, 2279",
+      "type": "scheduler",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "dep-injection-budget",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "knobs": {
+        "_MAX_FULL_FETCH_BYTES_FOR_JSON": 2000000,
+        "_MAX_INJECTED_CHARS": 3000,
+        "_MAX_INJECTED_CHARS_WITH_INLINE": 50000,
+        "_MAX_INLINE_FETCH_BYTES": 40000
+      },
+      "mutability": "AUTO_CANDIDATE",
+      "notes": "_NOISY_KEY_PATTERNS is substring match incl \"cost\"/\"manifest\" \u2014 deletes legit fields silently.",
+      "owner": "US",
+      "revalidated": "2026-08-21 at 93840d4",
+      "source_location": "infra/lib/lambdas/plan-chainer/handler.py:571,580,589",
+      "type": "budget",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "node-model-selector",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": false,
+      "mutability": "BUG",
+      "notes": "So the field is no longer \"unreachable\"; it is OVERRIDDEN by a coarser value. That is a different fix (read the per-node field at dispatch) and a smaller one. Still the prime AUTO surface once done \u2014 cheap-model synthesis nodes beside expensive reasoning nodes is the obvious win.",
+      "owner": "US",
+      "reason_corrected_2026_08_21": "The old note said \"DAGNode.model_id is silently dropped by two independent omissions (D-10b)\". Half of that is now fixed and the remaining half is narrower. What LANDED (commit 7e530bc): a model_id now flows plan-row -> dispatch -> payload and IS read at task_agent.py:1723 (node_model_id = payload.get(\"model_id\") or DEFAULT_MODEL_ID), so plan nodes no longer all run on the hardcoded default. What is STILL BROKEN: handler.py:370 reads the PLAN-level model_id \u2014 the user's orchestrator pick \u2014 and applies it to EVERY node. node_def.get(\"model_id\") is still never read at dispatch, so per-NODE model selection remains dead while DAGNode.model_id is still emitted by the schema.",
+      "revalidated": "2026-08-21 at 93840d4",
+      "source_location": "agent/src/dag_schema.py:115 (field); consumed task_agent.py:1723",
+      "type": "model_selector",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "task-ceilings",
+      "data_or_code": "CODE + env",
+      "decision_recorded_per_run": "YES (external only, _usage_attribution)",
+      "hot_swappable": "NO (env => deploy)",
+      "known_failure_modes": [
+        "internal MAX_* default 0=disabled \u2014 every plan node/chat turn unbounded (D-11b)"
+      ],
+      "mutability": "AUTO_CANDIDATE",
+      "owner": "US",
+      "source_location": "task_agent.py:131-156, enforced :2240-2280",
+      "type": "budget",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "global",
+      "component_id": "approval-gate",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": "N/A",
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "phantom control \u2014 UI buttons report success over an unconditional path (D-05b)"
+      ],
+      "mutability": "INERT",
+      "owner": "US",
+      "source_location": "progress_channel.py:84-124; _gate NEVER CALLED (plan_and_execute_tool.py:39); UI StepsPanel.tsx:194",
+      "type": "gate",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "none",
+      "capabilities_still_absent_on_the_live_path": [
+        "bounded concurrency",
+        "fail-fast/best-effort strategy",
+        "token budget",
+        "replan loop",
+        "per-node token accounting"
+      ],
+      "capabilities_that_now_EXIST_for_real": [
+        "per-node retries -> MAX_NODE_RETRIES / _should_retry_node / _retry_failed_node (handler.py:159,180,1026)",
+        "explicit downstream SKIP -> _mark_node_skipped + 'skipped' in all_terminal (handler.py:1607,468)",
+        "stuck-DAG detection -> _has_pending_gateway_job / _node_gateway_pending (handler.py:103,134)"
+      ],
+      "component_id": "coordinator",
+      "data_or_code": "N/A",
+      "decision_recorded_per_run": "N/A",
+      "hot_swappable": "N/A",
+      "known_failure_modes": [],
+      "mutability": "N/A",
+      "notes": "Row RETAINED deliberately rather than deleted, because two conclusions were drawn FROM it that are now void: \"deleting it unblocks D-03\" (partly \u2014 D-03's remaining blocker is four chainer write sites, not this file) and \"retry thresholds is an unbuildable AUTO candidate\" (false \u2014 see permission_matrix.caveats). Also see data_store (deleted in the same commit).",
+      "owner": "US",
+      "source_location": null,
+      "status": "REMOVED_FROM_CODEBASE",
+      "type": "scheduler",
+      "versioned": "N/A"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "render-path-router",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "owner": "US",
+      "source_location": "render_agent.py:2472-2532",
+      "type": "routing",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "changed_in_delta": [
+        "render_agent gained a SECOND, independent model selector \u2014 RENDER_MODEL_ID, default haiku-4-5 \u2014 so the render path now runs on a cheaper model than the orchestrator and NOTHING records which model produced a manifest. See render-model-id in delta_2026_08_21.new_components."
+      ],
+      "component_id": "render-budgets",
+      "data_or_code": "CODE + env",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "caller 90s vs inner 240s \u2014 inconsistent 8x; orphaned manifests",
+        "the DETERMINISTIC (primary) path has NO total-time budget at all",
+        "the user-facing TIMEOUT message still says 'exceeded 30-second pipeline timeout' on a 240s timeout"
+      ],
+      "mutability": "AUTO_CANDIDATE",
+      "owner": "US",
+      "revalidated": "2026-08-21 at 93840d4",
+      "source_location": "render_agent.py:552 (240s), :555 (5s); render_artifacts.py:483 (90s)",
+      "type": "budget",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "session",
+      "component_id": "hook-engine",
+      "data_or_code": "CODE over DATA (HookSpec list)",
+      "decision_recorded_per_run": false,
+      "hot_swappable": "YES for user hooks",
+      "known_failure_modes": [
+        "same-named disabled user hook silently disables all rendering for an actor (D-16)",
+        "dispatch action = unbounded fan-out one CRUD call away; args never validated (D-16)",
+        "expr sandbox: no code-exec escape, but ReDoS + unbounded recursion DoS (D-16)"
+      ],
+      "mutability": "REVIEW",
+      "owner": "US (engine) / USER_AUTHORED (specs)",
+      "source_location": "hooks/engine.py:53-100; expr sandbox hooks/expr.py:44-210",
+      "type": "hook",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single run",
+      "component_id": "lab-workflow-executor",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": true,
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "THIRD independent DAG engine; sequential/fail-fast, DIFFERENT semantics from prod \u2014 weakens Lab as Verify evidence (D-10c)"
+      ],
+      "mutability": "LOCKED_TODAY",
+      "owner": "US",
+      "source_location": "lab/test_harness.py:783-912",
+      "type": "scheduler",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single workflow",
+      "component_id": "promotion-readiness-gate",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": true,
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "notes": "The ONE gate that actually blocks and records why. Template for a re-enabled plan gate.",
+      "owner": "US",
+      "source_location": "lab/readiness.py:103-243",
+      "type": "gate",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "none (offline)",
+      "component_id": "improve-loop-config",
+      "data_or_code": "DATA (YAML policy)",
+      "decision_recorded_per_run": "YES (Verdicts)",
+      "hot_swappable": "YES (offline)",
+      "mutability": "PROTECTED",
+      "notes": "NS-2. The model to copy. Also the thing the loop must never redefine (survey's fixed point U).",
+      "owner": "US",
+      "source_location": "agent/src/improve/loop.config.yaml",
+      "type": "validator_gate",
+      "versioned": "YES (version:1)"
+    }
+  ],
+  "delta_2026_08_21": {
+    "meta": {
+      "added_files": 253,
+      "baseline": "d09ebe8",
+      "clusters": [
+        "capability_control_plane",
+        "slack_ingress",
+        "plan_chainer_control",
+        "proxy_routes",
+        "ui_capability_client",
+        "spec_docs"
+      ],
+      "corrections_to_this_registry": "see stale_entries below \u2014 16 items",
+      "defects_filed": "SLK-1..5, CAP-1..5 in defects.md",
+      "head": "93840d4"
+    },
+    "needs_live_verification": [
+      "whether the two new 60-day S3 lifecycle rules were applied BY HAND to the imported buckets",
+      "whether the artifacts CloudFront distribution is genuinely unauthenticated for artifacts/<session>/input/ (Slack attachment exposure hinges on this)",
+      "whether the staging Slack secret is populated (code ships \"REPLACE_ME\"; fail-closed either way)",
+      "whether a deploy happened between 995276e (real user's sub) and 0417d59 (revert) \u2014 i.e. whether Slack turns EVER ran as a real user in a live stack",
+      "whether any span attribute would let the eval pipeline SEGMENT Slack runs (sessionId.startsWith(\"slack-\") is the only origin discriminator in the entire system; no run record carries a source/origin/surface field)",
+      "the effective API Gateway throttle on POST /slack/events (nothing configured => account default)",
+      "whether slack-notifier can read artifacts at all: it gets ARTIFACTS_DOMAIN and MAX_UPLOAD_BYTES but NO SKILLS_BUCKET and NO S3 grant, implying it fetches over public CloudFront \u2014 if any artifact path is not publicly fetchable, notifier uploads degrade silently"
+    ],
+    "new_components": [
+      {
+        "blast_radius": "global",
+        "component_id": "slack-events-endpoint",
+        "data_or_code": "CODE",
+        "defect": "SLK-1",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "AuthorizationType NONE; no authorizer/IAM/WAF/throttle/reservedConcurrency",
+          "no replay-dedup on the DEPLOYED path (the prototype has one), so Slack's at-least-once retry inside 300s duplicates agent turns"
+        ],
+        "layer": "ingress",
+        "mutability": "LOCKED",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/slack-integration.ts:151-161",
+        "type": "http_entrypoint",
+        "used_by_task_types": "every Slack-originated turn (staging only)",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "global",
+        "component_id": "slack-signature-gate",
+        "data_or_code": "CODE + secret",
+        "defect": "SLK-2",
+        "hot_swappable": "secret YES; 300s window NO",
+        "known_failure_modes": [
+          "authN only. NO team/channel/user allowlist anywhere (grep: 0 hits); teamId is read and hashed but never CHECKED"
+        ],
+        "layer": "ingress",
+        "mutability": "LOCKED",
+        "notes": "the gate itself is SOUND \u2014 300s skew, timingSafeEqual, fail-closed on an unpopulated \"REPLACE_ME\" secret. The missing piece is authZ, not authN.",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/slack-shared/signature.ts:14,33",
+        "type": "validator",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "slack-actor-stamp",
+        "data_or_code": "DATA (CDK env SLACK_DEMO_ACTOR_ID)",
+        "defect": "SLK-2",
+        "hot_swappable": "NO (deploy + StopRuntimeSession for a warm microVM)",
+        "known_failure_modes": [
+          "ONE static actor for every Slack human -> shared memory namespace, shared artifact ownership, shared quota; per-user attribution impossible",
+          "principal is ABSENT (unlike the external realm), so no caller-scoped audit key"
+        ],
+        "layer": "ingress",
+        "mutability": "LOCKED",
+        "notes": "995276e briefly stamped a REAL smoketest user's Cognito sub to inherit that owner's fal-ai MCP target; 0417d59 reverted it (\"didn't unlock fal (user_jwt gateway) and mixed a real user\"). It failed because the Slack path sends NO user JWT, so borrowing a sub buys registry VISIBILITY without gateway AUTHORIZATION. One config line from returning, with no code change.\n",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/slack-worker/handler.ts:173-174",
+        "type": "identity",
+        "versioned": "git only"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "slack-session-derivation",
+        "data_or_code": "CODE + salt",
+        "hot_swappable": "salt only, via redeploy (changing it resets every session)",
+        "known_failure_modes": [
+          "Slack userId deliberately EXCLUDED, so every participant in a thread SHARES one harness session and its conversation memory"
+        ],
+        "layer": "memory",
+        "notes": "slack-<sha256(len-prefixed(teamId,channelId,rootThreadTs,salt))>. Length-prefixed canonicalisation is collision-safe.",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/slack-shared/session.ts:20-40",
+        "type": "session_key",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "slack-file-ingest",
+        "data_or_code": "CODE + env caps",
+        "defect": "SLK-4",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "NO MIME allowlist (grep: 0); Slack-supplied mimetype passed through as S3 ContentType",
+          "lands at artifacts/<session>/input/ in the shared skills bucket, a prefix app.ts:441-445 asserts is PUBLIC, with NO TTL",
+          "IAM s3:PutObject on ${bucket}/artifacts/*/input/* \u2014 the wildcard session segment permits writing into ANY session's input prefix"
+        ],
+        "layer": "ingress",
+        "mutability": "LOCKED",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/slack-shared/fileIngest.ts; IAM slack-integration.ts:128-129",
+        "type": "attachment_ingest",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "slack-prompt-assembly",
+        "data_or_code": "CODE",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "file preambles concatenated BEFORE user text with no delimiter or escaping, so a user can type text mimicking \"[Attached file: \u2026 bucket: \u2026 key: \u2026]\" and inject fabricated s3 references"
+        ],
+        "layer": "prompt",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/slack-worker/handler.ts:71-78,159-161",
+        "type": "template",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "slack-completion-reinvoke-prompt",
+        "data_or_code": "CODE",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "an UNATTENDED, stream-triggered agent invocation on the shared static actor; only guard is a notified#<jobId> conditional put",
+          "adds a SECOND consumer to the job-registry stream (batch 10, retries 2, maxRecordAge 1h, NO filter criteria, NO DLQ), sharing that stream's per-shard consumer budget with the existing fan-out Lambda"
+        ],
+        "layer": "prompt",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/slack-notifier/handler.ts:107-109",
+        "type": "agent_prompt",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "slack-artifact-egress-scraper",
+        "data_or_code": "CODE",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "regexes the AGENT'S OWN REPLY TEXT for artifact URLs and re-uploads those bytes into Slack \u2014 a model-text-driven egress path",
+          "streamParse drops every record type except \"step\", so execution_summary never reaches Slack (no per-turn evidence survives)"
+        ],
+        "layer": "control",
+        "mutability": "LOCKED",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/slack-shared/notify.ts:38-53",
+        "type": "projection",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "global",
+        "component_id": "slack-adapter-shadow-tree",
+        "defect": "SLK-5",
+        "known_failure_modes": [
+          "45 of the realm's 51 tests exercise this NON-DEPLOYED copy; the deployed tree has 6. slackClient.ts diverged into two same-named modules and the DEPLOYED one's byte-upload path (uploadFromUrl/headArtifact/filesInfo) has NO tests"
+        ],
+        "layer": "infra",
+        "observability": "n/a",
+        "owner": "US",
+        "source_location": "slack-adapter/**",
+        "type": "undeployed_duplicate",
+        "used_by_task_types": "NONE \u2014 zero CI/Makefile/shell references"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "capability-api-service",
+        "data_or_code": "CODE + out-of-band container image",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "cpu 512 / mem 1024 / desiredCount 1, NO autoscaling \u2014 one task serves every inventory read for the env",
+          "ECR repo IMPORTED not created; a missing image hangs cdk deploy at minHealthyPercent 100. Staging runs desiredCount 0.",
+          "awslogs group has NO logRetention -> never expires"
+        ],
+        "layer": "infra",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "infra/lib/agent-infra-stack.ts:3993,4038,4077-4088",
+        "type": "fargate_service",
+        "versioned": "ECR tag (-c capabilityApiImageTag)"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "capability-source-flags",
+        "data_or_code": "DATA (per-env literal compiled into the CFN template)",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "agentRegistry exists in EXACTLY ONE env (sandbox); staging/prod/dev have no capabilitySources at all",
+          "REGISTRY_SHADOW_SAMPLE_PERCENT is \"0\" everywhere, so the R14 shadow-parity gate that governs canonical->registry promotion produces NO data \u2014 yet sandbox specialty-agent is ALREADY at `registry`"
+        ],
+        "layer": "control",
+        "mutability": "REVIEW",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "infra/lib/env-config.ts:141-144,381; agent/src/capability/config.py:62-69",
+        "type": "read_source_router",
+        "versioned": "git only \u2014 NO SSM/AppConfig/DDB indirection"
+      },
+      {
+        "blast_radius": "single, with shared-bucket delete authority",
+        "component_id": "capability-purge-route",
+        "data_or_code": "CODE",
+        "defect": "CAP-1",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "IAM s3:DeleteObject on ${labArtifactsBucket}/* \u2014 whole-bucket, not lineage-scoped",
+          "scan_references never scans tool-collections; the org tier is nearly always unscanned (a LabRequestContext carries no org id)"
+        ],
+        "layer": "control",
+        "mutability": "LOCKED",
+        "notes": "dryRun defaults TRUE; only an explicit JSON false destroys (\"false\", 0, null all preview). NOT a @tool and not in the lab dispatch table \u2014 the model cannot reach it because THIS PROCESS has no Strands and no model client, asserted by tests/test_capability_api_isolation.py. STRONGEST permission boundary in the codebase; the template this matrix should copy.\n",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "agent/src/capability_api/app.py:331-410",
+        "type": "destructive_operation",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "purge-authority-check",
+        "data_or_code": "CODE",
+        "hot_swappable": false,
+        "layer": "control",
+        "notes": "Per-ROW not per-lineage \u2014 contributor on v3 does not license destroying v1. The prefix is RE-DERIVED from the row's own scope/owner/category/version and compared before any delete. Second gate in the repo that actually BLOCKS and records why (the other is lab/readiness.py).\n",
+        "observability": true,
+        "owner": "US",
+        "source_location": "agent/src/lab/_canonical_ops.py:2225-2252,2255-2293",
+        "type": "gate",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "lab-outbox",
+        "data_or_code": "DATA (reserved OUTBOX# partition of the AssetIndex table)",
+        "defect": "CAP-3",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "WRITER-SIDE org-only filter ELIGIBLE_SCOPES={\"org\"} \u2014 a PRIVATE published asset (the common case) emits NO event at all",
+          "`hook` not projectable; tool-collection projectable but has no published form",
+          "EVENT_METADATA_UPDATED has ZERO emitters; EVENT_REPLAY has one (a hand-run script)"
+        ],
+        "layer": "memory",
+        "notes": "rides the SAME TransactWriteItems as the canonical mutation. Identifiers only \u2014 a replayed event cannot publish stale data.",
+        "observability": "YES per event (idempotencyKey, occurredAt, canonicalRevision), 30-day TTL",
+        "owner": "US",
+        "source_location": "agent/src/lab/outbox.py:74,79,83,90; emitters _canonical_ops.py:656,1092,1384,2527",
+        "type": "transactional_outbox",
+        "versioned": "OUTBOX_EVENT_VERSION=1"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "registry-projector",
+        "data_or_code": "CODE",
+        "defect": "CAP-2",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "NOTHING DRAINS `pending`. Only trigger is the outbox stream and an immutable published version emits no further event, so PENDING_APPROVAL/CREATING never converges without a manual replay",
+          "shipped GREEN with three never-worked bugs because FakeControl accepted any params \u2014 \"two independent total blockers, had never once succeeded\"",
+          "the event source is created UNCONDITIONALLY, independent of projectionEnabled, so the Lambda raises ConfigError per batch in an env with no registry"
+        ],
+        "layer": "control",
+        "observability": true,
+        "owner": "US",
+        "source_location": "agent/src/capability/projector.py:191-365,527; CDK :3527,3563-3583",
+        "type": "projection_worker",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "projection-state-table",
+        "data_or_code": "DATA",
+        "hot_swappable": true,
+        "known_failure_modes": [
+          "NO TTL",
+          "no GSI",
+          "no stream",
+          "PITR unset",
+          "RETAIN => grows forever"
+        ],
+        "layer": "memory",
+        "notes": "the ONLY durable per-projection decision record in the delta, and the most complete one in the repo after TestHarnessRunRecord. Covers org-scoped only.",
+        "observability": true,
+        "owner": "US",
+        "source_location": "agent/src/capability/projection_state.py:5-6; CDK :3449-3455",
+        "type": "projection_ledger",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "registry-projector-dlq",
+        "defect": "CAP-2",
+        "known_failure_modes": [
+          "the CfnOutput description literally says \"Non-zero depth means projection is failing\" and there is NO alarm, metric filter or dashboard on it"
+        ],
+        "layer": "infra",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "infra/lib/agent-infra-stack.ts:3464-3468",
+        "type": "dead_letter_queue"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "prohibited-tools-denylist",
+        "data_or_code": "CODE",
+        "hot_swappable": false,
+        "layer": "control",
+        "notes": "A GENUINELY NEW Sigma lever \u2014 the FIFTH thing we can do to a tool, alongside remove / declare-meaning / rename / prose: \"refuse to advertise it\". Matched on the BARE name so a target-qualified alias (media-processing___shell) is rejected exactly like shell. Asserted against the live modules by a test, so adding a lab tool fails the test rather than silently publishing it.\n",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "agent/src/capability/descriptors.py:99-203,258-269",
+        "type": "denylist",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "descriptor-builders",
+        "data_or_code": "CODE",
+        "hot_swappable": false,
+        "layer": "tool",
+        "notes": "the nearest thing in the repo to a VERSIONED data contract. Bumping a SCHEMA_VERSION re-digests and rewrites every record \u2014 greppable and deliberate.",
+        "observability": true,
+        "owner": "US",
+        "source_location": "agent/src/capability/descriptors.py:48-77,301-331",
+        "type": "schema_projection",
+        "versioned": "YES \u2014 DATED payload schema versions e.g. mediaworks.skill/2026-08-13"
+      },
+      {
+        "blast_radius": "global",
+        "component_id": "agent-registry-external",
+        "data_or_code": "DATA over the wire",
+        "hot_swappable": "YES for content; the contract is not ours",
+        "known_failure_modes": [
+          "approval is APPROVE_ALL, i.e. the Registry performs NO governance \u2014 our canonical publish authz + eligibility + descriptor validation are the ACTUAL gates"
+        ],
+        "layer": "tool",
+        "notes": "NS-3 now has a SIXTH external surface, and it is the FIRST one we WRITE to.",
+        "observability": "partial",
+        "owner": "EXTERNAL",
+        "source_location": "agent/src/capability/registry.py:32-44 + vendored botocore models",
+        "type": "federated_catalog",
+        "versioned": "EXTERNAL (API 2025-12-01, pinned by vendored gz models)"
+      },
+      {
+        "blast_radius": "global",
+        "component_id": "capability-image-artifact",
+        "defect": "CAP-4",
+        "hot_swappable": "NO \u2014 and TWO independent build steps",
+        "known_failure_modes": [
+          "agent/src/{lab,capability} feeds THREE independently-deployed artifacts (image, projector zip, runtime zip); divergent descriptor builders corrupt descriptor_digest, which is exactly what decides \"already converged, no-op\"",
+          "the image is built OUT OF BAND; CDK never builds or validates it"
+        ],
+        "layer": "infra",
+        "observability": false,
+        "owner": "US",
+        "source_location": "agent/capability.Dockerfile:46-48; CDK zip :3531-3540",
+        "type": "deploy_artifact",
+        "versioned": "ECR tag only"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "node-retry-policy",
+        "data_or_code": "CODE + env PLAN_NODE_MAX_RETRIES (default 1)",
+        "hot_swappable": "NO (env => deploy)",
+        "layer": "control",
+        "mutability": "AUTO_CANDIDATE",
+        "notes": "*** LIVE NODE RETRIES NOW EXIST. *** This RETIRES this registry's caveat that \"retry thresholds\" is unbuildable because the live path has none. Env-tunable, single-node blast radius, AND the decision is recorded \u2014 arguably the BEST auto candidate in the repo, better than the render-skill DATA surfaces because its effect is measurable and its scope is bounded.\n",
+        "observability": true,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/plan-chainer/handler.py:159,180-209,1026-1069",
+        "type": "recovery",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "missing-input-classifier",
+        "data_or_code": "CODE (12 hardcoded substring signatures)",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "substring matching on free-text error strings; a reworded upstream error silently flips the class and either retries a hopeless node or fails a correctable one"
+        ],
+        "layer": "control",
+        "notes": "prime candidate for a data-driven VERSIONED signature table.",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/plan-chainer/handler.py:162-177",
+        "type": "classifier",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "downstream-skip-cascade",
+        "data_or_code": "CODE",
+        "layer": "control",
+        "notes": "FIXES D-01. Transitive dependents are marked skipped, `skipped` joined all_terminal, and the plan settles FAILED in the SAME pass.",
+        "observability": true,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/plan-chainer/handler.py:432-463,1607-1630",
+        "type": "scheduler"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "dispatch-gateway-gate",
+        "known_failure_modes": [
+          "fail-OPEN by design on read error \u2014 degrades to dispatch-now rather than deadlock"
+        ],
+        "layer": "control",
+        "notes": "FIXES DF-11 \u2014 a dependent racing ahead of a Step Functions execution that had not yet written its output.",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/plan-chainer/handler.py:134-156, applied :507-511",
+        "type": "gate"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "map-fanout-expander",
+        "data_or_code": "CODE",
+        "hot_swappable": "NO \u2014 gated by DYNAMIC_FANOUT_ENABLED",
+        "layer": "control",
+        "notes": "*** THE DAG IS NOW MUTABLE AT RUNTIME. *** The plan the Design Agent authored is no longer the plan that executed. This materially changes what \"the plan\" means as EVAL EVIDENCE \u2014 our dag_completion and any ordering check now judge a graph that may have been expanded after authoring, and nothing records which shape ran.\n",
+        "observability": true,
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/plan-chainer/handler.py:1726-1793,1794-1852,1853+",
+        "type": "scheduler"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "node-kind-taxonomy-and-validator",
+        "known_failure_modes": [
+          "`branch` is a KNOWN kind with validation but is never in executable_kinds \u2014 declarable, validated, permanently rejected",
+          "executable_kinds() is ENVIRONMENT-DEPENDENT, so the SAME plan validates in one env and is rejected in another, and no run record says which"
+        ],
+        "layer": "control",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "agent/src/dag_schema.py:13-54,56-66,69-81,229-296",
+        "type": "validator"
+      },
+      {
+        "blast_radius": "global",
+        "component_id": "dynamic-fanout-flag",
+        "data_or_code": "DATA (CDK context => env var)",
+        "hot_swappable": false,
+        "known_failure_modes": [
+          "one flag must flip across FOUR runtimes plus the chainer simultaneously; a partial rollout means the Design Agent emits kinds the chainer cannot execute"
+        ],
+        "layer": "control",
+        "notes": "the single highest-leverage new boolean in the repo, and nothing records which side of it a given run was on.",
+        "observability": false,
+        "owner": "US",
+        "source_location": "infra/lib/agent-infra-stack.ts:206-209; readers dag_schema.py:66, handler.py:55-58",
+        "type": "feature_flag",
+        "versioned": "git only"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "per-request-model-selector",
+        "data_or_code": "DATA (payload.model_id from browser localStorage 'lab-orchestrator-model-id')",
+        "hot_swappable": "YES \u2014 no redeploy, no restart",
+        "known_failure_modes": [
+          "an unusable id silently falls back to the default and only logs a warning",
+          "the value lives in ONE BROWSER's localStorage \u2014 no server-side per-actor persistence, so the same actor gets different models from different devices"
+        ],
+        "layer": "control",
+        "mutability": "AUTO_CANDIDATE",
+        "notes": "The FIRST theta knob that is DATA + hot-swappable + read per-invoke. Belongs beside custom-agent-persona under NS-2. Its 24h-TTL-only recording is a NEW observability gap.\n",
+        "observability": "PARTIAL",
+        "owner": "USER_AUTHORED",
+        "source_location": "agent/src/main.py:92-117; persisted plan_and_execute_tool.py:879-880; consumed task_agent.py:1723",
+        "type": "model_selector",
+        "versioned": "NONE"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "node-continuation-loop",
+        "data_or_code": "CODE + env NODE_MAX_CONTINUATIONS (default 6)",
+        "known_failure_modes": [
+          "up to 6 extra full generations per node \u2014 an unbudgeted 7x cost multiplier with no token accounting"
+        ],
+        "layer": "control",
+        "mutability": "AUTO_CANDIDATE",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "agent/src/task_agent.py:174,177-180,183-225",
+        "type": "recovery"
+      },
+      {
+        "blast_radius": "single",
+        "component_id": "nodes-json-s3-offload",
+        "data_or_code": "DATA",
+        "known_failure_modes": [
+          "the node list lives in TWO possible places; a reader that checks only the inline field sees a truncated graph"
+        ],
+        "layer": "memory",
+        "notes": "OUR build_run._edges_from_plan_row was updated 2026-08-21 to follow the pointer and to WARN rather than silently return \"no edges\".",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/plan-chainer/handler.py:41 (NODES_JSON_INLINE_MAX=300_000)",
+        "type": "overflow_store"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "plan-import-copier",
+        "defect": "CAP-5",
+        "known_failure_modes": [
+          "the 60-day lifecycle rule is INERT \u2014 it sits inside shouldCreate(\"createSkillsBucket\") and the bucket is IMPORTED in every deployed env. Same for artifacts/durable/ at :231-236."
+        ],
+        "layer": "control",
+        "owner": "US",
+        "source_location": "infra/lib/lambdas/plan-chainer/handler.py:44; lifecycle CDK :241-246",
+        "type": "artifact_projection"
+      },
+      {
+        "blast_radius": "global",
+        "component_id": "proxy-public-paths",
+        "data_or_code": "CODE",
+        "known_failure_modes": [
+          "a NEW unauthenticated path INSIDE authPaths. Mitigated by path-boundary matching (a bare startsWith would have published /api/artifacts, /api/artifact-registry), but the exemption list is now security-critical with nothing asserting its contents"
+        ],
+        "layer": "ingress",
+        "mutability": "LOCKED",
+        "observability": false,
+        "owner": "US",
+        "source_location": "ui/server/app.ts:446,453-456,457-468",
+        "type": "auth_exemption"
+      },
+      {
+        "blast_radius": "shared",
+        "component_id": "external-artifact-download-route",
+        "known_failure_modes": [
+          "SELF-DOCUMENTED \u2014 \"a verified caller of an agent can read any object in those two buckets\"; the bucket allowlist is the ENTIRE boundary, unlike invokeManifestRoute whose key must match a narrow pattern"
+        ],
+        "layer": "ingress",
+        "mutability": "LOCKED",
+        "observability": "partial",
+        "owner": "US",
+        "source_location": "ui/server/invoke/invokeDownloadRoute.ts:26-34,68",
+        "type": "http_route"
+      }
+    ],
+    "reanchored": {
+      "control.approval-gate-INERT": {
+        "now": "plan_and_execute_tool.py:40 (_gate), :48 (its only wait_for_approval caller)",
+        "was": "plan_and_execute_tool.py:39"
+      },
+      "control.dep-injection-budget": {
+        "now": "handler.py:571,580,589 + _MAX_FULL_FETCH_BYTES_FOR_JSON",
+        "was": "handler.py:342-663,757-775"
+      },
+      "control.plan-validator": {
+        "now": "validator.py:24 (validate_plan)",
+        "was": "validator.py:16-208"
+      },
+      "control.task-ceilings": {
+        "now": "task_agent.py:264-266",
+        "was": "task_agent.py:131-156"
+      },
+      "memory.plan-state-table TTL": {
+        "note": "unchanged; update_expr at :118 still omits ttl (D-08)",
+        "now": "state_store.py:18",
+        "was": "state_store.py:18"
+      },
+      "north_star.NS-2 persona -> system_prompt": {
+        "note": "unchanged",
+        "now": "custom_agent_resolver.py:568",
+        "was": "custom_agent_resolver.py:568"
+      },
+      "north_star.NS-4 harness_snapshot=UNKNOWN": {
+        "now": "improve/observe/build_run.py:218",
+        "was": "build_run.py:141"
+      },
+      "prompt.design-agent-system-prompt": {
+        "note": "unchanged",
+        "now": "design_agent.py:43",
+        "was": "design_agent.py:43-129"
+      },
+      "prompt.main-orchestrator-system-prompt": {
+        "now": "main.py:741 (_build_system_prompt)",
+        "was": "main.py:611-771"
+      },
+      "prompt.planning-agent-system-prompt": {
+        "now": "planning_agent.py:44",
+        "was": "planning_agent.py:43-160"
+      },
+      "prompt.task-agent-default-system-prompt": {
+        "now": "task_agent.py:295-322",
+        "was": "task_agent.py:162-178"
+      },
+      "tool.read_result_files module-attr bug": {
+        "now": "tools/result_files.py:54",
+        "was": "tools/result_files.py:55"
+      }
+    },
+    "stale_entries": [
+      {
+        "id": "coordinator",
+        "status": "DELETED \u2014 the file is gone. The row, its mutability:DEAD, its unique_capabilities_with_no_live_equivalent list, and fix_first are obsolete. Several of those \"unique\" capabilities now exist FOR REAL in the chainer (per-node retries, explicit downstream skip, stuck-DAG detection)."
+      },
+      {
+        "id": "plan-state-table",
+        "status": "PARTIAL \u2014 the multi-plan collision (D-03) has its MECHANISM landed (plan_row_of reads both formats; put_node_status takes an optional plan_id) but the chainer STILL WRITES LEGACY KEYS at handler.py:1045,1370,1578,1617. The 24h-from-creation TTL (D-08) stands and now matters MORE \u2014 retries, skips and model_id all live in that window."
+      },
+      {
+        "id": [
+          "chainer-readiness-rule",
+          "chainer-settle-rule"
+        ],
+        "status": "known_failure_modes FIXED (D-01). \"a never-ready node is recorded NOWHERE (no skipped status)\" is now WRONG. All line anchors wrong (handler.py 1,207 -> 2,329)."
+      },
+      {
+        "id": "dep-injection-budget",
+        "status": "anchors stale \u2014 caps now handler.py:571,580,589, joined by _MAX_FULL_FETCH_BYTES_FOR_JSON = 2,000,000."
+      },
+      {
+        "id": "node-model-selector",
+        "status": "PARTIAL, and the REASON is now wrong. model_id flows plan-row -> dispatch -> payload -> task_agent.py:1723, but handler.py:370 reads the PLAN-level model_id (the user's orchestrator choice) and applies it to every node; node_def.get(\"model_id\") is still never read. Per-NODE selection remains dead."
+      },
+      {
+        "id": "task-agent-default-system-prompt",
+        "status": "\"a persona REPLACES this wholesale, dropping the async contract\" is now true\n      only on the INTERNAL path \u2014 the async contract is APPENDED for external invokes.\n      Anchor 162-178 -> 295-322."
+      },
+      {
+        "id": [
+          "render-agent-system-prompt",
+          "render-budgets"
+        ],
+        "status": "anchors stale (405-485 -> 558; 399 -> 552; 402 -> 555). The 90s-vs-240s mismatch PERSISTS. render_agent.py gained a SECOND model selector (RENDER_MODEL_ID, haiku-4-5) the row does not mention."
+      },
+      {
+        "id": "skills-store-s3",
+        "status": "retention incomplete \u2014 two new prefixes got 60-day rules that are INERT, and Slack now writes UNBOUNDED attachments to artifacts/<session>/input/."
+      },
+      {
+        "id": "lab-asset-index",
+        "status": "materially changed. It now carries a DDB STREAM and a reserved OUTBOX# partition, so a write to it can trigger a Lambda that writes to a SHARED CROSS-TEAM catalog. \"The improvement loop's primary write target\" is now also the trigger for external publication. Anchor :321 -> :295."
+      },
+      {
+        "id": "plan-validator",
+        "status": "anchor :16-208 -> validate_plan at :24; omits the new validate_node_kinds pass and that executable_kinds() is ENVIRONMENT-DEPENDENT."
+      },
+      {
+        "id": "permission_matrix.caveats",
+        "status": "\"retry thresholds (no live retries exist \u2014 D-01)\" is FALSE \u2014 remove it. PLAN_NODE_MAX_RETRIES is now the best AUTO candidate. Also MISSING from auto_candidates: per-request-model-selector, node-continuation-loop. MISSING from locked: every Slack and capability-plane row above. purge-authority-check should join promotion-readiness-gate as a template for gates that block AND record why.\n"
+      },
+      {
+        "id": "meta.headline_counts",
+        "status": "control_components 55 is low by ~20; component_count_approx 100 low by ~40."
+      },
+      {
+        "id": "NS-4",
+        "status": "HOLDS and is now MORE costly \u2014 build_run still stamps harness_snapshot=UNKNOWN while the delta added >=6 new un-stamped global switches (DYNAMIC_FANOUT_ENABLED, six CAPABILITY_SOURCE_*, capabilityApiEnabled, capabilityApiImageTag, PLAN_NODE_MAX_RETRIES, NODE_MAX_CONTINUATIONS). Attribution is HARDER than when NS-4 was written."
+      },
+      {
+        "id": "NS-6",
+        "status": "composition changed \u2014 retries, skips and the model choice now also live in the 24h window, while projection-state is the first permanent decision-granular ledger (org-scoped publishes only)."
+      },
+      {
+        "id": "data_store.py",
+        "status": "DELETED \u2014 any memory-list entry referencing it is dangling."
+      },
+      {
+        "id": "GLOBAL",
+        "status": "essentially EVERY source_location above has drifted. Treat all anchors as needing re-derivation, not just the rows named here."
+      }
+    ],
+    "widened_iam": [
+      "\"CapabilityApiTaskRole sid ReadGatewayHierarchy: bedrock-agentcore:GetGateway/ ListGatewayTargets/GetGatewayTarget on Resource '*' (:3962-3975) \u2014 read-only but ACCOUNT-WIDE across every AgentCore gateway\"",
+      "\"sid PurgePublishedArtifacts: s3:DeleteObject on ${labArtifactsBucket}/* (:3958) \u2014 whole-bucket, not lineage-scoped\"",
+      "\"infra/gitlab/deploy-policy*.json: EcrPushUiProxyImage -> EcrPushHarnessImages, widened from ONE repo to repository/mediaworks-harness-* in BOTH staging and prod\"",
+      "\"plan-chainer gained s3:ListBucket at bucket level on the M2C proxy bucket (:2486-2503)\"",
+      "\"registry-reconciliation-role assumedBy AccountPrincipal(this.account) \u2014 ANY principal in the account with sts:AssumeRole can assume it (:3595-3618)\"",
+      "\"COUNTEREXAMPLE, exemplary: the projector role is 6 agent-registry actions scoped to ONE registry ARN, no Delete*, attached only when a registry exists (:3486-3500)\""
+    ]
+  },
+  "memory_layer": [
+    {
+      "component_id": "agentcore-conversation-memory",
+      "data_or_code": "DATA",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": "contents yes (proxy CreateEvent, app.ts:1474)",
+      "mutability": "REVIEW",
+      "notes": "NO memory strategies configured => raw event log, no semantic/preference extraction. Sub-agent internal calls never reach it (only external-principal path attaches a session manager).",
+      "owner": "US",
+      "retention": "30 days per EVENT (rolling, not per session)",
+      "scoping": "actor+session",
+      "source_location": "identity.py:222 (config); CDK:1955-1963",
+      "type": "conversation",
+      "versioned": "NONE",
+      "writable_by_loop_without_deploy": "yes (but pollutes the judge's transcript)"
+    },
+    {
+      "changed_in_delta": [
+        "carries retries + last_retry_error (node-retry-policy) \u2014 new evidence, same 24h window",
+        "carries the effective model_id (per-request-model-selector) \u2014 the ONLY place a run's model is recorded",
+        "nodes_json may be OFFLOADED to S3 with a nodes_s3_key pointer above 300,000 bytes"
+      ],
+      "component_id": "plan-state-table",
+      "data_or_code": "DATA",
+      "decision_recorded_per_run": "PARTIAL",
+      "fixed_2026_08_21": [
+        "was \"PLAN parent row status unreliable, stuck 'pending' even on success\". _mark_run_complete now writes the plan-state PLAN row on run completion (c00fbc7), so the parent status is authoritative. NOTE for our own code: HarvestedPlanSource still deliberately ignores the PLAN row and reads task-node terminality \u2014 that is now conservative rather than necessary."
+      ],
+      "hot_swappable": "yes (plain rows) \u2014 BUT DO NOT WRITE (D-08 context)",
+      "known_failure_modes": [
+        "long-running plan loses its own rows mid-flight at T+24h",
+        "multi-plan-per-session write collision (D-03) \u2014 MECHANISM landed but the chainer still writes LEGACY keys at handler.py:1045,1370,1578,1617. state_store.plan_row_of reads BOTH formats and put_node_status accepts an optional plan_id that qualifies the sort key (\"PLAN#<plan_id>\", \"<plan_id>#<node_id>\"); _plan_sk/_node_sk (:275,:285) are defined and unused on every write path. Fix = pass plan_id at those four sites."
+      ],
+      "mutability": "LOCKED",
+      "notes": "The most fragile store and the one with the highest-fidelity evidence \u2014 and the delta made that worse, not better: three MORE decision classes now live only in the 24h window (retries, skip reasons, model choice). D-08 is now the highest-value retention fix.",
+      "owner": "US",
+      "retention": "24h from ROW CREATION, NEVER refreshed on update (D-08)",
+      "scoping": "session (PK=session_id, SK=node_id)",
+      "source_location": "state_store.py:35; CDK:1179-1188",
+      "type": "plan_state",
+      "versioned": "NONE",
+      "writable_by_loop_without_deploy": "FORBIDDEN"
+    },
+    {
+      "component_id": "job-registry-table",
+      "data_or_code": "DATA",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": "yes \u2014 BUT DO NOT WRITE (stream emits SSE frames to the user's browser)",
+      "mutability": "LOCKED",
+      "notes": "Only store with turn-level run_id + turn_id correlation.",
+      "owner": "US",
+      "retention": "gateway jobs 30d post-terminal; plan/__coordinator__ rows PERMANENT (never get a ttl)",
+      "scoping": "actor",
+      "source_location": "jobs/registry.py:62; CDK:1265-1288",
+      "type": "job_registry",
+      "versioned": "NONE",
+      "writable_by_loop_without_deploy": "FORBIDDEN"
+    },
+    {
+      "changed_in_delta": [
+        "The table now has a DynamoDB STREAM (NEW_IMAGE, CDK:3225) and a reserved OUTBOX# partition. A publish therefore appends an outbox row in the SAME TransactWriteItems, which triggers the registry-projector Lambda, which writes to agent-registry \u2014 a SHARED, CROSS-TEAM discovery catalog. So the loop's primary write target is now also the trigger for EXTERNAL PUBLICATION.",
+        "Scope matters more than it did: ELIGIBLE_SCOPES={\"org\"} means a PRIVATE publish emits no event and stays local, while an ORG publish leaves the harness. Same write path, two very different blast radii \u2014 decided by a field, not by an API."
+      ],
+      "component_id": "lab-asset-index",
+      "data_or_code": "DATA",
+      "decision_recorded_per_run": false,
+      "hot_swappable": "YES \u2014 read PER-INVOKE (task_agent.py:840-905)",
+      "mutability": "THE_ACTUATOR",
+      "mutability_caveat": "THE_ACTUATOR still holds for private/group scope. For ORG scope this is no longer a bounded local write and should be treated as REVIEW at minimum: the projector's own docstring notes the Registry runs APPROVE_ALL, i.e. it performs NO governance of its own \u2014 our canonical publish authz, eligibility check and descriptor validation ARE the gates. Anything the loop publishes at org scope is externally visible with no second opinion.",
+      "notes": "Pairs with lab-artifacts-bucket (the S3 content it points at). The stale schema-drift docstring formerly at asset_index.py:41 has been REMOVED by the team (D-10a fixed), so the earlier correction note is retired.",
+      "owner": "USER_AUTHORED",
+      "retention": "NONE (RETAIN, survives cdk destroy)",
+      "revalidated": "2026-08-21 at 93840d4",
+      "scoping": "actor / group / org (PK-encoded) + a reserved OUTBOX# partition (NEW)",
+      "source_location": "agent/src/lab/asset_index.py:295 (class AssetIndex); CDK:3041-3058, stream :3225",
+      "type": "asset_index",
+      "versioned": "YES \u2014 strongest in the system (zero-padded v%010d SKs, byPublishedId GSI, rollback)",
+      "writable_by_loop_without_deploy": true
+    },
+    {
+      "changed_in_delta": [
+        "Slack now writes attachments to artifacts/<session>/input/ in THIS bucket, with no MIME allowlist and NO TTL, under an IAM grant whose wildcard session segment (artifacts/*/input/*) permits writing into any session's prefix. app.ts:441-445 asserts artifacts/ is PUBLIC, so a Slack DM attachment becomes publicly fetchable (SLK-4). This bucket is now shared with an unauthenticated ingress realm."
+      ],
+      "component_id": "skills-store-s3",
+      "data_or_code": "DATA (SKILL.md prose)",
+      "decision_recorded_per_run": false,
+      "hot_swappable": "YES on next cold start \u2014 BUT invisible to DAG nodes (they load skills from disk only, task_agent.py:1355)",
+      "mutability": "MANUAL",
+      "notes": "The most powerful no-deploy write target AND the riskiest \u2014 more so after the delta.",
+      "owner": "US / USER_AUTHORED",
+      "retention": "current versions never expire; noncurrent 30d. TWO new prefixes gained 60-day lifecycle rules in the delta (artifacts/imports/, artifacts/durable/) but BOTH ARE INERT \u2014 they sit inside the shouldCreate(\"createSkillsBucket\") branch and the bucket is IMPORTED in every deployed env, so the copies the code comment says \"don't accumulate\" do exactly that (CAP-5).",
+      "scoping": "GLOBAL (skills/<name>/, no actor segment)",
+      "source_location": "skills_manager.py:335; save via main.py:1945; CDK:151-179",
+      "type": "artifact_store",
+      "versioned": "S3 object versioning (coarse, unlabelled, no rollback API)",
+      "writable_by_loop_without_deploy": "yes (dangerous)"
+    },
+    {
+      "component_id": "gateway-registry",
+      "data_or_code": "DATA (config, replaced the old GATEWAYS env var)",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": true,
+      "mutability": "MANUAL",
+      "owner": "US (admin)",
+      "retention": "NONE (RETAIN)",
+      "scoping": "global (single partition)",
+      "source_location": "gateway_registry.py:485; CDK:1219-1225",
+      "type": "config_registry",
+      "versioned": "NONE",
+      "writable_by_loop_without_deploy": "yes (dangerous)"
+    },
+    {
+      "component_id": "lab-durable-knowledge",
+      "data_or_code": "DATA (S3 {actor}/knowledge/)",
+      "decision_recorded_per_run": false,
+      "hot_swappable": true,
+      "mutability": "MANUAL",
+      "notes": "Right SHAPE for a preferences/lessons store; currently unwired.",
+      "owner": "US (DEAD CODE \u2014 zero callers; docstring falsely claims Lab-Chat uses it \u2014 D-10)",
+      "retention": "NONE",
+      "scoping": "actor, cross-session",
+      "source_location": "lab/durable_knowledge.py:31",
+      "type": "preferences",
+      "versioned": "NONE",
+      "writable_by_loop_without_deploy": "needs one constructor line"
+    },
+    {
+      "component_id": "learned-failure-lessons-store",
+      "data_or_code": "n/a",
+      "decision_recorded_per_run": "n/a",
+      "mutability": "n/a",
+      "notes": "The substrate a learning loop needs. docs/learning-framework.md:75-77 agrees: \"nothing says run 17's failure should change run 100; the L2 playbook store does not exist.\" This is the gap M2's FailurePatterns would persist into.\n",
+      "owner": "n/a",
+      "source_location": "DOES NOT EXIST (verified: no lesson/retrospective/playbook store anywhere)",
+      "type": "MISSING"
+    }
+  ],
+  "meta": {
+    "assembled": "2026-08-17/18",
+    "assembled_against": "d09ebe8",
+    "component_count_approx": 80,
+    "head_branch": "feat/observability-eval-baseline",
+    "head_sha": "5c3f40f",
+    "headline_counts": {
+      "control_components": 55,
+      "control_data_driven": 4,
+      "control_dead": 0,
+      "control_decision_unrecorded": 30,
+      "control_hot_swappable": 5,
+      "control_inert": 1,
+      "control_versioned": 1
+    },
+    "layers": [
+      "prompt",
+      "memory",
+      "tool",
+      "control",
+      "ingress",
+      "infra"
+    ],
+    "revalidated": "2026-08-21",
+    "revalidated_against": "93840d4",
+    "yaml_valid": true
+  },
+  "north_star": [
+    {
+      "fact": "Only ~1/3 of the prompt layer is editable without a redeploy. Editable+ versioned+hot-swappable: custom-agent personas, Lab-authored skill bodies, hook prompt templates. Everything with real leverage over observed failures (the routing rule, node prompts, the Design Agent meta-prompt) is CODE and redeploy-only.\n",
+      "id": "NS-1"
+    },
+    {
+      "fact": "The ONE production surface that is already data + versioned + hot-swappable + read-per-invoke is the custom-agent persona (custom_agent_resolver.py:568, lab specialty asset). It is the template every hardcoded prompt should copy. Its infra twin on the control side is improve/loop.config.yaml \u2014 the only versioned, data-driven, hot-swappable control config in the repo, and the only knobs with recorded provenance.\n",
+      "id": "NS-2"
+    },
+    {
+      "amended": "2026-08-21 \u2014 a FIFTH lever landed in the delta",
+      "fact": "We hold exactly FIVE levers over an EXTERNAL tool: remove it (tool_allowlist), declare what it means (job_role_overrides), rename it (name_override), write prose (skill/prompt), and \u2014 new \u2014 REFUSE TO ADVERTISE IT (capability/descriptors.py PROHIBITED_TOOLS, matched on the BARE name so a target-qualified alias like media-processing___shell is rejected exactly like shell). Still NONE of the five can constrain a PARAMETER. That remains the hard boundary of the mutable search space, and why the num_inference_steps<=8 constraint lives in a markdown file.",
+      "id": "NS-3"
+    },
+    {
+      "fact": "No per-run record captures which harness version produced a run (improve/observe/build_run.py:218 hard-codes harness_snapshot=UNKNOWN; no prompt/skill/config version is stamped on any span). This blocks attributing an improvement to a change \u2014 DF-1, and the reason M2-004 exists. WORSE AFTER THE DELTA: >=6 new un-stamped global switches landed (DYNAMIC_FANOUT_ENABLED, six CAPABILITY_SOURCE_*, capabilityApiEnabled, capabilityApiImageTag, PLAN_NODE_MAX_RETRIES, NODE_MAX_CONTINUATIONS).\n",
+      "id": "NS-4"
+    },
+    {
+      "corrected": "2026-08-21 \u2014 the previous wording was FACTUALLY WRONG; see wrong_previously",
+      "fact": "Tool ARGUMENTS and RESULTS reach aws/spans as span ATTRIBUTES \u2014 attributes.gen_ai.tool.call.arguments and .result \u2014 but ONLY on `mcp tools/call <target>___<tool>` spans, emitted by the AgentCore MCP client instrumentation and flagged telemetry.extended=true. Strands-level `execute_tool <name>` spans (our own builtins) carry NEITHER \u2014 only gen_ai.tool.json_schema (the tool's SCHEMA, not the call) plus description and status. span events[] is ALWAYS empty: the exporter drops the OTel events that Strands emits, which is why the code-only reading concluded \"events, never attributes\". Coverage measured 2,416 of 6,518 TOOL spans over 14 days (~37%), and 718 argument-bearing records in a 3-day window. Consequence unchanged and now sharper \u2014 span data is SENSITIVE-DATA-BEARING (real arguments and result bodies), so redaction/retention/access are first-class, and compliance.RedactingLogWriter still has ZERO callers (OURS-4).",
+      "id": "NS-5",
+      "live_verified": "3-day query 2026-08-21 -> 718 records with attributes.gen_ai.tool.call.arguments present",
+      "practical_rule": "Query the named attributes directly. Do NOT use `fields @message` for volume work (events are empty, records are large), and do NOT use `fields attributes.*` as the original harvest did \u2014 that is what produced the false negative.",
+      "wrong_previously": "\"emitted as OTEL span *events* (gen_ai.tool.message), never as span *attributes*\" \u2014 derived from Strands source alone. The live check refuted it: the MCP instrumentation writes attributes via a different code path. The harvest's real miss was projecting a fields list that named neither."
+    },
+    {
+      "fact": "The highest-fidelity evidence (DAG shape + per-node status) has the SHORTEST life (24h from row creation, never refreshed \u2014 D-08). The lowest-fidelity evidence (schemaless S3 blobs) lives forever. Nothing durable describes what happened at decision granularity.\n",
+      "id": "NS-6"
+    }
+  ],
+  "permission_matrix": {
+    "auto_candidates": [
+      "node-retry-policy",
+      "per-request-model-selector",
+      "custom-agent-persona",
+      "lab-user-skill-bodies",
+      "dep-injection-budget",
+      "task-ceilings",
+      "render-budgets",
+      "render-projection-declarations"
+    ],
+    "caveats": [
+      "[AMENDED 2026-08-21] The AUTO surface is smaller than a generic checklist assumes, but ONE of the three items previously listed here as unbuildable has since become the BEST candidate. Current status \u2014 \"retry thresholds\" is now BUILDABLE: live node retries exist (PLAN_NODE_MAX_RETRIES, plan-chainer/handler.py:159), are env-tunable, have single-node blast radius, and the decision IS recorded on the node row. Still unbuildable \u2014 \"low-risk prompt wording\" (the system prompt is redeploy-only, NS-1) and \"tool-routing hints\" (routing decided in 7 places with undefined precedence, D-06).",
+      "PROTECTED must be enforced in CODE, not declared in loop.config.yaml \u2014 a config file that lists what is protected while being loop-writable is the circularity the survey warns about (\"I changed my objectives, and by my new objectives the change was excellent\")."
+    ],
+    "fix_first": [
+      "approval-gate(INERT)",
+      "D-17-runtimeSessionId",
+      "TEN-1-sessions-actor-scope"
+    ],
+    "locked": [
+      "gateway-tool-descriptions",
+      "video-processing-reference-prompts",
+      "federated-m2c-five",
+      "federated-fal-queue",
+      "plan-state-table",
+      "job-registry-table",
+      "oms-persistence",
+      "slack-events-endpoint",
+      "slack-signature-gate",
+      "slack-actor-stamp",
+      "slack-file-ingest",
+      "slack-artifact-egress-scraper",
+      "capability-purge-route",
+      "prohibited-tools-denylist",
+      "lab-outbox",
+      "agent-registry-external",
+      "proxy-public-paths",
+      "external-artifact-download-route"
+    ],
+    "locked_today": [
+      "main-orchestrator-system-prompt",
+      "task/planning/design/render system prompts",
+      "dispatch/plan tool descriptions",
+      "bundled-skill-bodies",
+      "plan-mode-router",
+      "plan-validator",
+      "missing-input-classifier",
+      "most control CODE"
+    ],
+    "manual": [
+      "skills-store-s3",
+      "gateway-registry",
+      "gateway-tool-allowlist",
+      "lab-durable-knowledge",
+      "dynamic-fanout-flag"
+    ],
+    "protected": [
+      "improve-loop-config",
+      "goal-judge-rubric",
+      "golden-dataset",
+      "judge-pass-threshold"
+    ],
+    "revalidated": "2026-08-21 at 93840d4 \u2014 delta components classified, retired items removed",
+    "review": [
+      "hook-dispatch-prompt-template",
+      "tool-collection-asset",
+      "agentcore-conversation-memory",
+      "capability-source-flags",
+      "node-continuation-loop"
+    ],
+    "the_actuator": [
+      "lab-asset-index"
+    ]
+  },
+  "prompt_layer": [
+    {
+      "blast_radius": "global",
+      "component_id": "main-orchestrator-system-prompt",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "contradicts dispatch/plan tool descriptions on routing (D-06)",
+        "names ~15 Lab tools that are not bound (D-12)"
+      ],
+      "mutability": "LOCKED_TODAY",
+      "notes": "~19k-token cached prefix; ~10 policy blocks. Highest-leverage editable surface once runtime-loadable.",
+      "owner": "US",
+      "source_location": "agent/src/main.py:611-771",
+      "type": "system_prompt",
+      "used_by": "every Main Agent chat turn",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "shared",
+      "component_id": "task-agent-default-system-prompt",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "notes": "The template is parameterised by {download_base}, filled per-agent, because the model asked to use \"the agent_id from this invocation\" substituted the persona's DISPLAY NAME and produced links that fell through CloudFront as HTML.",
+      "owner": "US",
+      "reason_corrected_2026_08_21": "The old note said a persona REPLACES this wholesale, \"dropping tool rules + async contract\". That is now true only on the INTERNAL path. ASYNC_JOBS_GUIDANCE (task_agent.py:333-360) is APPENDED in _resolve_system_prompt when a principal is stamped \u2014 so an EXTERNAL caller keeps the async contract even under a persona. The gap narrowed to exactly the paths we care about most: internal dispatch and plan nodes still lose it.",
+      "revalidated": "2026-08-21 at 93840d4",
+      "source_location": "agent/src/task_agent.py:295-322",
+      "type": "system_prompt",
+      "used_by": "every dispatch target + plan-less invoke with no persona",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "global",
+      "component_id": "planning-agent-system-prompt",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "notes": "Copy 4 of the routing rule (execution_mode). Tool descs truncated to 120 chars (D-15).",
+      "owner": "US",
+      "source_location": "agent/src/planning_agent.py:43-160",
+      "type": "agent_prompt",
+      "used_by": "plan_and_execute flow",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "shared",
+      "component_id": "design-agent-system-prompt",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "notes": "The system's meta-prompt \u2014 its job is to WRITE the node prompts. Best target for improving DAG quality; blocked on redeploy-only.",
+      "owner": "US",
+      "source_location": "agent/src/design_agent.py:43-129",
+      "type": "agent_prompt",
+      "used_by": "standard|complex plans",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "dag-node-prompts",
+      "data_or_code": "GENERATED",
+      "decision_recorded_per_run": true,
+      "hot_swappable": "N/A",
+      "mutability": "N/A",
+      "notes": "Because recorded, these are the natural training signal for improving the Design Agent.",
+      "owner": "US (via DESIGN_SYSTEM_PROMPT)",
+      "source_location": "GENERATED by design_agent; persisted plan_and_execute_tool.py:877 (DDB) + :892 (manifest)",
+      "type": "node_prompt",
+      "used_by": "plan node execution",
+      "versioned": "per plan_id (24h TTL \u2014 D-08)"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "custom-agent-persona",
+      "data_or_code": "DATA",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": true,
+      "mutability": "AUTO_CANDIDATE",
+      "notes": "NS-2. The reference template for making hardcoded prompts data-driven.",
+      "owner": "USER_AUTHORED",
+      "source_location": "custom_agent_resolver.py:526,568; storage lab/specialty_crud.py:626,683; read task_agent.py:1913,1946",
+      "type": "persona",
+      "used_by": "Custom Agent invocations (external + owner test console)",
+      "versioned": "YES (Lab asset lifecycle, immutable vN + working copy)"
+    },
+    {
+      "blast_radius": "global",
+      "component_id": "bundled-skill-bodies",
+      "data_or_code": "DATA (but in the deploy zip => CODE in practice)",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "local disk WINS over S3, so an S3 upload of a bundled skill name is a no-op (D-06 context)"
+      ],
+      "mutability": "LOCKED_TODAY",
+      "notes": "\"S3 upload not a code push\" is FALSE for bundled skills. Only a per-actor Lab draft overrides, and only for that actor.",
+      "owner": "US (video-processing, render-media) / EXTERNAL (references)",
+      "source_location": "agent/skills/*/SKILL.md; skills_manager.py:83-110",
+      "type": "skill_body",
+      "used_by": "main, task, render",
+      "versioned": "git only"
+    },
+    {
+      "blast_radius": "global",
+      "component_id": "video-processing-reference-prompts",
+      "data_or_code": "DATA",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "unreachable on the Task Agent \u2014 the runtime that actually calls the tools (D-06 context; task_agent.py:2152 rebuilds Skill with no path)"
+      ],
+      "mutability": "LOCKED",
+      "owner": "EXTERNAL",
+      "source_location": "agent/skills/video-processing/references/*.md",
+      "type": "skill_body",
+      "used_by": "nominally every media flow",
+      "versioned": "SHA-256 pinned to upstream commit 7cdd98e5\u2026 (test asserts the digest)"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "lab-user-skill-bodies",
+      "data_or_code": "DATA (S3, users/<actor>/\u2026/SKILL.md)",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": true,
+      "mutability": "AUTO_CANDIDATE",
+      "owner": "USER_AUTHORED",
+      "source_location": "lab/skill_crud.py:306; loaded main.py:1481",
+      "type": "skill_body",
+      "used_by": "that actor's turns; forwarded to sub-agents as defs",
+      "versioned": "YES (Lab lifecycle)"
+    },
+    {
+      "blast_radius": "single (with recursion tail risk \u2014 D-16)",
+      "component_id": "hook-dispatch-prompt-template",
+      "data_or_code": "DATA (hook asset, {dotted.path} tokens)",
+      "decision_recorded_per_run": false,
+      "hot_swappable": true,
+      "mutability": "REVIEW",
+      "owner": "USER_AUTHORED",
+      "source_location": "hooks/actions.py:395-411; loaded main.py:1595, task_agent.py:2172",
+      "type": "template",
+      "used_by": "task agent (node_id absent); orchestrator does NOT run user hooks",
+      "versioned": "Lab lifecycle (but hooks are draft-status, no version set)"
+    },
+    {
+      "blast_radius": "global",
+      "component_id": "gateway-tool-descriptions",
+      "data_or_code": "DATA (over the wire)",
+      "decision_recorded_per_run": false,
+      "hot_swappable": "YES (a gateway refresh picks up new text) but NOT editable by us",
+      "mutability": "LOCKED",
+      "notes": "NS-3. Truncated to 120 chars in the catalog (D-15). Five external media services feed every media flow.",
+      "owner": "EXTERNAL",
+      "source_location": "mcp_manager.py:100-106 -> mcp_agent_tool.py:73-79 (from server tools/list)",
+      "type": "tool_description",
+      "used_by": "all gateway-touching flows",
+      "versioned": "EXTERNAL"
+    },
+    {
+      "blast_radius": "global",
+      "component_id": "dispatch-and-plan-tool-descriptions",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "contradicts the system prompt on routing \u2014 D-06"
+      ],
+      "mutability": "LOCKED_TODAY",
+      "owner": "US",
+      "source_location": "dispatch_tool.py:26-62; plan_and_execute_tool.py:51-79",
+      "type": "tool_description",
+      "used_by": "every Main Agent turn (in toolConfig, same request as the system prompt)",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "shared",
+      "component_id": "render-agent-system-prompt",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "notes": "NOT dead code (corrects how-it-works.md). Fires from invoke:2472 -> :2527 -> :2531.",
+      "owner": "US",
+      "revalidated": "2026-08-21 at 93840d4",
+      "source_location": "agent/src/render_agent.py:558; bound :2916",
+      "type": "system_prompt",
+      "used_by": "render LLM-fallback path (LIVE \u2014 reached on crash/timeout/error manifest \u2014 D-05 correction)",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "shared",
+      "component_id": "render-projection-declarations",
+      "data_or_code": "DATA (YAML frontmatter, a small DSL)",
+      "decision_recorded_per_run": "PARTIAL",
+      "hot_swappable": "YES (S3 render-* skills)",
+      "mutability": "REVIEW",
+      "owner": "US (bundled) / USER_AUTHORED (S3)",
+      "source_location": "parsed render_agent.py:983-1050; instances in agent/skills/render-media/references/*.md frontmatter",
+      "type": "template",
+      "used_by": "deterministic render path",
+      "versioned": "git (bundled) / none (S3)"
+    }
+  ],
+  "tool_layer": [
+    {
+      "blast_radius": "single/shared",
+      "component_id": "builtin-tools",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": false,
+      "hot_swappable": false,
+      "known_failure_modes": [
+        "read_result_files may silently no-op in the orchestrator (module-vs-instance _gateways \u2014 D-14, SUSPECTED)",
+        "artifact tool has two divergent copies (D-13)"
+      ],
+      "mutability": "LOCKED_TODAY",
+      "owner": "US",
+      "source_location": "agent/src/tools/ (media_probe, mp4_duration, peak_extractor, caption_parser, read_result_files, persist_media)",
+      "type": "builtin_tool",
+      "used_by": "mostly render; read_result_files on both orchestrator+task",
+      "versioned": "git only"
+    },
+    {
+      "blast_radius": "shared",
+      "component_id": "federated-m2c-five",
+      "data_or_code": "DATA (gateway targets)",
+      "decision_recorded_per_run": "NO (our side)",
+      "hot_swappable": "YES (new ARN / upstream redeploy)",
+      "mutability": "LOCKED",
+      "notes": "NS-3. Behavior + authoritative schema are external. We own only wiring + prose.",
+      "owner": "EXTERNAL",
+      "source_location": "distribution/vendor/m2c-release.json (externally published M2C bundle; imported ARNs from its agent-tools / gateway stack)",
+      "type": "federated_tool",
+      "used_by": "media analysis/transform",
+      "versioned": "upstream stack versions, opaque here"
+    },
+    {
+      "blast_radius": "shared",
+      "component_id": "federated-fal-queue",
+      "data_or_code": "DATA (DDB descriptor)",
+      "decision_recorded_per_run": "NO (args); lastError yes",
+      "hot_swappable": true,
+      "known_failure_modes": [
+        "THE num_inference_steps<=8 surface; constraint lives only in media-references/SKILL.md; no local gate (D-04)",
+        "accepts out-of-range value, 422s minutes later inside a SUCCEEDED result body"
+      ],
+      "mutability": "LOCKED",
+      "owner": "EXTERNAL (user-registered)",
+      "source_location": "gateway_registry.py:293; mcp_manager.py:278 (job_role_overrides)",
+      "type": "federated_tool",
+      "used_by": "media GENERATION",
+      "versioned": "NONE"
+    },
+    {
+      "blast_radius": "shared (a gateway's whole surface)",
+      "component_id": "gateway-tool-allowlist",
+      "data_or_code": "DATA (DDB row)",
+      "decision_recorded_per_run": "PARTIAL (kept/dropped counts logged)",
+      "hot_swappable": true,
+      "mutability": "MANUAL",
+      "notes": "Lever",
+      "owner": "US (admin)",
+      "source_location": "gateway_registry.py:291; enforced mcp_manager.py:841-867",
+      "type": "allowlist",
+      "used_by": "all, per gateway",
+      "versioned": "created/updated timestamps only"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "tool-collection-asset",
+      "data_or_code": "DATA",
+      "decision_recorded_per_run": false,
+      "hot_swappable": true,
+      "mutability": "REVIEW",
+      "notes": "NO metadata slot \u2014 cannot carry a parameter constraint (kills that candidate for D-04).",
+      "owner": "USER_AUTHORED",
+      "source_location": "lab/tool_collection_crud.py:85; doc shape :181-190",
+      "type": "tool_collection",
+      "used_by": "Custom Agent invocations",
+      "versioned": "NO (flat)"
+    },
+    {
+      "blast_radius": "single",
+      "component_id": "skill-tools-json",
+      "data_or_code": "DATA",
+      "decision_recorded_per_run": "n/a",
+      "hot_swappable": "YES (S3)",
+      "mutability": "N/A",
+      "notes": "PROVEN inert \u2014 advisory metadata, constrains nothing. Only one shipped skill has one, and it is not the tool-heavy router.",
+      "owner": "US / USER_AUTHORED",
+      "source_location": "skills_manager.py:104 (disk), :151 (S3); surfaced list_skills/get_skill only",
+      "type": "metadata",
+      "used_by": "NONE at runtime",
+      "versioned": "follows the skill"
+    },
+    {
+      "blast_radius": "shared",
+      "component_id": "name-override-aliasing",
+      "data_or_code": "CODE",
+      "decision_recorded_per_run": "PARTIAL (alias logged)",
+      "hot_swappable": false,
+      "mutability": "LOCKED_TODAY",
+      "notes": "Lever",
+      "owner": "US",
+      "source_location": "task_agent.py:636-688",
+      "type": "tool_schema",
+      "used_by": "any gateway tool with a >64-char name",
+      "versioned": "NONE"
+    }
+  ]
+}

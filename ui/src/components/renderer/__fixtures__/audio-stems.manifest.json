@@ -1,0 +1,40 @@
+{
+  "captions": [],
+  "clips": [],
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "duration": 300.0,
+  "id": "fixture",
+  "mimeType": "audio/wav",
+  "peaks": {
+    "audio-audio_music": [],
+    "audio-audio_sfx": [],
+    "audio-audio_speech": []
+  },
+  "template": "nle-timeline",
+  "tracks": [
+    {
+      "end": 300.0,
+      "id": "audio-audio_speech",
+      "label": "audio_speech",
+      "src": "https://cdn.example/audio_speech.wav",
+      "start": 0.0,
+      "type": "audio"
+    },
+    {
+      "end": 300.0,
+      "id": "audio-audio_music",
+      "label": "audio_music",
+      "src": "https://cdn.example/audio_music.wav",
+      "start": 0.0,
+      "type": "audio"
+    },
+    {
+      "end": 300.0,
+      "id": "audio-audio_sfx",
+      "label": "audio_sfx",
+      "src": "https://cdn.example/audio_sfx.wav",
+      "start": 0.0,
+      "type": "audio"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+# Dependencies
+# No trailing slash: `node_modules/` matches only DIRECTORIES, so a SYMLINK
+# named node_modules slipped past it and got committed by a `git add -A`.
+# Checking that out into the main clone then replaced the real install with a
+# link to itself ("Too many levels of symbolic links"). Working in a git
+# worktree makes such a symlink the natural way to share one install, so this
+# must stay slash-less.
+node_modules
+.venv/
+venv/
+ENV/
+env/
+
+# Build output
+dist/
+build/
+server-dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+.eggs/
+
+# Environment variables
+.env
+.env.local
+
+# Harvested per-account media-toolkit federation config (scripts/harvest-media-toolkit-config.sh)
+infra/media-config/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CDK
+cdk.out/
+infra/cdk.out*/
+infra/dist/
+# Generated deployment resource IDs and endpoints.
+/infra/deployment-outputs.json
+# Synth-time staging for the built-in skill catalog asset. Generated from
+# `agent/skills/*`, which IS versioned — committing the derived copy would let the two
+# drift and make the deploy's source of truth ambiguous.
+infra/.build/
+
+# AgentCore CLI artifacts (no longer used — CDK manages deployment)
+.bedrock_agentcore/
+.bedrock_agentcore.yaml
+
+# Generated project scaffold
+testproj/
+
+# Playwright
+ui/test-results/
+.playwright-mcp/
+
+# Eval suite run outputs
+tests/evaluation/results/
+tests/evaluation/datasets/harvested/
+# Local search A/B eval runs (search_eval.py / search_ab_report.py; search-qa-rendering Local run).
+agent/.eval-runs/
+
+# Local per-env convenience env files (account-specific config, not secrets)
+.env.staging
+.env.prod
+
+# Local environment backups and test artifacts
+.env.bak*
+test-results/
+
+# Root-level browser audit screenshots
+/staging-*.png
+/test-*.png
+/custom-agent-*.png
+
+# Root-level ad-hoc screenshots (audits, UI validation)
+/*.png
+/*.jpg
+
+# Local agent/editor configuration — machine-specific, and a place credentials
+# accumulate as MCP servers are added. `.kiro/settings/mcp.json` was tracked
+# (a harmless Playwright entry), so it is untracked in the same commit that adds
+# this; the file stays on disk.
+.kiro/settings/
+
+# Local assistant state. Ignored by this repo rather than only by a personal
+# global ignore file, so the protection travels with a fresh clone.
+.claude/settings.local.json
+
+# Weekly change summaries — working notes, regenerated locally, never shared.
+docs/WEEKLY-CHANGES-*.md
+
+# Test media. Fixtures live in S3 (the UAT specs reference them as s3:// keys,
+# never as local paths), so a 13 MB video in the repo was accidental weight.
+*.mp4
+*.mov
+*.mkv
+*.wav
+
+# M2C service repos — each is a SEPARATE git repo cloned in-tree for local
+# reference/dev (they have their own .git). They are never part of this repo;
+# ignoring them prevents accidental broken gitlink commits.
+/audiostem-separation-on-aws/
+/agent-harness-demo-script/
+/MUA_CX_AI/
+/KiroCrew/
+/audio-description-on-aws/
+/frame-inspection-on-aws/
+/program-structure-analysis-on-aws/
+/face-recognition-on-aws/
+/hybrid-search-on-aws/
+/m2c-agent-tools/
+/media-processing-on-aws/
+/micro-workflow-bundle/
+/shot-segmentation-on-aws/
+/speech-diarization-on-aws/
+/tts-on-aws/
+/nanoclaw-on-bedrock-agentcore/
+/bedrock-inference-on-aws/
+/conversation-analysis-on-aws/
+/prompt-registry-on-aws/
+/shot-metadata-enrichment-on-aws/
+
+# Downloaded skill packages / attachments (transient working artifacts, e.g.
+# an uploaded ai-storybuilding.zip). Skills live in agent/skills/ or per-user
+# in the lab, not as committed archives.
+*.zip
+*.skill
+
+# Manually-managed per-user skill (uploaded via the lab UI, lives in the lab
+# store per actor — not source-controlled here).
+/ai-storyboarding/
+
+# Screenshots anywhere (audits / UI debug). Root-level is already covered by
+# /*.png above; this also catches tests/ and other subdirectories. Filenames
+# may contain a U+202F narrow no-break space, which the wildcard matches.
+Screenshot*.png
+
+# Local suggestion store. State, not source: it holds findings whose evidence may have
+# expired, so it must not be committed or merged. Step 2 replaces it with DynamoDB.
+tests/evaluation/experiments/suggestions_store.json
+tests/evaluation/experiments/mine_result_*.json
+
+
+# Workshops / tutorials cloned in-tree for reference — NOT this repo's source
+# (e.g. Amazon Nova media-analysis workshop notebooks). Keep them out of `git add`.
+/2-media-analysis-using-amazon-nova/
+
+# In-tree clones / linked worktrees of OTHER repos (each has its own .git and is
+# distributed separately). Ignoring prevents an accidental broken gitlink commit.
+/toolkit-mono-repo-git/
+/integration-cdk-source/
+
+# Local archives — source lives in git, not in tarballs.
+*.tar
+*.tar.gz
+*.tgz
+
+# Generated PR review docs (semantic_reviewer output) — transient working notes.
+/semantic-review/
+
+# Scratch media + HTML mockups — local working artifacts, not source.
+/agent-olive-james/
+/mocks/
+
+# lance-graph spike (local throwaway; see graph-lab/FINDINGS.md)
+/graph-lab/
+
+# Migration tool output (agent/src/lab/migration/report.py)
+agent/report.json

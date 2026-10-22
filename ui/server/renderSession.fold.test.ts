@@ -1,0 +1,110 @@
+// R7.1: composeRenderTabs folds timeline manifests onto their source by `sourceAssetId`, else
+// `sourceLocation`, else the exact `sourceKey` (legacy). An analysis whose sourceKey differs from the
+// source render's (a mirror / presigned / CloudFront form of the same object) still folds when both
+// name the same asset or location.
+import { describe, it, expect } from "vitest";
+import { composeRenderTabs, foldKeys, isTimelineComposable } from "./renderSession";
+
+const item = (key: string, manifest: Record<string, unknown>, createdAt: string, label?: string) => ({
+  key, createdAt, label, manifest: { template: "nle-timeline", tracks: [], clips: [], ...manifest },
+});
+const video = [{ id: "v", type: "video", src: "https://cdn/v.mp4" }];
+const audio = [{ id: "a", type: "audio", src: "https://cdn/a.wav" }];
+
+describe("composeRenderTabs — fold by source asset / location / key", () => {
+  it("folds by sourceAssetId even when the sourceKeys differ", () => {
+    const tabs = composeRenderTabs([
+      item("src.json", { sourceAssetId: "video:1", sourceKey: "projects/p/1/nba.mp4", tracks: video }, "2026-01-01T00:00:01Z", "Video"),
+      item("shots.json", { sourceAssetId: "video:1", sourceKey: "artifacts/durable/x/nba.mp4", markers: [{ id: "m1", time: 1 }] }, "2026-01-01T00:00:02Z"),
+    ]);
+    expect(tabs).toHaveLength(1);
+    expect(tabs[0].composite).toBe(true);
+    expect(tabs[0].key).toBe("composite:asset:video:1");
+    expect(tabs[0].memberKeys).toEqual(["src.json", "shots.json"]);
+    expect((tabs[0].manifest as { sourceAssetId?: string }).sourceAssetId).toBe("video:1");
+  });
+
+  it("falls back to sourceLocation when no asset id is known", () => {
+    const loc = "s3://ingest/artifacts/s1/output/clip.mp4";
+    const tabs = composeRenderTabs([
+      item("src.json", { sourceLocation: loc, sourceKey: "a", tracks: video }, "2026-01-01T00:00:01Z"),
+      item("stems.json", { sourceLocation: loc, sourceKey: "b", tracks: audio }, "2026-01-01T00:00:02Z"),
+    ]);
+    expect(tabs).toHaveLength(1);
+    expect(tabs[0].key).toBe(`composite:loc:${loc}`);
+  });
+
+  it("a location resolves to the asset another manifest pairs it with", () => {
+    const loc = "s3://ingest/projects/p/1/nba.mp4";
+    const tabs = composeRenderTabs([
+      item("src.json", { sourceAssetId: "video:1", sourceLocation: loc, tracks: video }, "2026-01-01T00:00:01Z"),
+      item("faces.json", { sourceLocation: loc, annotations: [{ id: "f1" }] }, "2026-01-01T00:00:02Z"),
+    ]);
+    expect(tabs).toHaveLength(1);
+    expect(tabs[0].key).toBe("composite:asset:video:1");
+  });
+
+  it("a legacy sourceKey-only analysis still folds onto a source that carries the same sourceKey + asset id", () => {
+    const tabs = composeRenderTabs([
+      item("src.json", { sourceAssetId: "video:1", sourceKey: "s/v.mp4", tracks: video }, "2026-01-01T00:00:01Z"),
+      item("legacy.json", { sourceKey: "s/v.mp4", tracks: audio }, "2026-01-01T00:00:02Z"),
+    ]);
+    expect(tabs).toHaveLength(1);
+    expect(tabs[0].memberKeys).toEqual(["src.json", "legacy.json"]);
+  });
+
+  it("legacy sourceKey-only manifests keep the historical composite key", () => {
+    const tabs = composeRenderTabs([
+      item("v.json", { sourceKey: "s/v.mp4", tracks: video }, "2026-01-01T00:00:01Z"),
+      item("a.json", { sourceKey: "s/v.mp4", tracks: audio }, "2026-01-01T00:00:02Z"),
+    ]);
+    expect(tabs.map((t) => t.key)).toEqual(["composite:s/v.mp4"]);
+    expect(tabs[0].sourceKey).toBe("s/v.mp4");
+  });
+
+  it("different assets never fold, even with the same sourceKey", () => {
+    expect(foldKeys([
+      { sourceAssetId: "video:1", sourceKey: "same" },
+      { sourceAssetId: "video:2", sourceKey: "same" },
+    ])).toEqual(["asset:video:1", "asset:video:2"]);
+  });
+
+  it("an asset-player view is never folded into a composite", () => {
+    expect(isTimelineComposable({ template: "asset-player", sourceAssetId: "video:1" })).toBe(false);
+    expect(isTimelineComposable({ template: "nle-timeline", sourceLocation: "s3://b/k" })).toBe(true);
+  });
+});
+
+// Session 981a44ef: the clip a media-processing job produced is kept by the harness under the session's output
+// root, while its shot segmentation names the copy M2C wrote in its proxy bucket. Same job output, two
+// locations -> the shot segmentation opened its own tab instead of folding onto the clip.
+describe("composeRenderTabs — two locations of one job output (session 981a44ef)", () => {
+  const SK = "6e63b326-9b98-5c28-a642-6ce34791ca08/meridian_clip.mp4";
+  const SESSION_COPY = "s3://skills/projects/p933/sessions/981a44ef/output/6e63b326-9b98-5c28-a642-6ce34791ca08/meridian_clip.mp4";
+  const M2C_COPY = "s3://m2cv6-proxy/micro-workflow/media-processing/6e63b326-9b98-5c28-a642-6ce34791ca08/clip/meridian_clip.mp4";
+
+  it("folds the analysis onto the clip it analysed", () => {
+    const tabs = composeRenderTabs([
+      item("clip.json", { sourceLocation: SESSION_COPY, sourceKey: SK, tracks: video }, "2026-10-11T12:43:30Z", "Video"),
+      item("shots.json", { sourceLocation: M2C_COPY, sourceKey: SK, markers: [{ id: "m1", time: 1 }] }, "2026-10-11T12:50:00Z", "Shot Segmentation"),
+      item("diarize.json", { sourceLocation: M2C_COPY, sourceKey: SK, tracks: audio }, "2026-10-11T12:55:00Z"),
+    ]);
+    expect(tabs).toHaveLength(1);
+    expect(tabs[0].key).toBe(`composite:loc:${SESSION_COPY}`);
+    expect(tabs[0].memberKeys).toEqual(["clip.json", "shots.json", "diarize.json"]);
+  });
+
+  it("never merges by a bare filename key", () => {
+    expect(foldKeys([
+      { sourceLocation: "s3://a/x/clip.mp4", sourceKey: "clip.mp4" },
+      { sourceLocation: "s3://b/y/clip.mp4", sourceKey: "clip.mp4" },
+    ])).toEqual(["loc:s3://a/x/clip.mp4", "loc:s3://b/y/clip.mp4"]);
+  });
+
+  it("never re-points a distinct asset", () => {
+    expect(foldKeys([
+      { sourceAssetId: "video:1", sourceKey: SK },
+      { sourceAssetId: "video:2", sourceKey: SK },
+    ])).toEqual(["asset:video:1", "asset:video:2"]);
+  });
+});

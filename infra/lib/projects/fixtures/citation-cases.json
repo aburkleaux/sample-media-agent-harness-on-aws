@@ -1,0 +1,290 @@
+{
+  "description": "Shared Citation_Formatter/Citation_Parser cases for agent/src/project_search/citations.py and ui/src/components/chat/citations.ts (media-harness-search-qa-rendering task 3.1). Both suites assert their CITATION_PATTERN constant equals `pattern` byte-for-byte. `pagePattern` is the document (PDF) page grammar `[name p.N]` / `[name @ p.N]` / a range `[name p.N–M]` / `[name pp. N-M]`; a page citation reduces to [name, (N-1)*10000, (M-1)*10000, text] (M = N for one page).",
+  "pattern": "\\[([^\\[\\]\\r\\n]+?) *@ *((?:\\d{1,2}:[0-5]\\d|[0-5]?\\d):[0-5]\\d) *[\\u2013-] *((?:\\d{1,2}:[0-5]\\d|[0-5]?\\d):[0-5]\\d) *\\](?!\\()",
+  "format": [
+    {
+      "name": "nba.mp4",
+      "start_ms": 74207,
+      "end_ms": 95662,
+      "text": "[nba.mp4 @ 01:14–01:36]"
+    },
+    {
+      "name": "still.png",
+      "start_ms": 0,
+      "end_ms": 1,
+      "text": "[still.png @ 00:00–00:01]"
+    },
+    {
+      "name": "long.mov",
+      "start_ms": 3599000,
+      "end_ms": 3600001,
+      "text": "[long.mov @ 59:59–1:00:01]"
+    }
+  ],
+  "parse": [
+    {
+      "input": "See [nba.mp4@01:14 - 01:36].",
+      "citations": [
+        {
+          "display_name": "nba.mp4",
+          "start_ms": 74000,
+          "end_ms": 96000,
+          "text": "[nba.mp4@01:14 - 01:36]"
+        }
+      ]
+    },
+    {
+      "input": "[nba.mp4 @ 01:14–01:36]",
+      "citations": [
+        {
+          "display_name": "nba.mp4",
+          "start_ms": 74000,
+          "end_ms": 96000,
+          "text": "[nba.mp4 @ 01:14–01:36]"
+        }
+      ]
+    },
+    {
+      "input": "[nba.mp4 @ 01:14-01:36]",
+      "citations": [
+        {
+          "display_name": "nba.mp4",
+          "start_ms": 74000,
+          "end_ms": 96000,
+          "text": "[nba.mp4 @ 01:14-01:36]"
+        }
+      ]
+    },
+    {
+      "input": "[clip.mp4   @   00:01–00:02]",
+      "citations": [
+        {
+          "display_name": "clip.mp4",
+          "start_ms": 1000,
+          "end_ms": 2000,
+          "text": "[clip.mp4   @   00:01–00:02]"
+        }
+      ]
+    },
+    {
+      "input": "[long.mov @ 59:59–1:00:01]",
+      "citations": [
+        {
+          "display_name": "long.mov",
+          "start_ms": 3599000,
+          "end_ms": 3601000,
+          "text": "[long.mov @ 59:59–1:00:01]"
+        }
+      ]
+    },
+    {
+      "input": "[clip @ 01:02:03–01:02:04]",
+      "citations": [
+        {
+          "display_name": "clip",
+          "start_ms": 3723000,
+          "end_ms": 3724000,
+          "text": "[clip @ 01:02:03–01:02:04]"
+        }
+      ]
+    },
+    {
+      "input": "[a@b @ 00:01–00:02]",
+      "citations": [
+        {
+          "display_name": "a@b",
+          "start_ms": 1000,
+          "end_ms": 2000,
+          "text": "[a@b @ 00:01–00:02]"
+        }
+      ]
+    },
+    {
+      "input": "[a [b @ 00:01–00:02]",
+      "citations": [
+        {
+          "display_name": "b",
+          "start_ms": 1000,
+          "end_ms": 2000,
+          "text": "[b @ 00:01–00:02]"
+        }
+      ]
+    },
+    {
+      "input": "[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa @ 00:01–00:02]",
+      "citations": [
+        {
+          "display_name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "start_ms": 1000,
+          "end_ms": 2000,
+          "text": "[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa @ 00:01–00:02]"
+        }
+      ]
+    },
+    {
+      "input": "[x @ 75:00–76:00] [x @ 00:05–00:04] [ @ 00:01–00:02] [Doc @ 00:01–00:02](https://e.x)",
+      "citations": []
+    },
+    {
+      "input": "[x @ 1:14–1:36]",
+      "citations": [
+        {
+          "display_name": "x",
+          "start_ms": 74000,
+          "end_ms": 96000,
+          "text": "[x @ 1:14–1:36]"
+        }
+      ],
+      "note": "m:ss accepted since 2026-10-10 (Req 2.2 amended): models write single-digit minutes and the citation was silently lost"
+    },
+    {
+      "input": "[x @ 00:60–01:00]",
+      "citations": []
+    },
+    {
+      "input": "[x @ 75:00–76:00]",
+      "citations": []
+    },
+    {
+      "input": "[x @ 00:05–00:04]",
+      "citations": []
+    },
+    {
+      "input": "[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa @ 00:01–00:02]",
+      "citations": []
+    },
+    {
+      "input": "[   @ 00:01–00:02]",
+      "citations": []
+    },
+    {
+      "input": "[na\nme @ 00:01–00:02]",
+      "citations": []
+    },
+    {
+      "input": "[Doc @ 00:01–00:02](https://e.x)",
+      "citations": []
+    },
+    {
+      "input": "[netflix_open_content_meridian.mp4 @ 3:24–3:57] and [Clip @ 0:05-0:09]",
+      "citations": [
+        {
+          "display_name": "netflix_open_content_meridian.mp4",
+          "start_ms": 204000,
+          "end_ms": 237000,
+          "text": "[netflix_open_content_meridian.mp4 @ 3:24–3:57]"
+        },
+        {
+          "display_name": "Clip",
+          "start_ms": 5000,
+          "end_ms": 9000,
+          "text": "[Clip @ 0:05-0:09]"
+        }
+      ],
+      "note": "single-digit minutes (m:ss) -- session 1e27290e's citations were all dropped as '3:24-3:57'"
+    },
+    {
+      "input": "See [report.pdf p.3].",
+      "citations": [
+        {
+          "display_name": "report.pdf",
+          "start_ms": 20000,
+          "end_ms": 20000,
+          "text": "[report.pdf p.3]"
+        }
+      ]
+    },
+    {
+      "input": "[report.pdf @ p.12]",
+      "citations": [
+        {
+          "display_name": "report.pdf",
+          "start_ms": 110000,
+          "end_ms": 110000,
+          "text": "[report.pdf @ p.12]"
+        }
+      ]
+    },
+    {
+      "input": "[Q3 notes.pdf p. 4] then [nba.mp4 @ 01:14–01:36]",
+      "citations": [
+        {
+          "display_name": "Q3 notes.pdf",
+          "start_ms": 30000,
+          "end_ms": 30000,
+          "text": "[Q3 notes.pdf p. 4]"
+        },
+        {
+          "display_name": "nba.mp4",
+          "start_ms": 74000,
+          "end_ms": 96000,
+          "text": "[nba.mp4 @ 01:14–01:36]"
+        }
+      ]
+    },
+    {
+      "input": "[app.3] [report.pdf p.0] [report.pdf p.3](https://x)",
+      "citations": []
+    },
+    {
+      "input": "rated Adult 18+ [tidal_line_trailer_enus_compliance_report.pdf p.1–2].",
+      "citations": [
+        {
+          "display_name": "tidal_line_trailer_enus_compliance_report.pdf",
+          "start_ms": 0,
+          "end_ms": 10000,
+          "text": "[tidal_line_trailer_enus_compliance_report.pdf p.1–2]"
+        }
+      ],
+      "note": "session 993b85b5: a page RANGE was left as plain text"
+    },
+    {
+      "input": "[report.pdf pp. 2-4] and [report.pdf @ p.7 - 7]",
+      "citations": [
+        {
+          "display_name": "report.pdf",
+          "start_ms": 10000,
+          "end_ms": 30000,
+          "text": "[report.pdf pp. 2-4]"
+        },
+        {
+          "display_name": "report.pdf",
+          "start_ms": 60000,
+          "end_ms": 60000,
+          "text": "[report.pdf @ p.7 - 7]"
+        }
+      ]
+    },
+    {
+      "input": "[report.pdf p.5–3]",
+      "citations": [],
+      "note": "a reversed range is not a citation"
+    }
+  ],
+  "keys": [
+    {
+      "name": "  NBA.MP4 ",
+      "start_ms": 74000,
+      "end_ms": 96000,
+      "key": "nba.mp4|74000|96000"
+    },
+    {
+      "name": "İstanbul.mp4",
+      "start_ms": 0,
+      "end_ms": 1000,
+      "key": "i̇stanbul.mp4|0|1000"
+    },
+    {
+      "name": "  Report.PDF ",
+      "page": 3,
+      "key": "report.pdf|p3"
+    },
+    {
+      "name": "Report.PDF",
+      "page": 1,
+      "page_end": 2,
+      "key": "report.pdf|p1-2"
+    }
+  ],
+  "pagePattern": "\\[([^\\[\\]\\r\\n]+?)(?: *@ *| +)pp?\\. ?([1-9]\\d{0,3})(?: *[\\u2013-] *([1-9]\\d{0,3}))? *\\](?!\\()"
+}

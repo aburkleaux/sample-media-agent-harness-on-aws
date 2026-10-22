@@ -1,0 +1,100 @@
+{
+ "duration": 105.0,
+ "markers": [
+  {
+   "time": 0.0,
+   "label": "0",
+   "category": "black",
+   "id": "m-0"
+  },
+  {
+   "time": 0.042,
+   "endTime": 2.958,
+   "label": "1",
+   "category": "content",
+   "id": "m-1"
+  },
+  {
+   "time": 3.0,
+   "endTime": 5.958,
+   "label": "2",
+   "category": "content",
+   "id": "m-2"
+  },
+  {
+   "time": 6.0,
+   "endTime": 10.958,
+   "label": "3",
+   "category": "content",
+   "id": "m-3"
+  }
+ ],
+ "segments": [
+  {
+   "id": "l-0-0",
+   "name": "Person_0",
+   "group": "Person_0",
+   "start": 16.0,
+   "end": 16.8
+  },
+  {
+   "id": "l-0-1",
+   "name": "Person_0",
+   "group": "Person_0",
+   "start": 26.0,
+   "end": 26.8
+  },
+  {
+   "id": "l-0-2",
+   "name": "Person_0",
+   "group": "Person_0",
+   "start": 27.0,
+   "end": 27.8
+  },
+  {
+   "id": "l-0-3",
+   "name": "Person_0",
+   "group": "Person_0",
+   "start": 28.0,
+   "end": 28.8
+  }
+ ],
+ "annotations": [
+  {
+   "x": 0.676884,
+   "y": 0.197968,
+   "w": 0.049558,
+   "h": 0.118023,
+   "label": "Person_0",
+   "time": 16.0,
+   "frame": "frame_0000384.jpg"
+  },
+  {
+   "x": 0.463629,
+   "y": 0.180196,
+   "w": 0.119522,
+   "h": 0.195455,
+   "label": "Person_0",
+   "time": 26.0,
+   "frame": "frame_0000624.jpg"
+  },
+  {
+   "x": 0.481633,
+   "y": 0.18892,
+   "w": 0.121707,
+   "h": 0.191132,
+   "label": "Person_0",
+   "time": 27.0,
+   "frame": "frame_0000648.jpg"
+  },
+  {
+   "x": 0.496372,
+   "y": 0.09664,
+   "w": 0.122124,
+   "h": 0.213456,
+   "label": "Person_0",
+   "time": 28.0,
+   "frame": "frame_0000672.jpg"
+  }
+ ]
+}

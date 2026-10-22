@@ -1,0 +1,10 @@
+{
+  "description": "The asset kinds a project search can return, and the document page stride. ONE list pinned across agent/src/project_search/compact.py (ASSET_KINDS), ui/server/projects/momentsSearch.ts (KINDS) and ui/src/components/renderer/templates/momentsTabSearch.ts (SEARCH_KINDS) by agent/tests/test_search_kinds.py and the TS tests. `document` was missing from every copy after PDFs became indexed, so each layer silently dropped document hits.",
+  "kinds": [
+    "video",
+    "image",
+    "audio",
+    "document"
+  ],
+  "pageStrideMs": 10000
+}

@@ -1,0 +1,122 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent"
+version = "0.1.0"
+requires-python = ">=3.10"
+
+dependencies = [
+    # 1.18.1: CVE-2026-12530 (fixed 1.6.1) and CVE-2026-16796 (fixed 1.18.1), command
+    # injection in the Code Interpreter client's install_packages.
+    "bedrock-agentcore == 1.18.1",
+    # >= 1.43.64 for signin's CreateOAuth2TokenWithIAM, which mints the AWS MCP
+    # Server's bearer token. Earlier versions expose only CreateOAuth2Token,
+    # the browser authorization-code flow.
+    "boto3 >= 1.43.64",
+    "httpx >= 0.27.0",
+    "pydantic >= 2.0",
+    "python-dotenv >= 1.0.0",
+    "PyYAML == 6.0.2",
+    # PINNED, and kept in lockstep with agent/src/requirements.txt (what the deploy
+    # zip-packager pip-downloads into the runtime package) AND agent/requirements.txt
+    # (the CI pytest deps). These were previously loose/unpinned in the deploy file, so
+    # every deploy pulled whatever PyPI resolved while the local uv.lock stayed on an old
+    # resolution — prod silently drifted (2026-09-08: mcp < 1.8.0 import crash) and local
+    # tests no longer reflected prod. Pin all three files to the same versions.
+    "strands-agents == 1.55.1",
+    "strands-agents-tools == 0.8.7",
+    # mcp is imported at module scope (mcp_manager.py) and MUST expose
+    # streamablehttp_client (introduced in mcp 1.8.0). It was previously an
+    # UNPINNED transitive dependency, so the deploy zip-packager resolved
+    # mcp < 1.8.0 on 2026-09-08 and every prod runtime crashed at import.
+    # Bound it and keep in lockstep with agent/requirements.txt.
+    "mcp >= 2.1.1, < 2.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/aws-samples/sample-media-agent-harness-on-aws"
+Repository = "https://github.com/aws-samples/sample-media-agent-harness-on-aws"
+
+[project.optional-dependencies]
+# The Capability API's HTTP layer (agent/src/capability_api). Deliberately NOT
+# in `dependencies`: the AgentCore runtimes have no use for a web framework,
+# and the Capability API container installs this set explicitly
+# (agent/capability.Dockerfile) rather than inheriting the runtime's tree —
+# which is what keeps `capability_api` free of Strands (R1).
+capability-api = [
+    "fastapi >= 0.115",
+    # The Capability API is internet-facing (ALB). Starlette >= 1.3.1 closes the Host-header /
+    # request-path URL reconstruction, HTTPEndpoint method dispatch and form-limit advisories;
+    # PyJWT >= 2.15 closes the 2.13-2.15 verification advisories. fastapi 0.141 accepts both.
+    "starlette >= 1.3.1",
+    "uvicorn >= 0.30",
+    "PyJWT[crypto] >= 2.15",
+]
+# The per-Project knowledge graph (agent/src/project_graph). Deliberately NOT in `dependencies`: it
+# runs only in the x86_64 graph Lambda image (agent/graph.Dockerfile, pinned in
+# agent/graph-requirements.txt). This extra lets the writer/reader tests run on a dev machine:
+# pylance + pyarrow have macOS/arm64 wheels; lance-graph (x86_64 glibc>=2.39 only) does not, so its
+# Cypher tests are marked `lance_graph` and run in the CI `test:graph` job.
+graph = [
+    "pylance == 13.0.0",
+    "pyarrow >= 17",
+]
+dev = [
+    "pytest >= 7.0",
+    "pytest-asyncio >= 0.21",
+    "hypothesis >= 6.0",
+    "moto[s3,dynamodb] >= 4.0",
+    # So the Capability API's routes and JWT verification are covered by the
+    # same `pytest` run as everything else.
+    "fastapi >= 0.115",
+    "starlette >= 1.3.1",
+    "httpx >= 0.27.0",
+    "PyJWT[crypto] >= 2.15",
+    # The IngestTick PDF text extractor (ingestion/pdf.py, Requirement 16) and its tests. Pinned to the
+    # version the deploy bundles (agent-infra-stack.ts `ingestionRequirements`).
+    "pypdf == 6.21.1",
+    # The HeroFrame Lambda's video decoder (ingestion/hero_frame.py) and its round-trip test. Pinned to the
+    # version the deploy bundles (agent-infra-stack.ts `heroFrameRequirements`).
+    "av == 19.0.1; python_version >= '3.12'",
+]
+
+[tool.uv]
+# Security floors for TRANSITIVE dependencies (pip-audit, 2026-10). They only steer the lock; the
+# deploy zip-packager and the CI pip install resolve transitives to the newest compatible release
+# anyway, so these keep local tests on the versions that ship. Two advisories are held back by an
+# upstream bound, not by choice: strands-agents (every release through 1.62) requires mcp < 2.2
+# (mcp 2.2.0 fixes a Streamable-HTTP *server* session leak; we only use the mcp client), and
+# strands-agents-tools (through 0.8.10) requires pillow < 13 (the ingestion Lambdas, which decode
+# user uploads, bundle their own pillow pin in agent-infra-stack.ts).
+constraint-dependencies = [
+    "aiohttp >= 3.14.4",
+    "anyio >= 4.14.2",
+    "certifi >= 2026.10.19",
+    "cryptography >= 50.0.0",
+    "multidict >= 6.9.1, < 7",
+    "opentelemetry-api >= 1.45.1",
+    "pillow >= 12.3.0",
+    "pygments >= 2.20.0",
+    "pyjwt >= 2.15.0",
+    "python-multipart >= 0.0.31",
+    "requests >= 2.33.0",
+    "soupsieve >= 2.9.0, < 3",
+    "starlette >= 1.3.1",
+    "urllib3 >= 2.8.0",
+    "werkzeug >= 3.1.9",
+]
+
+[tool.pytest.ini_options]
+# Live tests make real AWS/Bedrock calls and are NON-DETERMINISTIC (real-judge
+# scoring against golden labels), so they must not run in the default suite —
+# otherwise, whenever creds are present, they leak into `pytest -q` and flake
+# (observed: test_improve_loop_live failed once, passed on re-run). Exclude them
+# by default; run them deliberately with `pytest -m live`. A CLI `-m` overrides
+# this addopts marker expression, so `-m live` still selects them.
+addopts = ["-m", "not live"]
+markers = [
+    "lance_graph: needs the lance-graph wheel (x86_64, glibc >= 2.39); skipped when it is not importable. Runs in the CI `test:graph` job.",
+    "live: makes real AWS/Bedrock calls; NON-DETERMINISTIC. Excluded from the default run (addopts `-m 'not live'`); opt in with `pytest -m live`. Also skipped without creds.",
+]

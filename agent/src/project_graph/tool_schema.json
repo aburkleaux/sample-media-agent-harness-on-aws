@@ -1,0 +1,185 @@
+[
+  {
+    "description": "The active Project's knowledge-graph schema: node labels and relationship types (with their source \u2192 destination labels), row counts, columns, id formats, and the query rules. Call once before writing graph_query.",
+    "inputSchema": {
+      "properties": {
+        "project_id": {
+          "description": "The active Project's id (the harness fills this in).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id"
+      ],
+      "type": "object"
+    },
+    "name": "graph_schema"
+  },
+  {
+    "description": "Find graph nodes whose name contains `text` (case-insensitive). Use it first to turn names in the user's question (a person, place, topic, file) into node ids.",
+    "inputSchema": {
+      "properties": {
+        "include_sample": {
+          "description": "Include the starter sample graph (default true).",
+          "type": "boolean"
+        },
+        "limit": {
+          "description": "1\u201350 (default 20).",
+          "type": "integer"
+        },
+        "project_id": {
+          "description": "The active Project's id (the harness fills this in).",
+          "type": "string"
+        },
+        "text": {
+          "description": "Name or part of a name.",
+          "type": "string"
+        },
+        "types": {
+          "description": "Only these node labels: any of Project, User, Tag, Asset, Scene, Shot, Person, Location, Organization, Topic, Session, Job.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "project_id",
+        "text"
+      ],
+      "type": "object"
+    },
+    "name": "graph_find"
+  },
+  {
+    "description": "Nodes connected to `node_id`, optionally only some relationship types / one direction, 1\u20132 hops.",
+    "inputSchema": {
+      "properties": {
+        "direction": {
+          "description": "both (default), out, or in.",
+          "type": "string"
+        },
+        "hops": {
+          "description": "1 (default) or 2.",
+          "type": "integer"
+        },
+        "limit": {
+          "description": "Max relationships returned, 1\u2013200 (default 100).",
+          "type": "integer"
+        },
+        "node_id": {
+          "description": "A node id from graph_find (e.g. person:\u2026, asset:\u2026).",
+          "type": "string"
+        },
+        "project_id": {
+          "description": "The active Project's id (the harness fills this in).",
+          "type": "string"
+        },
+        "relationships": {
+          "description": "Only these relationship types: any of OWNS, MEMBER_OF, TAGGED, HAS_ASSET, HAS_SCENE, HAS_SHOT, APPEARS_IN, LOCATED_AT, ABOUT, AFFILIATED_WITH, KNOWS, DERIVED_FROM, PRODUCED_BY, OUTPUT_OF, RAN_IN.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "project_id",
+        "node_id"
+      ],
+      "type": "object"
+    },
+    "name": "graph_neighbours"
+  },
+  {
+    "description": "How two nodes are connected: up to `limit` shortest paths of at most `max_hops` (\u2264 3) relationships.",
+    "inputSchema": {
+      "properties": {
+        "from_id": {
+          "description": "Start node id.",
+          "type": "string"
+        },
+        "limit": {
+          "description": "Max paths, 1\u201310 (default 3).",
+          "type": "integer"
+        },
+        "max_hops": {
+          "description": "1\u20133 (default 3).",
+          "type": "integer"
+        },
+        "project_id": {
+          "description": "The active Project's id (the harness fills this in).",
+          "type": "string"
+        },
+        "to_id": {
+          "description": "End node id.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "from_id",
+        "to_id"
+      ],
+      "type": "object"
+    },
+    "name": "graph_paths"
+  },
+  {
+    "description": "Graph context for project files \u2014 e.g. the `asset_id`s of search hits: their scenes and the people, locations, topics and organizations linked to them. Use it to enrich and explain search results.",
+    "inputSchema": {
+      "properties": {
+        "asset_ids": {
+          "description": "1\u201320 asset ids (as returned by search hits) or asset node ids.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "end_ms": {
+          "description": "Optional: only scenes overlapping this end (ms).",
+          "type": "integer"
+        },
+        "project_id": {
+          "description": "The active Project's id (the harness fills this in).",
+          "type": "string"
+        },
+        "start_ms": {
+          "description": "Optional: only scenes overlapping this start (ms).",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "project_id",
+        "asset_ids"
+      ],
+      "type": "object"
+    },
+    "name": "graph_context"
+  },
+  {
+    "description": "Run a READ-ONLY Cypher query on the active Project's graph. One `MATCH \u2026 [WHERE \u2026] RETURN \u2026`; every node labelled and every relationship typed (see graph_schema); patterns are directed; no OPTIONAL MATCH / WITH / writes; variable-length up to *1..3; `$name` parameters via `params`; at most 200 rows. Prefer the typed tools when one fits.",
+    "inputSchema": {
+      "properties": {
+        "cypher": {
+          "description": "The read-only Cypher query.",
+          "type": "string"
+        },
+        "params": {
+          "description": "Values for $name parameters (strings or numbers).",
+          "type": "object"
+        },
+        "project_id": {
+          "description": "The active Project's id (the harness fills this in).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "cypher"
+      ],
+      "type": "object"
+    },
+    "name": "graph_query"
+  }
+]

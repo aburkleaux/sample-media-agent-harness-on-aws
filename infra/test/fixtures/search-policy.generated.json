@@ -1,0 +1,39 @@
+{
+  "searchToolName": "mediaworks-harness-m2c-search___hybrid-search___search_content",
+  "gatewayArn": "arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway",
+  "cases": [
+    {
+      "env": "staging",
+      "ingestBucket": "mediaworks-harness-skills-store-100000000002-us-west-2",
+      "m2cProxyBucket": "m2cv6-0e0000000002-100000000002-us-west-2-proxy",
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"mediaworks-harness-m2c-search___hybrid-search___search_content\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has collection_id &&\n  context.input.collection_id == principal.getTag(\"project_id\") &&\n  (if context.input has search_image_s3uri\n     then (context.input.search_image_s3uri like \"s3://mediaworks-harness-skills-store-100000000002-us-west-2/projects/*/rendition.jpg\" ||\n           context.input.search_image_s3uri like \"s3://m2cv6-0e0000000002-100000000002-us-west-2-proxy/*\")\n     else true)\n};"
+    },
+    {
+      "env": "prod",
+      "ingestBucket": "mediaworks-harness-skills-store-100000000003-us-west-2",
+      "m2cProxyBucket": "m2cv6-0e0000000003-100000000003-us-west-2-proxy",
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"mediaworks-harness-m2c-search___hybrid-search___search_content\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has collection_id &&\n  context.input.collection_id == principal.getTag(\"project_id\") &&\n  (if context.input has search_image_s3uri\n     then (context.input.search_image_s3uri like \"s3://mediaworks-harness-skills-store-100000000003-us-west-2/projects/*/rendition.jpg\" ||\n           context.input.search_image_s3uri like \"s3://m2cv6-0e0000000003-100000000003-us-west-2-proxy/*\")\n     else true)\n};"
+    },
+    {
+      "env": "sandbox",
+      "ingestBucket": "mediaworks-harness-skills-store-100000000001-us-west-2",
+      "m2cProxyBucket": "mediaworks-proxy-100000000001-us-west-2",
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"mediaworks-harness-m2c-search___hybrid-search___search_content\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has collection_id &&\n  context.input.collection_id == principal.getTag(\"project_id\") &&\n  (if context.input has search_image_s3uri\n     then (context.input.search_image_s3uri like \"s3://mediaworks-harness-skills-store-100000000001-us-west-2/projects/*/rendition.jpg\" ||\n           context.input.search_image_s3uri like \"s3://mediaworks-proxy-100000000001-us-west-2/*\")\n     else true)\n};"
+    },
+    {
+      "env": "sample",
+      "ingestBucket": "harness-ingest-sample",
+      "m2cProxyBucket": "m2c-proxy-sample",
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"mediaworks-harness-m2c-search___hybrid-search___search_content\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has collection_id &&\n  context.input.collection_id == principal.getTag(\"project_id\") &&\n  (if context.input has search_image_s3uri\n     then (context.input.search_image_s3uri like \"s3://harness-ingest-sample/projects/*/rendition.jpg\" ||\n           context.input.search_image_s3uri like \"s3://m2c-proxy-sample/*\")\n     else true)\n};"
+    }
+  ],
+  "otherName": {
+    "env": "staging",
+    "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"mediaworks-harness-m2c-search___hybrid-search___search_content\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has collection_id &&\n  context.input.collection_id == principal.getTag(\"project_id\") &&\n  (if context.input has search_image_uri\n     then (context.input.search_image_uri like \"s3://mediaworks-harness-skills-store-100000000002-us-west-2/projects/*/rendition.jpg\" ||\n           context.input.search_image_uri like \"s3://m2cv6-0e0000000002-100000000002-us-west-2-proxy/*\")\n     else true)\n};"
+  },
+  "regression": {
+    "env": "staging",
+    "form": "negated-disjunction",
+    "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"mediaworks-harness-m2c-search___hybrid-search___search_content\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has collection_id &&\n  context.input.collection_id == principal.getTag(\"project_id\") &&\n  (!(context.input has search_image_s3uri) ||\n   context.input.search_image_s3uri like \"s3://mediaworks-harness-skills-store-100000000002-us-west-2/*\" ||\n   context.input.search_image_s3uri like \"s3://m2cv6-0e0000000002-100000000002-us-west-2-proxy/*\")\n};"
+  }
+}

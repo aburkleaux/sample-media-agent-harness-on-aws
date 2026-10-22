@@ -1,0 +1,36 @@
+{
+  "description": "Shared Project id cases for ids.ts and ids.py (media-harness-projects-access task 1.1).",
+  "valid": [
+    "p00000000000000000000000000000000",
+    "paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "p3f2b9c4d1e0a47b8a9c6d5e4f3a2b1c0",
+    "p0123456789abcdef0123456789abcdef"
+  ],
+  "invalid": [
+    "default",
+    "",
+    "p",
+    "Paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "pAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "pgggggggggggggggggggggggggggggggg",
+    "qaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "p3f2b9c4d-1e0a-47b8-a9c6-d5e4f3a2b1c0",
+    "3f2b9c4d1e0a47b8a9c6d5e4f3a2b1c0",
+    "paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+    " paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
+    "paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*",
+    "*",
+    "%"
+  ],
+  "invalidNonStrings": [
+    null,
+    0,
+    123,
+    true,
+    [],
+    {}
+  ]
+}

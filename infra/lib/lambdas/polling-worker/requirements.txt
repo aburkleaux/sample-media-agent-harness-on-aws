@@ -1,0 +1,14 @@
+# Polling worker Lambda requirements.
+#
+# Empty by design: handler.py and its helpers (registry.py,
+# gateway_invoker.py) use only:
+#   - boto3 / botocore (provided by the AWS Lambda Python runtime)
+#   - urllib + json + threading + dataclasses + datetime (stdlib)
+#
+# CDK task 8.1 wires the Lambda with `lambda.Code.fromAsset(...)` against
+# `infra/lib/lambdas/polling-worker/`, and no `pip install` step is needed
+# because the runtime ships boto3.
+#
+# If a future change introduces a non-stdlib dependency (e.g. httpx), add
+# it here AND switch the CDK packaging path to the same `zip-packager`
+# pattern the agent runtime uses (see `infra/lib/zip-packager/`).

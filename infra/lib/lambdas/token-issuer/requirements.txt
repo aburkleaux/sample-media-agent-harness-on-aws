@@ -1,0 +1,8 @@
+# Runtime dependencies of the token-issuer asset (TokenIssuerFn / TokenRefreshFn).
+#
+# NONE. This asset is dependency-free: the modules import only the Python 3.13 standard library
+# (plus boto3, which the Lambda runtime provides). CDK zips this directory as-is at synth and no
+# layer or bundling step is needed:
+#   - tokens.py signs via kms:Sign and verifies via kms:Verify (no third-party crypto library).
+#   - cognito.py / dev_login.py verify foreign RS256 / HS256 tokens with jwslite (stdlib: base64,
+#     json, hashlib, hmac, and an RSA public-key check via pow()); no third-party token library.

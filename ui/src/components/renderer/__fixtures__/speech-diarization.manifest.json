@@ -1,0 +1,51 @@
+{
+  "captions": [],
+  "clips": [],
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "duration": 300.0,
+  "id": "fixture",
+  "metadata": {
+    "language": "en",
+    "num_global_speakers": 2,
+    "num_sentences": 3
+  },
+  "mimeType": "audio/wav",
+  "peaks": {
+    "audio-audio_16k_mono": []
+  },
+  "renderSkill": "render-speaker-diarization",
+  "segments": [
+    {
+      "end": 29.318,
+      "group": "SPEAKER_01",
+      "id": "s-0",
+      "name": "So these guys just disappeared?",
+      "start": 26.978
+    },
+    {
+      "end": 34.015,
+      "group": "SPEAKER_00",
+      "id": "s-1",
+      "name": "Yeah, on that stretch of road.",
+      "start": 30.018
+    },
+    {
+      "end": 36.0,
+      "group": "SPEAKER_01",
+      "id": "s-2",
+      "name": "With the big rock.",
+      "start": 34.5
+    }
+  ],
+  "template": "composite-timeline",
+  "tracks": [
+    {
+      "end": 300.0,
+      "id": "audio-audio_16k_mono",
+      "label": "audio_16k_mono",
+      "src": "https://cdn.example/audio_16k_mono.wav",
+      "start": 0.0,
+      "type": "audio"
+    }
+  ]
+}

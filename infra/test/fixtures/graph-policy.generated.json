@@ -1,0 +1,194 @@
+{
+  "gatewayArn": "arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway",
+  "tools": [
+    {
+      "name": "graph_schema",
+      "action": "project-graph___graph_schema",
+      "inputSchema": {
+        "properties": {
+          "project_id": {
+            "description": "The active Project's id (the harness fills this in).",
+            "type": "string"
+          }
+        },
+        "required": [
+          "project_id"
+        ],
+        "type": "object"
+      },
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"project-graph___graph_schema\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has project_id &&\n  context.input.project_id == principal.getTag(\"project_id\")\n};"
+    },
+    {
+      "name": "graph_find",
+      "action": "project-graph___graph_find",
+      "inputSchema": {
+        "properties": {
+          "include_sample": {
+            "description": "Include the starter sample graph (default true).",
+            "type": "boolean"
+          },
+          "limit": {
+            "description": "1–50 (default 20).",
+            "type": "integer"
+          },
+          "project_id": {
+            "description": "The active Project's id (the harness fills this in).",
+            "type": "string"
+          },
+          "text": {
+            "description": "Name or part of a name.",
+            "type": "string"
+          },
+          "types": {
+            "description": "Only these node labels: any of Project, User, Tag, Asset, Scene, Shot, Person, Location, Organization, Topic, Session, Job.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "project_id",
+          "text"
+        ],
+        "type": "object"
+      },
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"project-graph___graph_find\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has project_id &&\n  context.input.project_id == principal.getTag(\"project_id\")\n};"
+    },
+    {
+      "name": "graph_neighbours",
+      "action": "project-graph___graph_neighbours",
+      "inputSchema": {
+        "properties": {
+          "direction": {
+            "description": "both (default), out, or in.",
+            "type": "string"
+          },
+          "hops": {
+            "description": "1 (default) or 2.",
+            "type": "integer"
+          },
+          "limit": {
+            "description": "Max relationships returned, 1–200 (default 100).",
+            "type": "integer"
+          },
+          "node_id": {
+            "description": "A node id from graph_find (e.g. person:…, asset:…).",
+            "type": "string"
+          },
+          "project_id": {
+            "description": "The active Project's id (the harness fills this in).",
+            "type": "string"
+          },
+          "relationships": {
+            "description": "Only these relationship types: any of OWNS, MEMBER_OF, TAGGED, HAS_ASSET, HAS_SCENE, HAS_SHOT, APPEARS_IN, LOCATED_AT, ABOUT, AFFILIATED_WITH, KNOWS, DERIVED_FROM, PRODUCED_BY, OUTPUT_OF, RAN_IN.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "project_id",
+          "node_id"
+        ],
+        "type": "object"
+      },
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"project-graph___graph_neighbours\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has project_id &&\n  context.input.project_id == principal.getTag(\"project_id\")\n};"
+    },
+    {
+      "name": "graph_paths",
+      "action": "project-graph___graph_paths",
+      "inputSchema": {
+        "properties": {
+          "from_id": {
+            "description": "Start node id.",
+            "type": "string"
+          },
+          "limit": {
+            "description": "Max paths, 1–10 (default 3).",
+            "type": "integer"
+          },
+          "max_hops": {
+            "description": "1–3 (default 3).",
+            "type": "integer"
+          },
+          "project_id": {
+            "description": "The active Project's id (the harness fills this in).",
+            "type": "string"
+          },
+          "to_id": {
+            "description": "End node id.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "project_id",
+          "from_id",
+          "to_id"
+        ],
+        "type": "object"
+      },
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"project-graph___graph_paths\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has project_id &&\n  context.input.project_id == principal.getTag(\"project_id\")\n};"
+    },
+    {
+      "name": "graph_context",
+      "action": "project-graph___graph_context",
+      "inputSchema": {
+        "properties": {
+          "asset_ids": {
+            "description": "1–20 asset ids (as returned by search hits) or asset node ids.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "end_ms": {
+            "description": "Optional: only scenes overlapping this end (ms).",
+            "type": "integer"
+          },
+          "project_id": {
+            "description": "The active Project's id (the harness fills this in).",
+            "type": "string"
+          },
+          "start_ms": {
+            "description": "Optional: only scenes overlapping this start (ms).",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "project_id",
+          "asset_ids"
+        ],
+        "type": "object"
+      },
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"project-graph___graph_context\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has project_id &&\n  context.input.project_id == principal.getTag(\"project_id\")\n};"
+    },
+    {
+      "name": "graph_query",
+      "action": "project-graph___graph_query",
+      "inputSchema": {
+        "properties": {
+          "cypher": {
+            "description": "The read-only Cypher query.",
+            "type": "string"
+          },
+          "params": {
+            "description": "Values for $name parameters (strings or numbers).",
+            "type": "object"
+          },
+          "project_id": {
+            "description": "The active Project's id (the harness fills this in).",
+            "type": "string"
+          }
+        },
+        "required": [
+          "project_id",
+          "cypher"
+        ],
+        "type": "object"
+      },
+      "policy": "permit(\n  principal,\n  action == AgentCore::Action::\"project-graph___graph_query\",\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-west-2:000000000000:gateway/mediaworks-harness-search-gateway\"\n) when {\n  principal.hasTag(\"project_id\") &&\n  context has input &&\n  context.input has project_id &&\n  context.input.project_id == principal.getTag(\"project_id\")\n};"
+    }
+  ]
+}

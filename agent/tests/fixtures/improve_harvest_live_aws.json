@@ -1,0 +1,996 @@
+{
+ "_provenance": "Real rows lifted verbatim from ideas/staging-data (staging account 000000000000, harvested 2026-08-25T09:00Z). Insights rows keep their @timestamp/sid/svc/name/status/status_msg/durationNano/@ptr fields; DynamoDB items keep their DynamoDB-JSON shape; the alarm set is the real staging one re-expressed as DescribeAlarms output. A subset of each session's spans is kept (first N, last N, and every ERROR row) so the fixture stays small while the time bounds and the error path are preserved. `insights_usage_rows` are real `stats sum(...) by sid, model` groups over `chat` spans for these same four sessions, from a staging query on 2026-08-28 \u2014 note that `spans_only` (35707c62) is absent from them, which is what an unmeasured session really looks like, and that `plan_and_spans_inline_edges` (a8c489e7) spans TWO models. `trace` was added to every span row after the fact by scripts/refresh_trace_fixtures.py, joined on (session, @timestamp, span name) against the same log group: the rows were lifted before the harvester projected traceId, which is a TOP-LEVEL span field and not an attribute, so no earlier harvest could have carried it.",
+ "sessions": {
+  "plan_and_spans_inline_edges": "a8c489e7-17c0-4973-9371-80a81294084d",
+  "plan_and_spans_offloaded_edges": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+  "spans_only": "35707c62-ceaa-4660-ac0f-06837677d50b",
+  "plan_with_real_edges": "d834d394-3705-4d57-9f07-2bbe6e8c65ab"
+ },
+ "insights_span_rows": [
+  {
+   "@timestamp": "2026-08-24 13:34:04.889",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.ListObjectsV2",
+   "status": "UNSET",
+   "durationNano": "41880494",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmN5WAoABqjEhOAAAAWiIAEo2djpn4M0MO/d6Z+DNDgGQPZmSMNLUP0tIAIQABgB",
+   "trace": "6a8c48461134160d4745715035f50e4c"
+  },
+  {
+   "@timestamp": "2026-08-24 13:34:05.349",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Bedrock.ListInferenceProfiles",
+   "status": "UNSET",
+   "durationNano": "326229580",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmN5WAoABqjEhOAAAAWiIAEo2djpn4M0MO/d6Z+DNDgGQPZmSMNLUP0tIAIQARgB",
+   "trace": "6a8c48461134160d4745715035f50e4c"
+  },
+  {
+   "@timestamp": "2026-08-24 13:34:05.383",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "DynamoDB.Query",
+   "status": "UNSET",
+   "durationNano": "31998645",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmN5WAoABqjEhOAAAAWiIAEo2djpn4M0MO/d6Z+DNDgGQPZmSMNLUP0tIAIQAhgB",
+   "trace": "6a8c48461134160d4745715035f50e4c"
+  },
+  {
+   "@timestamp": "2026-08-24 13:34:05.457",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Secrets Manager.GetSecretValue",
+   "status": "UNSET",
+   "durationNano": "69692639",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmN5WAoABqjEhOAAAAWiIAEo2djpn4M0MO/d6Z+DNDgGQPZmSMNLUP0tIAIQAxgB",
+   "trace": "6a8c48461134160d4745715035f50e4c"
+  },
+  {
+   "@timestamp": "2026-08-24 13:34:05.539",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Secrets Manager.GetSecretValue",
+   "status": "UNSET",
+   "durationNano": "77814134",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmN5WAoABqjEhOAAAAWiIAEo2djpn4M0MO/d6Z+DNDgGQPZmSMNLUP0tIAIQBBgB",
+   "trace": "6a8c48461134160d4745715035f50e4c"
+  },
+  {
+   "@timestamp": "2026-08-24 14:21:39.564",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.GetObject",
+   "status": "ERROR",
+   "status_msg": "NoSuchKey: An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.",
+   "durationNano": "57161765",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmO5ZHwABqjFNyAAAAWiIAEo4NeXoYM0MISJmaGDNDg2QLCxB0iz/AFQuMABIAIQFBgB",
+   "trace": "6a8c536f1640e1c92bee77354897da80"
+  },
+  {
+   "@timestamp": "2026-08-24 14:32:42.641",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_render_agent.DEFAULT",
+   "name": "POST /invocations",
+   "status": "UNSET",
+   "durationNano": "5123547071",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmPINsIABqjFX9AAAAWiIAEo39K/oYM0MM2zwKGDNDg2QLPeB0iu/wFQwMwBIAIQNRgB",
+   "trace": "6a8c55d975f918a3593c241b69b1288d"
+  },
+  {
+   "@timestamp": "2026-08-24 14:32:42.661",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.HeadObject",
+   "status": "UNSET",
+   "durationNano": "15919643",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmPINsIABqjFX9AAAAWiIAEo39K/oYM0MM2zwKGDNDg2QLPeB0iu/wFQwMwBIAIQMBgB",
+   "trace": "6a8c55d975f918a3593c241b69b1288d"
+  },
+  {
+   "@timestamp": "2026-08-24 14:32:42.685",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.GetObject",
+   "status": "UNSET",
+   "durationNano": "24200730",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmPINsIABqjFX9AAAAWiIAEo39K/oYM0MM2zwKGDNDg2QLPeB0iu/wFQwMwBIAIQMRgB",
+   "trace": "6a8c55d975f918a3593c241b69b1288d"
+  },
+  {
+   "@timestamp": "2026-08-24 14:32:42.695",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "invoke_agent Strands Agents",
+   "status": "OK",
+   "durationNano": "48170215248",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmPINsIABqjFX9AAAAWiIAEo39K/oYM0MM2zwKGDNDg2QLPeB0iu/wFQwMwBIAIQMhgB",
+   "trace": "6a8c55d975f918a3593c241b69b1288d"
+  },
+  {
+   "@timestamp": "2026-08-24 14:32:42.701",
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "POST /invocations",
+   "status": "UNSET",
+   "durationNano": "49002481445",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmPINsIABqjFX9AAAAWiIAEo39K/oYM0MM2zwKGDNDg2QLPeB0iu/wFQwMwBIAIQMxgB",
+   "trace": "6a8c55d975f918a3593c241b69b1288d"
+  },
+  {
+   "@timestamp": "2026-08-24 15:05:11.777",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.ListObjectsV2",
+   "status": "UNSET",
+   "durationNano": "46948274",
+   "@ptr": "Cp0BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNxoYAgabjsPKAAAAAmPz1kAABqjF2jAAAAWiIAEoy/e2ooM0MIvGt6KDNDgiQJi5BEjXlgFQlWkgAhAEGAE=",
+   "trace": "6a8c5da15ec7280b18e42203204fb847"
+  },
+  {
+   "@timestamp": "2026-08-24 15:05:12.198",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Bedrock.ListInferenceProfiles",
+   "status": "UNSET",
+   "durationNano": "287246381",
+   "@ptr": "Cp0BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNxoYAgabjsPKAAAAAmPz1kAABqjF2jAAAAWiIAEoy/e2ooM0MIvGt6KDNDgiQJi5BEjXlgFQlWkgAhAFGAE=",
+   "trace": "6a8c5da15ec7280b18e42203204fb847"
+  },
+  {
+   "@timestamp": "2026-08-24 15:05:12.231",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "DynamoDB.Query",
+   "status": "UNSET",
+   "durationNano": "30145387",
+   "@ptr": "Cp0BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNxoYAgabjsPKAAAAAmPz1kAABqjF2jAAAAWiIAEoy/e2ooM0MIvGt6KDNDgiQJi5BEjXlgFQlWkgAhAGGAE=",
+   "trace": "6a8c5da15ec7280b18e42203204fb847"
+  },
+  {
+   "@timestamp": "2026-08-24 15:05:12.303",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Secrets Manager.GetSecretValue",
+   "status": "UNSET",
+   "durationNano": "67992146",
+   "@ptr": "Cp0BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNxoYAgabjsPKAAAAAmPz1kAABqjF2jAAAAWiIAEoy/e2ooM0MIvGt6KDNDgiQJi5BEjXlgFQlWkgAhAHGAE=",
+   "trace": "6a8c5da15ec7280b18e42203204fb847"
+  },
+  {
+   "@timestamp": "2026-08-24 15:05:12.364",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Secrets Manager.GetSecretValue",
+   "status": "UNSET",
+   "durationNano": "57693747",
+   "@ptr": "Cp0BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNxoYAgabjsPKAAAAAmPz1kAABqjF2jAAAAWiIAEoy/e2ooM0MIvGt6KDNDgiQJi5BEjXlgFQlWkgAhAIGAE=",
+   "trace": "6a8c5da15ec7280b18e42203204fb847"
+  },
+  {
+   "@timestamp": "2026-08-24 15:16:27.765",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.GetObject",
+   "status": "ERROR",
+   "status_msg": "NoSuchKey: An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.",
+   "durationNano": "54296344",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmQAgXAABqjGA3AAAAWiIAEo+qjfooM0MNj64KKDNDg8QOzyCEj74wFQlLEBIAIQMxgB",
+   "trace": "6a8c6047296ea209561213bd71b3d23c"
+  },
+  {
+   "@timestamp": "2026-08-24 15:18:46.717",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.GetObject",
+   "status": "ERROR",
+   "status_msg": "NoSuchKey: An error occurred (NoSuchKey) when calling the GetObject operation: The specified key does not exist.",
+   "durationNano": "39996912",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmQEEYIABqjGDYAAAAWiIAEokYzpooM0MIrN6aKDNDgbQIXuA0jdzAFQupIBIAIQBBgB",
+   "trace": "6a8c60d36d620cde1deb72d803e8dd1c"
+  },
+  {
+   "@timestamp": "2026-08-24 15:23:59.835",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.PutObject",
+   "status": "UNSET",
+   "durationNano": "137084294",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmQK61AABqjGINAAAAWiIAEo8Iv8ooM0MMOW/aKDNDgoQOWcBUjKuwFQ1IkBIAIQEhgB",
+   "trace": "6a8c61eb5fa1cea823462c927f2913ff"
+  },
+  {
+   "@timestamp": "2026-08-24 15:23:59.919",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.PutObject",
+   "status": "UNSET",
+   "durationNano": "82383653",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmQK61AABqjGINAAAAWiIAEo8Iv8ooM0MMOW/aKDNDgoQOWcBUjKuwFQ1IkBIAIQExgB",
+   "trace": "6a8c61eb5fa1cea823462c927f2913ff"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:00.009",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Bedrock AgentCore.CreateEvent",
+   "status": "UNSET",
+   "durationNano": "89825739",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmQK61AABqjGINAAAAWiIAEo8Iv8ooM0MMOW/aKDNDgoQOWcBUjKuwFQ1IkBIAIQFBgB",
+   "trace": "6a8c61eb5fa1cea823462c927f2913ff"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:00.010",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "invoke_agent Strands Agents",
+   "status": "OK",
+   "durationNano": "35769702868",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmQK61AABqjGINAAAAWiIAEo8Iv8ooM0MMOW/aKDNDgoQOWcBUjKuwFQ1IkBIAIQFRgB",
+   "trace": "6a8c61eb5fa1cea823462c927f2913ff"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:00.014",
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "POST /invocations",
+   "status": "UNSET",
+   "durationNano": "36639379412",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmQK61AABqjGINAAAAWiIAEo8Iv8ooM0MMOW/aKDNDgoQOWcBUjKuwFQ1IkBIAIQFhgB",
+   "trace": "6a8c61eb5fa1cea823462c927f2913ff"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:28.048",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.ListObjectsV2",
+   "status": "UNSET",
+   "durationNano": "47439037",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAAYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:28.488",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Bedrock.ListInferenceProfiles",
+   "status": "UNSET",
+   "durationNano": "310541380",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAEYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:28.523",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "DynamoDB.Query",
+   "status": "UNSET",
+   "durationNano": "32552828",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAIYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:28.599",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Secrets Manager.GetSecretValue",
+   "status": "UNSET",
+   "durationNano": "71621763",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAMYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:28.656",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Secrets Manager.GetSecretValue",
+   "status": "UNSET",
+   "durationNano": "53432576",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAQYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:28.670",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "DynamoDB.PutItem",
+   "status": "UNSET",
+   "durationNano": "11894381",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAUYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:32.508",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "mcp tools/list",
+   "status": "OK",
+   "durationNano": "3119926323",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAYYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:32.903",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "POST",
+   "status": "UNSET",
+   "durationNano": "387391526",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAcYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:33.130",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "mcp tools/list",
+   "status": "OK",
+   "durationNano": "146768315",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAgYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:33.225",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "mcp tools/list",
+   "status": "OK",
+   "durationNano": "94313520",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAkYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:33.575",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "POST",
+   "status": "UNSET",
+   "durationNano": "340643609",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAoYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:33.771",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "mcp tools/list",
+   "status": "OK",
+   "durationNano": "134296689",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAsYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:33.829",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "mcp tools/list",
+   "status": "OK",
+   "durationNano": "58199176",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEAwYAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-24 15:24:33.838",
+   "sid": "35707c62-ceaa-4660-ac0f-06837677d50b",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "POST /invocations",
+   "status": "UNSET",
+   "durationNano": "5957462739",
+   "@ptr": "CpwBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNhoYAgabjsPKAAAAAmQLkuoABqjGIrAAAAWiIAEokPj9ooM0MOn0/qKDNDgdQKDGA0j5eFCNUyACEA0YAQ==",
+   "trace": "6a8c62251b52ed90351c69f02c9da416"
+  },
+  {
+   "@timestamp": "2026-08-25 08:46:33.363",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "S3.ListObjectsV2",
+   "status": "UNSET",
+   "durationNano": "39677481",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmhUeMcABqjVZcAAAAWiIAEox57lwIM0MMCi5sCDNDgsQNTHBUiWwgFQtIwBIAIQJBgB",
+   "trace": "6a8d566251b41bc27447036d35a6a366"
+  },
+  {
+   "@timestamp": "2026-08-25 08:46:33.837",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Bedrock.ListInferenceProfiles",
+   "status": "UNSET",
+   "durationNano": "346815120",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmhUeMcABqjVZcAAAAWiIAEox57lwIM0MMCi5sCDNDgsQNTHBUiWwgFQtIwBIAIQJRgB",
+   "trace": "6a8d566251b41bc27447036d35a6a366"
+  },
+  {
+   "@timestamp": "2026-08-25 08:46:33.871",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "DynamoDB.Query",
+   "status": "UNSET",
+   "durationNano": "32120069",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmhUeMcABqjVZcAAAAWiIAEox57lwIM0MMCi5sCDNDgsQNTHBUiWwgFQtIwBIAIQJhgB",
+   "trace": "6a8d566251b41bc27447036d35a6a366"
+  },
+  {
+   "@timestamp": "2026-08-25 08:46:33.932",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Secrets Manager.GetSecretValue",
+   "status": "UNSET",
+   "durationNano": "57236537",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmhUeMcABqjVZcAAAAWiIAEox57lwIM0MMCi5sCDNDgsQNTHBUiWwgFQtIwBIAIQJxgB",
+   "trace": "6a8d566251b41bc27447036d35a6a366"
+  },
+  {
+   "@timestamp": "2026-08-25 08:46:33.998",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Secrets Manager.GetSecretValue",
+   "status": "UNSET",
+   "durationNano": "62650094",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmhUeMcABqjVZcAAAAWiIAEox57lwIM0MMCi5sCDNDgsQNTHBUiWwgFQtIwBIAIQKBgB",
+   "trace": "6a8d566251b41bc27447036d35a6a366"
+  },
+  {
+   "@timestamp": "2026-08-25 08:52:05.826",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_task_agent.DEFAULT",
+   "name": "execute_tool code_interpreter",
+   "status": "ERROR",
+   "status_msg": "Validation failed for input parameters: 1 validation error for Code_interpreterTool\ncode_interpreter_input\n  Input should be a valid dictionary or instance of CodeInterpreterInput [type=model_type, input_value='{\"action\": {\"type\": \"ini...\": \"vehicle-inspect\"}}}', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/model_type",
+   "durationNano": "5951601",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmhXX4kABqjVenAAAAWiIAEo3MD5wIM0MIiW+8CDNDglQOqbCEjxjAJQsNEBIAIQFxgB",
+   "trace": "6a8d5792748a8c052b6a86e75343b7a6"
+  },
+  {
+   "@timestamp": "2026-08-25 08:52:08.161",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_task_agent.DEFAULT",
+   "name": "execute_tool code_interpreter",
+   "status": "ERROR",
+   "status_msg": "Validation failed for input parameters: 1 validation error for Code_interpreterTool\ncode_interpreter_input\n  Input should be a valid dictionary or instance of CodeInterpreterInput [type=model_type, input_value='{\"action\": {\"type\": \"ini...\": \"vehicle-inspect\"}}}', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/model_type",
+   "durationNano": "2657497",
+   "@ptr": "Cp4BCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASOBoYAgabjsPKAAAAAmhXX4kABqjVenAAAAWiIAEo3MD5wIM0MIiW+8CDNDglQOqbCEjxjAJQsNEBIAIQGxgB",
+   "trace": "6a8d5792748a8c052b6a86e75343b7a6"
+  },
+  {
+   "@timestamp": "2026-08-25 08:57:29.959",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "chat",
+   "status": "OK",
+   "durationNano": "13053406137",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmhaWAwABqjVj5AAAAWiIAEo5qCOwYM0MLyhjsGDNDgGQOdlSKtoUNU7IAIQARgB",
+   "trace": "6a8d58ec3550ac5b7f9c00e824ddfaa0"
+  },
+  {
+   "@timestamp": "2026-08-25 08:57:30.042",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "Bedrock AgentCore.CreateEvent",
+   "status": "UNSET",
+   "durationNano": "82527055",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmhaWAwABqjVj5AAAAWiIAEo5qCOwYM0MLyhjsGDNDgGQOdlSKtoUNU7IAIQAhgB",
+   "trace": "6a8d58ec3550ac5b7f9c00e824ddfaa0"
+  },
+  {
+   "@timestamp": "2026-08-25 08:57:30.043",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "execute_event_loop_cycle",
+   "status": "OK",
+   "durationNano": "13161982941",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmhaWAwABqjVj5AAAAWiIAEo5qCOwYM0MLyhjsGDNDgGQOdlSKtoUNU7IAIQAxgB",
+   "trace": "6a8d58ec3550ac5b7f9c00e824ddfaa0"
+  },
+  {
+   "@timestamp": "2026-08-25 08:57:30.043",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "invoke_agent Strands Agents",
+   "status": "OK",
+   "durationNano": "13341309688",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmhaWAwABqjVj5AAAAWiIAEo5qCOwYM0MLyhjsGDNDgGQOdlSKtoUNU7IAIQBBgB",
+   "trace": "6a8d58ec3550ac5b7f9c00e824ddfaa0"
+  },
+  {
+   "@timestamp": "2026-08-25 08:57:30.044",
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "svc": "mediaworks_harness_main_agent.DEFAULT",
+   "name": "POST /invocations",
+   "status": "UNSET",
+   "durationNano": "13822806774",
+   "@ptr": "CpsBCmAKFjM3NjY3ODk0NzYyNDphd3Mvc3BhbnMQABokYWRkOGRmOWUtNzZlNi00N2Q3LThmMWEtZDc5NGUxNjVmOGYwIg4IsOr+l4M0EJeqmMGDNDilt6LAlTNAg8edlJ8zSAASNRoYAgabjsPKAAAAAmhaWAwABqjVj5AAAAWiIAEo5qCOwYM0MLyhjsGDNDgGQOdlSKtoUNU7IAIQBRgB",
+   "trace": "6a8d58ec3550ac5b7f9c00e824ddfaa0"
+  }
+ ],
+ "ddb_plan_state_items": [
+  {
+   "plan_id": {
+    "S": "5ddc8f05-1c5c-4085-812b-5cbfcc67457e"
+   },
+   "updated_at": {
+    "S": "2026-08-25T08:50:26.502728+00:00"
+   },
+   "nodes_json": {
+    "S": "[{\"id\": \"extract_frames\", \"prompt\": \"Extract frames from s3://mediaworks-harness-skills-store-000000000000-us-west-2/artifacts/d834d394-3705-4d57-9f07-2bbe6e8c65ab/input/1787647581268-20327471-hd_1920_1080_24fps.mp4 using media-processing process_media with frame-capture mode. Use roughly 1 frame per second (or an interval that gives full-clip coverage) and full resolution to maximize legibility of vehicle details and license plates. Call process_media ONCE to start the job and return the job_id from the response \\u2014 do not poll or wait for completion.\", \"tools\": [\"media-processing___process_media\"], \"depends_on\": [], \"output_key\": \"frame_extraction_job\", \"output_type\": \"json\", \"skills\": [{\"name\": \"video-processing\"}]}, {\"id\": \"inspect_vehicles\", \"prompt\": \"The frame extraction job (from the previous step) produced a set of extracted frame images from s3://mediaworks-harness-skills-store-000000000000-us-west-2/artifacts/d834d394-3705-4d57-9f07-2bbe6e8c65ab/input/1787647581268-20327471-hd_1920_1080_24fps.mp4. Use media-outputs get_download_urls to obtain presigned URLs for the frame image outputs listed in that job's results, then use file_read (document mode) to visually inspect each frame image across the whole clip. Identify every distinct vehicle appearing in the clip. For each distinct vehicle: report make and model ONLY if confidently determinable from the visible frames; otherwise mark make/model as 'uncertain' and instead describe body type and color. Report license plate characters ONLY if truly legible in at least one frame; otherwise explicitly state the plate is not legible and give the reason (too small/blurred/angled/obscured/absent). Do NOT fabricate any plate numbers or vehicle identities under any circumstance. Present the final answer as a per-vehicle summary table with columns: Vehicle #, Make, Model, Color/Body Type (if uncertain), Plate/Legibility Note, Frame Reference.\", \"tools\": [\"media-outputs___get_download_urls\", \"file_read\"], \"depends_on\": [\"extract_frames\"], \"output_key\": \"vehicle_identification_report\", \"output_type\": \"text\", \"skills\": [{\"name\": \"video-processing\"}]}]"
+   },
+   "actor_id": {
+    "S": "4841b3c0-b011-7066-3ff0-3cec74842729"
+   },
+   "session_id": {
+    "S": "d834d394-3705-4d57-9f07-2bbe6e8c65ab"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "turn_id": {
+    "S": "turn-4a4c6766c7664a6aaed5dc21df173457"
+   },
+   "ttl": {
+    "N": "1787734054"
+   },
+   "goal": {
+    "S": "Extract frames from the provided video and visually inspect them to identify every distinct vehicle, reporting make/model/plate legibility without fabrication."
+   },
+   "model_id": {
+    "S": "global.anthropic.claude-opus-4-8"
+   },
+   "display_name": {
+    "S": "plan-vehicle-frame-inspect"
+   },
+   "node_id": {
+    "S": "PLAN"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-25T08:48:25.263968+00:00"
+   },
+   "session_id": {
+    "S": "d834d394-3705-4d57-9f07-2bbe6e8c65ab"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/d834d394-3705-4d57-9f07-2bbe6e8c65ab/5ddc8f05-1c5c-4085-812b-5cbfcc67457e/extract_frames/output"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "ttl": {
+    "N": "1787734100"
+   },
+   "gateway_status": {
+    "S": "SUCCEEDED"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-media-processing:c19dc821-6a39-5d1c-adbb-be3d22624895"
+   },
+   "node_id": {
+    "S": "extract_frames"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-25T08:50:26.283399+00:00"
+   },
+   "session_id": {
+    "S": "d834d394-3705-4d57-9f07-2bbe6e8c65ab"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/d834d394-3705-4d57-9f07-2bbe6e8c65ab/5ddc8f05-1c5c-4085-812b-5cbfcc67457e/inspect_vehicles/output"
+   },
+   "ttl": {
+    "N": "1787734226"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "node_id": {
+    "S": "inspect_vehicles"
+   }
+  },
+  {
+   "plan_id": {
+    "S": "dcaa1760-1708-4054-b50a-c96961c720e8"
+   },
+   "nodes_json": {
+    "S": ""
+   },
+   "actor_id": {
+    "S": "68e153d0-f0b1-7072-91bc-84425b517126"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "turn_id": {
+    "S": "turn-12ab18362fa4424eb069be989d8026da"
+   },
+   "ttl": {
+    "N": "1787667954"
+   },
+   "goal": {
+    "S": "Submit four independent async media analysis jobs (stem separation, diarization, shot segmentation, face recognition) on the given proxy clip and return job identifiers without polling."
+   },
+   "model_id": {
+    "S": "global.anthropic.claude-opus-4-8"
+   },
+   "display_name": {
+    "S": "plan-media-async-submit"
+   },
+   "nodes_s3_key": {
+    "S": "plans/1a0d9650-8e12-4f55-9884-1551d761d9a1/dcaa1760-1708-4054-b50a-c96961c720e8/nodes.json"
+   },
+   "updated_at": {
+    "S": "2026-08-24T14:28:30.692031+00:00"
+   },
+   "session_id": {
+    "S": "1a0d9650-8e12-4f55-9884-1551d761d9a1"
+   },
+   "node_id": {
+    "S": "PLAN"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-24T14:28:25.624094+00:00"
+   },
+   "session_id": {
+    "S": "1a0d9650-8e12-4f55-9884-1551d761d9a1"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/1a0d9650-8e12-4f55-9884-1551d761d9a1/dcaa1760-1708-4054-b50a-c96961c720e8/sg_diarize/output"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "ttl": {
+    "N": "1787668100"
+   },
+   "gateway_status": {
+    "S": "SUCCEEDED"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-speech-diarization:cbec9af9-213c-52b3-aa3e-3ebb5e1cdfdf"
+   },
+   "node_id": {
+    "S": "sg_diarize"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-24T14:27:20.155476+00:00"
+   },
+   "session_id": {
+    "S": "1a0d9650-8e12-4f55-9884-1551d761d9a1"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/1a0d9650-8e12-4f55-9884-1551d761d9a1/dcaa1760-1708-4054-b50a-c96961c720e8/sg_faces/output"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "ttl": {
+    "N": "1787668039"
+   },
+   "gateway_status": {
+    "S": "SUCCEEDED"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-face-recognition:c36daa50-b000-5059-9195-7cb010f1d452"
+   },
+   "node_id": {
+    "S": "sg_faces"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-24T14:28:25.851982+00:00"
+   },
+   "session_id": {
+    "S": "1a0d9650-8e12-4f55-9884-1551d761d9a1"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/1a0d9650-8e12-4f55-9884-1551d761d9a1/dcaa1760-1708-4054-b50a-c96961c720e8/sg_shots/output"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "ttl": {
+    "N": "1787668100"
+   },
+   "gateway_status": {
+    "S": "SUCCEEDED"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-shot-segmentation:e80f57ac-647e-50e1-81bc-8eea20a8e9ec"
+   },
+   "node_id": {
+    "S": "sg_shots"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-24T14:28:20.751533+00:00"
+   },
+   "session_id": {
+    "S": "1a0d9650-8e12-4f55-9884-1551d761d9a1"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/1a0d9650-8e12-4f55-9884-1551d761d9a1/dcaa1760-1708-4054-b50a-c96961c720e8/sg_stems/output"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "ttl": {
+    "N": "1787668100"
+   },
+   "gateway_status": {
+    "S": "SUCCEEDED"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-audiostem-separation:cbec9af9-213c-52b3-aa3e-3ebb5e1cdfdf"
+   },
+   "node_id": {
+    "S": "sg_stems"
+   }
+  },
+  {
+   "plan_id": {
+    "S": "c8d9fedb-18dd-48f2-bb52-620bf67b546f"
+   },
+   "updated_at": {
+    "S": "2026-08-24T15:22:29.554114+00:00"
+   },
+   "nodes_json": {
+    "S": "[{\"id\": \"sg1_shot_segmentation\", \"prompt\": \"Submit an asynchronous shot segmentation job for the trimmed clip at s3://m2cv6-0e0000000002-000000000000-us-west-2-proxy/micro-workflow/media-processing/f4443bb4-6dac-55dd-ac80-22ffb7dc0ba2/proxy/transcoded.mp4 by calling shot-segmentation___segment_shots with asset_s3_uri set to that URI and all other parameters at default (no output_s3_prefix or output_bucket). Call the tool ONCE. Do not poll or wait for completion. Return the job_id and workflow_id from the response immediately after submission.\", \"tools\": [\"shot-segmentation___segment_shots\"], \"depends_on\": [], \"output_key\": \"shot_segmentation_job\", \"output_type\": \"json\", \"skills\": [{\"name\": \"video-processing\"}]}, {\"id\": \"sg2_face_recognition\", \"prompt\": \"Submit an asynchronous face/people detection job for the trimmed clip at s3://m2cv6-0e0000000002-000000000000-us-west-2-proxy/micro-workflow/media-processing/f4443bb4-6dac-55dd-ac80-22ffb7dc0ba2/proxy/transcoded.mp4 by calling face-recognition___recognize_faces with asset_s3_uri set to that URI, collection_id: \\\"\\\", max_faces_to_index: 0, and min_appearances: 1 (no output_s3_prefix or output_bucket). Call the tool ONCE. Do not poll or wait for completion. Return the job_id and workflow_id from the response immediately after submission.\", \"tools\": [\"face-recognition___recognize_faces\"], \"depends_on\": [], \"output_key\": \"face_recognition_job\", \"output_type\": \"json\", \"skills\": [{\"name\": \"video-processing\"}]}]"
+   },
+   "actor_id": {
+    "S": "68e153d0-f0b1-7072-91bc-84425b517126"
+   },
+   "session_id": {
+    "S": "a8c489e7-17c0-4973-9371-80a81294084d"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "turn_id": {
+    "S": "turn-8dc2e1a642db4fb2aaf6b0a4e20e04c6"
+   },
+   "ttl": {
+    "N": "1787671252"
+   },
+   "goal": {
+    "S": "Submit asynchronous shot segmentation and face/people detection jobs for the trimmed clip at s3://m2cv6-0e0000000002-000000000000-us-west-2-proxy/micro-workflow/media-processing/f4443bb4-6dac-55dd-ac80-22ffb7dc0ba2/proxy/transcoded.mp4"
+   },
+   "model_id": {
+    "S": "global.anthropic.claude-opus-4-8"
+   },
+   "display_name": {
+    "S": "plan-shotface-async"
+   },
+   "node_id": {
+    "S": "PLAN"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-24T15:22:20.375Z"
+   },
+   "session_id": {
+    "S": "a8c489e7-17c0-4973-9371-80a81294084d"
+   },
+   "status": {
+    "S": "results_ready"
+   },
+   "result_s3_key": {
+    "S": "plans/a8c489e7-17c0-4973-9371-80a81294084d/49cfb65a-5f6d-4301-8248-76f97a2eeb59/face_recognition/output"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "ttl": {
+    "N": "1787671340"
+   },
+   "gateway_status": {
+    "S": "SUCCEEDED"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-face-recognition:e75cd3d2-68c0-5125-8f1f-75086f660af1"
+   },
+   "node_id": {
+    "S": "face_recognition"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-24T15:22:24.497400+00:00"
+   },
+   "session_id": {
+    "S": "a8c489e7-17c0-4973-9371-80a81294084d"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/a8c489e7-17c0-4973-9371-80a81294084d/c8d9fedb-18dd-48f2-bb52-620bf67b546f/sg1_shot_segmentation/output"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "ttl": {
+    "N": "1787671339"
+   },
+   "gateway_status": {
+    "S": "SUCCEEDED"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-shot-segmentation:06c042d4-a34a-5b4d-8157-fe991e9c8cfc"
+   },
+   "node_id": {
+    "S": "sg1_shot_segmentation"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-24T15:22:24.978814+00:00"
+   },
+   "session_id": {
+    "S": "a8c489e7-17c0-4973-9371-80a81294084d"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/a8c489e7-17c0-4973-9371-80a81294084d/c8d9fedb-18dd-48f2-bb52-620bf67b546f/sg2_face_recognition/output"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "ttl": {
+    "N": "1787671340"
+   },
+   "gateway_status": {
+    "S": "SUCCEEDED"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-face-recognition:1fa1883f-8477-5d7e-b312-d652b3263510"
+   },
+   "node_id": {
+    "S": "sg2_face_recognition"
+   }
+  },
+  {
+   "updated_at": {
+    "S": "2026-08-24T15:20:56.238299+00:00"
+   },
+   "session_id": {
+    "S": "a8c489e7-17c0-4973-9371-80a81294084d"
+   },
+   "status": {
+    "S": "completed"
+   },
+   "result_s3_key": {
+    "S": "plans/a8c489e7-17c0-4973-9371-80a81294084d/49cfb65a-5f6d-4301-8248-76f97a2eeb59/shot_segmentation/output"
+   },
+   "ttl": {
+    "N": "1787671256"
+   },
+   "output_type": {
+    "S": "text"
+   },
+   "job_id": {
+    "S": "arn:aws:states:us-west-2:000000000000:execution:m2cv6-0e0000000002-shot-segmentation:06c042d4-a34a-5b4d-8157-fe991e9c8cfc"
+   },
+   "node_id": {
+    "S": "shot_segmentation"
+   }
+  }
+ ],
+ "cw_metric_alarms": [
+  {
+   "AlarmName": "mediaworks-harness-infra-staging-ChangefeedDlqDepthAlarmA6AE53C9-7BTmugLWn3ke",
+   "StateValue": "OK",
+   "StateUpdatedTimestamp": "2026-07-11T15:28:26.793000-07:00"
+  },
+  {
+   "AlarmName": "mediaworks-harness-infra-staging-ChangefeedErrorsAlarm37B652B1-io0FvgD0Gg2T",
+   "StateValue": "OK",
+   "StateUpdatedTimestamp": "2026-07-11T15:28:50.358000-07:00"
+  },
+  {
+   "AlarmName": "mediaworks-harness-infra-staging-FanoutDlqDepthAlarm84F7025E-PUrEy9XidoX5",
+   "StateValue": "ALARM",
+   "StateUpdatedTimestamp": "2026-08-09T12:26:57.598000-07:00"
+  },
+  {
+   "AlarmName": "mediaworks-harness-infra-staging-PollNonTransientErrorsAlarmE15F7399-fEHby45jDHGH",
+   "StateValue": "OK",
+   "StateUpdatedTimestamp": "2026-08-07T06:22:55.925000-07:00"
+  },
+  {
+   "AlarmName": "mediaworks-harness-infra-staging-PollingWorkerErrorsAlarm79C33EB5-RmehHaENwI1m",
+   "StateValue": "OK",
+   "StateUpdatedTimestamp": "2026-07-11T15:28:23.062000-07:00"
+  },
+  {
+   "AlarmName": "mediaworks-harness-infra-staging-PollingWorkerThrottlesAlarm93AADE8C-DT3YE3FXtzqh",
+   "StateValue": "OK",
+   "StateUpdatedTimestamp": "2026-07-11T15:27:17.582000-07:00"
+  },
+  {
+   "AlarmName": "mediaworks-harness-infra-staging-StuckJobsSweptAlarm5141A2A9-S6QpoccKBXV8",
+   "StateValue": "OK",
+   "StateUpdatedTimestamp": "2026-07-31T20:14:21.708000-07:00"
+  },
+  {
+   "AlarmName": "slow-mo-2024-05-18-00-23-13-739-zero-scale-alarm",
+   "StateValue": "INSUFFICIENT_DATA",
+   "StateUpdatedTimestamp": "2024-05-17T18:46:56.846000-07:00"
+  },
+  {
+   "AlarmName": "slow-mo-2024-05-19-02-55-21-646-zero-scale-alarm",
+   "StateValue": "INSUFFICIENT_DATA",
+   "StateUpdatedTimestamp": "2024-06-13T15:18:45.113000-07:00"
+  },
+  {
+   "AlarmName": "slow-mo-new-2024-05-18-04-55-00-049-zero-scale-alarm",
+   "StateValue": "INSUFFICIENT_DATA",
+   "StateUpdatedTimestamp": "2024-05-17T22:28:41.272000-07:00"
+  }
+ ],
+ "insights_usage_rows": [
+  {
+   "sid": "1a0d9650-8e12-4f55-9884-1551d761d9a1",
+   "model": "global.anthropic.claude-opus-4-8",
+   "total_tokens": "551627",
+   "output_tokens": "7918",
+   "cache_read_tokens": "314338",
+   "cache_write_tokens": "229341",
+   "llm_calls": "15"
+  },
+  {
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "model": "global.anthropic.claude-opus-4-8",
+   "total_tokens": "1170341",
+   "output_tokens": "14039",
+   "cache_read_tokens": "840689",
+   "cache_write_tokens": "315555",
+   "llm_calls": "29"
+  },
+  {
+   "sid": "a8c489e7-17c0-4973-9371-80a81294084d",
+   "model": "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+   "total_tokens": "5399",
+   "output_tokens": "228",
+   "cache_read_tokens": "0",
+   "cache_write_tokens": "5169",
+   "llm_calls": "1"
+  },
+  {
+   "sid": "d834d394-3705-4d57-9f07-2bbe6e8c65ab",
+   "model": "global.anthropic.claude-opus-4-8",
+   "total_tokens": "1098668",
+   "output_tokens": "49059",
+   "cache_read_tokens": "807407",
+   "cache_write_tokens": "242148",
+   "llm_calls": "27"
+  }
+ ]
+}

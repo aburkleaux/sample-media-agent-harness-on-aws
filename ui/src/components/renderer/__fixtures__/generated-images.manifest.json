@@ -1,0 +1,30 @@
+{
+  "artifacts": [
+    {
+      "kind": "image",
+      "label": "d644e758f306cf65027bc821",
+      "mime": "image/jpeg",
+      "url": "https://dexamplecdn002.cloudfront.net/artifacts/external/d644e758f306cf65027bc821.jpg"
+    },
+    {
+      "kind": "image",
+      "label": "490cc260d406b8e0b8b35a5c",
+      "mime": "image/png",
+      "url": "https://dexamplecdn002.cloudfront.net/artifacts/external/490cc260d406b8e0b8b35a5c.png"
+    }
+  ],
+  "captions": [],
+  "clips": [],
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "duration": 0.001,
+  "id": "fixture",
+  "mimeType": "image/jpeg",
+  "renderSkill": "render-generic",
+  "sourceUrl": "https://dexamplecdn002.cloudfront.net/artifacts/external/d644e758f306cf65027bc821.jpg",
+  "sources": [
+    "https://dexamplecdn002.cloudfront.net/artifacts/external/d644e758f306cf65027bc821.jpg",
+    "https://dexamplecdn002.cloudfront.net/artifacts/external/490cc260d406b8e0b8b35a5c.png"
+  ],
+  "template": "generic-preview",
+  "tracks": []
+}

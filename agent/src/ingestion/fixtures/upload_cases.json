@@ -1,0 +1,235 @@
+{
+ "sanitize": [
+  {
+   "name": "clip.mp4",
+   "sanitized": "clip.mp4"
+  },
+  {
+   "name": "My Holiday Video (final).MOV",
+   "sanitized": "My_Holiday_Video__final_.MOV"
+  },
+  {
+   "name": "",
+   "sanitized": "_"
+  },
+  {
+   "name": "   ",
+   "sanitized": "___"
+  },
+  {
+   "name": "../../etc/passwd",
+   "sanitized": ".._.._etc_passwd"
+  },
+  {
+   "name": "a/b\\c.png",
+   "sanitized": "a_b_c.png"
+  },
+  {
+   "name": "naïve café.jpg",
+   "sanitized": "na_ve_caf_.jpg"
+  },
+  {
+   "name": "日本語のファイル.pdf",
+   "sanitized": "________.pdf"
+  },
+  {
+   "name": "emoji 🎬 take 2.mp4",
+   "sanitized": "emoji___take_2.mp4"
+  },
+  {
+   "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.mp4",
+   "sanitized": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.mp4"
+  },
+  {
+   "name": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+   "sanitized": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+  },
+  {
+   "name": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz.verylongext",
+   "sanitized": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz.very"
+  },
+  {
+   "name": "dots...in...name.txt",
+   "sanitized": "dots...in...name.txt"
+  },
+  {
+   "name": ".hidden",
+   "sanitized": ".hidden"
+  },
+  {
+   "name": "name.",
+   "sanitized": "name."
+  },
+  {
+   "name": "tab\tand\nnewline.wav",
+   "sanitized": "tab_and_newline.wav"
+  },
+  {
+   "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbb",
+   "sanitized": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbb"
+  },
+  {
+   "name": "%20encoded%2F.png",
+   "sanitized": "_20encoded_2F.png"
+  },
+  {
+   "name": "IMG_0001.JPG",
+   "sanitized": "IMG_0001.JPG"
+  },
+  {
+   "name": "report.final.v2.docx",
+   "sanitized": "report.final.v2.docx"
+  },
+  {
+   "name": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww.eeeeeeeeee",
+   "sanitized": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww.eeeeeeeeee"
+  }
+ ],
+ "kind": [
+  {
+   "contentType": "video/mp4",
+   "name": "clip.mp4",
+   "kind": "video"
+  },
+  {
+   "contentType": "video/quicktime",
+   "name": "x.bin",
+   "kind": "video"
+  },
+  {
+   "contentType": "audio/mpeg",
+   "name": "a.mp3",
+   "kind": "audio"
+  },
+  {
+   "contentType": "audio/wav",
+   "name": "x",
+   "kind": "audio"
+  },
+  {
+   "contentType": "image/png",
+   "name": "p.png",
+   "kind": "image"
+  },
+  {
+   "contentType": "image/svg+xml",
+   "name": "logo.svg",
+   "kind": "image"
+  },
+  {
+   "contentType": "IMAGE/JPEG; charset=binary",
+   "name": "x",
+   "kind": "image"
+  },
+  {
+   "contentType": "application/octet-stream",
+   "name": "a.mov",
+   "kind": "video"
+  },
+  {
+   "contentType": "",
+   "name": "a.mkv",
+   "kind": "video"
+  },
+  {
+   "contentType": "",
+   "name": "a.flac",
+   "kind": "audio"
+  },
+  {
+   "contentType": "",
+   "name": "a.webp",
+   "kind": "image"
+  },
+  {
+   "contentType": "text/plain",
+   "name": "a.mp4",
+   "kind": "video"
+  },
+  {
+   "contentType": "application/pdf",
+   "name": "doc.pdf",
+   "kind": "document"
+  },
+  {
+   "contentType": "",
+   "name": "noext",
+   "kind": "document"
+  },
+  {
+   "contentType": "",
+   "name": "",
+   "kind": "document"
+  },
+  {
+   "contentType": "text/csv",
+   "name": "data.csv",
+   "kind": "document"
+  },
+  {
+   "contentType": "application/zip",
+   "name": "a.zip",
+   "kind": "document"
+  },
+  {
+   "contentType": "",
+   "name": "ARCHIVE.TIFF",
+   "kind": "image"
+  },
+  {
+   "contentType": "",
+   "name": ".mp4",
+   "kind": "video"
+  },
+  {
+   "contentType": "application/json",
+   "name": "a.json",
+   "kind": "document"
+  },
+  {
+   "contentType": "binary/octet-stream",
+   "name": "song.ogg",
+   "kind": "audio"
+  },
+  {
+   "contentType": "",
+   "name": "broadcast.MXF",
+   "kind": "video"
+  },
+  {
+   "contentType": "",
+   "name": "voice.opus",
+   "kind": "audio"
+  },
+  {
+   "contentType": "",
+   "name": "photo.heic",
+   "kind": "image"
+  },
+  {
+   "contentType": "",
+   "name": "dir.mp4/notes",
+   "kind": "document"
+  },
+  {
+   "contentType": "",
+   "name": "a.b/c.wav",
+   "kind": "audio"
+  },
+  {
+   "contentType": "Video/MP4",
+   "name": "x",
+   "kind": "video"
+  },
+  {
+   "contentType": "application/octet-stream",
+   "name": "x.TS",
+   "kind": "video"
+  },
+  {
+   "contentType": "",
+   "name": "file.toolongextension",
+   "kind": "document"
+  }
+ ]
+}

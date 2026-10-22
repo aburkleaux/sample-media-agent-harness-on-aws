@@ -1,0 +1,10 @@
+
+# Safety net: `ui/public` is copied verbatim into the SPA bucket, so an Improve bundle
+# here would ship to staging as a public, unauthenticated, un-filtered file. The surface
+# no longer reads a static file at all — it fetches the bundle through the authenticated
+# `/improve/data` proxy route, backed by the DynamoDB Improve store. Emit the wire payload
+# to a scratch path outside public/ and seed it with `improve.seed_snapshot`, e.g.:
+#   cd agent && uv run python -m improve.mine_local --emit-wire ../tests/evaluation/experiments/improve-wire.json
+#   cd agent && uv run python -m improve.seed_snapshot --bundle ../tests/evaluation/experiments/improve-wire.json --table mediaworks-harness-improve
+# This entry stays so an accidental regeneration to the old location never gets committed.
+public/improve-data.json

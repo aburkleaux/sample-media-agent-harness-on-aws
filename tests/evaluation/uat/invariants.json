@@ -1,0 +1,63 @@
+{
+  "$comment": "UX invariants for the Playwright-MCP autonomous UAT goal-loop (P4.T14). Each invariant encodes one robustness property; the loop drives the UI, observes, and asserts these. `check` describes the observable assertion; `origin` links back to the Phase-1 fix that must hold.",
+  "invariants": [
+    {
+      "id": "renderer-visibility",
+      "title": "Renderer visible iff a render artifact exists",
+      "origin": "P1.T3 shouldRevertSpuriousOpen",
+      "check": "After a turn that produces NO renderable artifact, the renderer drawer is not left open showing 'No rendered content yet'. After a turn that DOES produce an artifact, the drawer is open and shows the render.",
+      "signals": ["drawer open/closed state", "presence of render block", "text 'No rendered content yet'"]
+    },
+    {
+      "id": "no-inspector-placeholder",
+      "title": "No leftover INSPECTOR placeholder when items exist",
+      "origin": "P1.T4 computeInspectorSelection",
+      "check": "When an nle-timeline renders with at least one clip or caption cue, the inspector shows metadata (SELECTION/ACTIVE SENTENCE), NOT the 'Select an item on the timeline to view its details' placeholder.",
+      "signals": ["text 'Select an item on the timeline'", "inspector SELECTION/ACTIVE SENTENCE section"]
+    },
+    {
+      "id": "single-render-per-artifact",
+      "title": "Exactly one render block per artifact",
+      "origin": "P1.T5 shouldRenderManifest",
+      "check": "A single completed render produces exactly one render history entry for its manifest key (no duplicate render blocks for the same artifact within a turn).",
+      "signals": ["render history entry count", "manifest key uniqueness"]
+    },
+    {
+      "id": "animation-consistent",
+      "title": "Working/compose animation shows during every render",
+      "origin": "P1.T6 isRenderPendingStep",
+      "check": "While the Render Agent is composing (hook or dispatch path), the renderer shows the 'Rendering…' animation until the manifest arrives.",
+      "signals": ["text 'Rendering…'", "RenderingAnimation element"]
+    },
+    {
+      "id": "drawer-open-compose-render",
+      "title": "Drawer opens, composes, then renders (in order)",
+      "origin": "live auto-render turn (session)",
+      "check": "For a job-completion auto-render on the active session: the request bubble appears immediately, the working animation runs, the renderer drawer opens and composes, then the final render appears — in that order (no abrupt dump).",
+      "signals": ["order of: user bubble, working indicator, drawer open, render block"]
+    },
+    {
+      "id": "no-console-errors",
+      "title": "No console errors during a turn",
+      "origin": "general robustness",
+      "check": "No uncaught errors or 'Error in input stream' banners appear in the transcript or browser console during a normal turn.",
+      "signals": ["console error entries", "text '⚠️'", "text 'Error in input stream'"]
+    }
+  ],
+  "uat_scenarios": {
+    "$comment": "Representative harvested flows to exercise the invariants. Selected by category from datasets/harvested/harvested.json.",
+    "selection": [
+      { "category": "render_video", "invariants": ["renderer-visibility", "no-inspector-placeholder", "single-render-per-artifact", "animation-consistent", "no-console-errors"] },
+      { "category": "gateway_diarization", "invariants": ["renderer-visibility", "animation-consistent", "drawer-open-compose-render", "no-console-errors"] },
+      { "category": "gateway_stems", "invariants": ["single-render-per-artifact", "animation-consistent", "no-console-errors"] },
+      { "category": "skill_selection", "invariants": ["renderer-visibility", "no-console-errors"] }
+    ]
+  },
+  "loop": {
+    "mode": "autonomous",
+    "max_iterations": 10,
+    "goal_state": "all selected scenarios pass all their invariants in a single sweep",
+    "on_failure": "root-cause -> fix -> re-run failing scenarios",
+    "escalate_when": "an invariant requires a subjective UX decision (ambiguous intended behavior)"
+  }
+}

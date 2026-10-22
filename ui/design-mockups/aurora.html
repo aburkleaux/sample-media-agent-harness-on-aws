@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Aurora — Agent Studio mockup</title>
+<style>
+  :root{
+    --ink:#1c2030; --ink2:#5a6178; --ink3:#9aa1b8; --card:rgba(255,255,255,.72);
+    --card2:#ffffff; --line:rgba(28,32,48,.08); --line2:rgba(28,32,48,.14);
+    --a1:#6d5efc; --a2:#ff6ba6; --a3:#3ec9d6; --ok:#12b886; --warn:#f59f00; --radius:18px;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;height:100vh;overflow:hidden;font-family:var(--sans);color:var(--ink);
+    background:linear-gradient(135deg,#eef0ff 0%,#fdeef6 45%,#e8fbfb 100%)}
+  .app{display:grid;grid-template-columns:220px 1fr 340px;gap:16px;height:100vh;padding:16px}
+  .panel{background:var(--card);backdrop-filter:blur(24px) saturate(1.3);border:1px solid var(--line2);
+    border-radius:var(--radius);box-shadow:0 8px 30px rgba(60,50,120,.08);display:flex;flex-direction:column;overflow:hidden}
+  /* nav */
+  .brand{display:flex;align-items:center;gap:10px;padding:16px 16px 10px}
+  .brand .m{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--a1),var(--a2))}
+  .brand b{font-size:16px;font-weight:700}
+  .new{margin:6px 12px 12px;padding:10px;border-radius:12px;border:none;cursor:pointer;font-size:13px;font-weight:600;color:#fff;
+    background:linear-gradient(135deg,var(--a1),var(--a2))}
+  .sec{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);margin:8px 16px 4px;font-weight:700}
+  .it{margin:2px 8px;padding:9px 12px;border-radius:12px;font-size:13px;color:var(--ink2);cursor:pointer;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .it:hover{background:rgba(109,94,252,.08)}
+  .it.on{background:rgba(109,94,252,.14);color:var(--a1);font-weight:600}
+  .foot{margin-top:auto;padding:12px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3)}
+  /* center */
+  .center{position:relative}
+  .top{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
+  .top h1{font-size:16px;margin:0;font-weight:700}
+  .top .b{font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(18,184,134,.14);color:var(--ok);font-weight:600}
+  .top .k{margin-left:auto;font-size:12px;color:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:5px 12px}
+  .scroll{flex:1;overflow:auto;padding:24px 22px}
+  .t{max-width:640px;margin:0 auto 22px}
+  .who{font-size:11px;color:var(--ink3);margin-bottom:6px;font-weight:600}
+  .u{background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;padding:12px 16px;border-radius:18px 18px 6px 18px;font-size:14px;box-shadow:0 6px 18px rgba(109,94,252,.25)}
+  .a{background:var(--card2);border:1px solid var(--line);padding:14px 16px;border-radius:18px 18px 18px 6px;font-size:14px;line-height:1.65}
+  .steps{margin:8px 0}
+  .step{font-size:12.5px;color:var(--ink2);padding:3px 0;display:flex;gap:8px}.step .c{color:var(--ok)}
+  .composer{position:absolute;left:20px;right:20px;bottom:16px;background:var(--card2);border:1px solid var(--line2);
+    border-radius:16px;box-shadow:0 8px 24px rgba(60,50,120,.12);padding:10px 12px;display:flex;align-items:center;gap:10px}
+  .composer input{flex:1;border:none;outline:none;font-size:14px;color:var(--ink);background:none}
+  .composer .m{font-size:12px;color:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:5px 10px}
+  .composer .send{width:34px;height:34px;border-radius:12px;border:none;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--a1),var(--a3))}
+  /* right contextual */
+  .segs{display:flex;gap:4px;padding:12px;border-bottom:1px solid var(--line)}
+  .seg{flex:1;text-align:center;font-size:12px;padding:8px;border-radius:11px;cursor:pointer;color:var(--ink2);font-weight:600}
+  .seg.on{background:#fff;color:var(--a1);box-shadow:0 2px 8px rgba(60,50,120,.1)}
+  .rbody{flex:1;overflow:auto;padding:16px}
+  .trk{margin-bottom:12px}
+  .trk .l{font-size:11px;color:var(--ink3);margin-bottom:5px;font-weight:600}
+  .trk .bar{height:34px;border-radius:11px;background:linear-gradient(90deg,var(--a1),var(--a3));opacity:.85}
+  .trk.s .bar{height:auto;padding:10px 12px;font-size:12px;color:var(--ink2);background:rgba(109,94,252,.08);opacity:1;line-height:1.5}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px}
+  .kv{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;color:var(--ink2)}
+  .kv b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="panel">
+    <div class="brand"><div class="m"></div><b>Aurora</b></div>
+    <button class="new">✦  New session</button>
+    <div class="sec">Sessions</div>
+    <div class="it on">Speaker diarization test</div>
+    <div class="it">Q3 revenue analysis</div>
+    <div class="it">Stem separation — podcast</div>
+    <div class="it">PDF cover-page edit</div>
+    <div class="sec">Build</div>
+    <div class="it">Skills &amp; workflows</div>
+    <div class="it">Gateways</div>
+    <div class="foot">◆ Claude Sonnet 4.6<br/>local-dev-user · Settings</div>
+  </div>
+
+  <div class="panel center">
+    <div class="top"><h1>Speaker diarization test</h1><span class="b">● Active</span><span class="k">⌘K</span></div>
+    <div class="scroll">
+      <div class="t"><div class="who">You</div>
+        <div class="u">Run a speech diarization on speech.wav and show me who spoke.</div></div>
+      <div class="t"><div class="who">Agent</div>
+        <div class="a">On it — dispatched the diarization and rendered the timeline.
+          <div class="steps">
+            <div class="step"><span class="c">✓</span> Dispatched to task agent</div>
+            <div class="step"><span class="c">✓</span> diarize_speech · SUCCEEDED</div>
+            <div class="step"><span class="c">✓</span> Rendered media timeline</div>
+          </div>
+          Found <b>2 speakers</b> across a 10.7s clip — transcript + per-speaker audio are in the panel →</div></div>
+    </div>
+    <div class="composer"><span class="m">◆</span>
+      <input placeholder="Ask anything…"/><button class="send">↑</button></div>
+  </div>
+
+  <div class="panel">
+    <div class="segs"><div class="seg on">Renderer</div><div class="seg">Jobs</div><div class="seg">Config</div></div>
+    <div class="rbody">
+      <div class="trk"><div class="l">SPEAKER_00 · audio</div><div class="bar"></div></div>
+      <div class="trk"><div class="l">SPEAKER_01 · audio</div><div class="bar"></div></div>
+      <div class="trk s"><div class="l">SUBTITLES</div>
+        <div class="bar">“Hello, this is Speaker 1 testing speech diarization…”</div></div>
+      <div class="card">
+        <div class="kv"><span>Speaker</span><b>SPEAKER_00</b></div>
+        <div class="kv"><span>Time</span><b>00:00.0 → 00:05.3</b></div>
+        <div class="kv"><span>Turn</span><b>1 of 3</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

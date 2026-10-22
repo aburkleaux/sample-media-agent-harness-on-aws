@@ -1,0 +1,82 @@
+{
+  "e2cb300b": {
+    "dispatch_runs": [
+      1.0,
+      1.0,
+      0.9
+    ],
+    "delivered_runs": [
+      0.4,
+      0.3,
+      0.4
+    ],
+    "dispatch_mean": 0.9666666666666667,
+    "delivered_mean": 0.3666666666666667,
+    "dispatch_spread": 0.09999999999999998,
+    "delivered_spread": 0.10000000000000003
+  },
+  "1b42d744": {
+    "dispatch_runs": [
+      0.9,
+      0.9,
+      0.9
+    ],
+    "delivered_runs": [
+      1.0,
+      0.9,
+      1.0
+    ],
+    "dispatch_mean": 0.9,
+    "delivered_mean": 0.9666666666666667,
+    "dispatch_spread": 0.0,
+    "delivered_spread": 0.09999999999999998
+  },
+  "abc839ca": {
+    "dispatch_runs": [
+      0.9,
+      1.0,
+      0.7
+    ],
+    "delivered_runs": [
+      0.2,
+      1.0,
+      0.0
+    ],
+    "dispatch_mean": 0.8666666666666666,
+    "delivered_mean": 0.39999999999999997,
+    "dispatch_spread": 0.30000000000000004,
+    "delivered_spread": 1.0
+  },
+  "6309f154": {
+    "dispatch_runs": [
+      0.9,
+      0.9,
+      0.9
+    ],
+    "delivered_runs": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dispatch_mean": 0.9,
+    "delivered_mean": 0.0,
+    "dispatch_spread": 0.0,
+    "delivered_spread": 0.0
+  },
+  "ffab73f8": {
+    "dispatch_runs": [
+      0.9,
+      0.8,
+      0.9
+    ],
+    "delivered_runs": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "dispatch_mean": 0.8666666666666667,
+    "delivered_mean": 1.0,
+    "dispatch_spread": 0.09999999999999998,
+    "delivered_spread": 0.0
+  }
+}

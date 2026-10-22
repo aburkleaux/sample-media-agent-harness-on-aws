@@ -1,0 +1,134 @@
+{
+  "annotations": [],
+  "artifacts": [
+    {
+      "kind": "data",
+      "label": "facemetadata",
+      "mime": "application/json",
+      "url": "https://cdn.example/facemetadata.json"
+    },
+    {
+      "kind": "image",
+      "label": "person 0000",
+      "mime": "image/jpeg",
+      "url": "https://cdn.example/debug/people/person_0000.jpg"
+    },
+    {
+      "kind": "image",
+      "label": "person 0001",
+      "mime": "image/jpeg",
+      "url": "https://cdn.example/debug/people/person_0001.jpg"
+    }
+  ],
+  "clips": [],
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "duration": 300.1,
+  "id": "fixture",
+  "images": [
+    {
+      "annotations": [],
+      "label": "Kawhi Leonard",
+      "src": "https://cdn.example/debug/people/person_0000.jpg"
+    },
+    {
+      "annotations": [],
+      "label": "Person_1",
+      "src": "https://cdn.example/debug/people/person_0001.jpg"
+    }
+  ],
+  "metadata": {
+    "faces_detected": 4,
+    "frames_analyzed": 30,
+    "num_people": 2,
+    "num_tracks": 4
+  },
+  "renderSkill": "render-face-people",
+  "segments": [
+    {
+      "end": 63.796,
+      "group": "Kawhi Leonard",
+      "id": "l-0-0",
+      "name": "Kawhi Leonard",
+      "start": 62.996
+    },
+    {
+      "end": 64.797,
+      "group": "Kawhi Leonard",
+      "id": "l-0-1",
+      "name": "Kawhi Leonard",
+      "start": 63.997
+    },
+    {
+      "end": 11.0,
+      "group": "Person_1",
+      "id": "l-1-0",
+      "name": "Person_1",
+      "start": 10.0
+    }
+  ],
+  "src": "https://cdn.example/debug/people/person_0000.jpg",
+  "tables": [
+    {
+      "columns": [
+        {
+          "key": "name",
+          "label": "Name",
+          "sortable": true
+        },
+        {
+          "key": "gender",
+          "label": "Gender",
+          "sortable": true
+        },
+        {
+          "key": "age_range",
+          "label": "Age Range",
+          "sortable": true
+        },
+        {
+          "key": "total_screen_time_sec",
+          "label": "Total Screen Time Sec",
+          "sortable": true
+        },
+        {
+          "key": "confidence",
+          "label": "Confidence",
+          "sortable": true
+        },
+        {
+          "key": "name_source",
+          "label": "Name Source",
+          "sortable": true
+        },
+        {
+          "key": "num_tracks",
+          "label": "Num Tracks",
+          "sortable": true
+        }
+      ],
+      "rows": [
+        {
+          "age_range": "28\u201336",
+          "confidence": 98.68563842773438,
+          "gender": "Male",
+          "name": "Kawhi Leonard",
+          "name_source": "celebrity",
+          "num_tracks": 2,
+          "total_screen_time_sec": 1.6
+        },
+        {
+          "age_range": "20\u201328",
+          "confidence": 0,
+          "gender": "Female",
+          "name": "Person_1",
+          "name_source": "",
+          "num_tracks": 2,
+          "total_screen_time_sec": 0.8
+        }
+      ]
+    }
+  ],
+  "template": "image-annotated",
+  "title": "Face People",
+  "tracks": []
+}

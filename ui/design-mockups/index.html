@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Agent Studio — UI directions</title>
+<style>
+  :root{--sans:"Inter",-apple-system,"Segoe UI",sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);background:#0e0f13;color:#e7e9f0;padding:48px 40px 80px}
+  h1{font-size:26px;margin:0 0 6px}p.sub{color:#9aa0b4;margin:0 0 36px;max-width:680px;line-height:1.6}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:1080px}
+  a.card{display:block;text-decoration:none;color:inherit;border:1px solid rgba(255,255,255,.1);border-radius:16px;
+    overflow:hidden;background:#15161d;transition:transform .15s,border-color .15s}
+  a.card:hover{transform:translateY(-3px);border-color:rgba(124,92,255,.5)}
+  .swatch{height:120px;display:flex;align-items:flex-end;padding:14px 16px;font-weight:700;font-size:15px}
+  .noc{background:radial-gradient(600px 300px at 80% -20%,rgba(124,92,255,.4),#0a0b10)}
+  .pap{background:linear-gradient(135deg,#fffdf9,#f6e9e4);color:#26231e}
+  .stu{background:linear-gradient(135deg,#15181d,#ff6a3d33)}
+  .aur{background:linear-gradient(135deg,#eef0ff,#fdeef6 50%,#e8fbfb);color:#1c2030}
+  .body{padding:16px 18px}
+  .body h3{margin:0 0 6px;font-size:16px}
+  .body .tag{font-size:11px;color:#7c5cff;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .body p{margin:8px 0 0;color:#9aa0b4;font-size:13px;line-height:1.6}
+  .body .layout{margin-top:10px;font-size:12px;color:#c7ccda;background:rgba(255,255,255,.04);border-radius:8px;padding:8px 10px}
+</style>
+</head>
+<body>
+  <h1>Agent Studio — 4 UI directions</h1>
+  <p class="sub">Four distinct visual + layout directions for the agent app, each rendered with the real regions
+  (sessions, chat, renderer/timeline, jobs, config). Click any card to open the full mockup. Same content, four
+  very different feels — pick a direction (or mix) and I'll build it out.</p>
+  <div class="grid">
+    <a class="card" href="nocturne.html"><div class="swatch noc">Nocturne</div><div class="body">
+      <span class="tag">Dark · glass · neon</span><h3>Developer-premium</h3>
+      <p>Deep space-black with glassmorphic panels and one electric violet→cyan accent. Confident, focused, "pro tool."
+      Think Linear / Vercel.</p>
+      <div class="layout">Layout: icon rail · sessions column · chat · right renderer. Slim ⌘K command bar.</div></div></a>
+    <a class="card" href="paper.html"><div class="swatch pap">Paper</div><div class="body">
+      <span class="tag">Light · editorial · warm</span><h3>Calm &amp; readable</h3>
+      <p>Warm ivory, ink text, serif headings, a terracotta accent, lots of whitespace. Reads like a beautiful
+      document. Think Notion / Stripe docs.</p>
+      <div class="layout">Layout: quiet left nav · wide centered chat · renderer as a right slide-over drawer.</div></div></a>
+    <a class="card" href="studio.html"><div class="swatch stu">Studio</div><div class="body">
+      <span class="tag">Dark · dense · media</span><h3>Media workstation</h3>
+      <p>The timeline is the hero — a full-width multi-track dock at the bottom like a video/audio editor. Highest
+      information density; best if media work is the core. Think DaVinci / Ableton.</p>
+      <div class="layout">Layout: session tabs · chat + inspector · full-width timeline dock at bottom.</div></div></a>
+    <a class="card" href="aurora.html"><div class="swatch aur">Aurora</div><div class="body">
+      <span class="tag">Light · gradient · friendly</span><h3>Soft &amp; approachable</h3>
+      <p>Floating rounded panels on a pastel aurora gradient, a vivid multi-stop accent, playful but clean. Think
+      Raycast / Arc.</p>
+      <div class="layout">Layout: floating nav · chat card · contextual right panel (Renderer / Jobs / Config tabs).</div></div></a>
+  </div>
+</body>
+</html>

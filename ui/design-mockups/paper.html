@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Paper — Agent Studio mockup</title>
+<style>
+  :root{
+    --bg:#faf8f4; --paper:#fffdf9; --ink:#26231e; --ink2:#6b655c; --ink3:#a49c8f;
+    --line:#eae5db; --line2:#ddd6c8; --accent:#c1543a; --accent-soft:#f6e9e4;
+    --sage:#5b7160; --radius:12px;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;height:100vh;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+  .app{display:grid;grid-template-columns:240px 1fr;height:100vh}
+  /* left nav */
+  .nav{background:var(--bg);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:18px 14px}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 18px}
+  .brand .m{width:26px;height:26px;border-radius:8px;background:var(--accent)}
+  .brand b{font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:.01em}
+  .new{margin:0 6px 16px;padding:9px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--paper);
+    font-size:13px;cursor:pointer;text-align:left;color:var(--ink);font-weight:500}
+  .sec{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:14px 8px 6px}
+  .item{padding:8px 10px;border-radius:8px;font-size:13px;color:var(--ink2);cursor:pointer;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item:hover{background:#f2ede4}
+  .item.on{background:var(--accent-soft);color:var(--accent);font-weight:500}
+  .navfoot{margin-top:auto;font-size:12px;color:var(--ink3);padding:10px 8px;border-top:1px solid var(--line);display:flex;gap:8px;align-items:center}
+  /* center */
+  .wrap{position:relative;display:flex;flex-direction:column;min-width:0}
+  .top{height:60px;display:flex;align-items:center;gap:12px;padding:0 32px;border-bottom:1px solid var(--line)}
+  .top h1{font-family:var(--serif);font-size:19px;margin:0;font-weight:600}
+  .top .meta{font-size:12px;color:var(--ink3)}
+  .top .actions{margin-left:auto;display:flex;gap:10px}
+  .pill{font-size:12px;padding:6px 12px;border:1px solid var(--line2);border-radius:999px;background:var(--paper);
+    color:var(--ink2);cursor:pointer}
+  .pill.render{border-color:var(--accent);color:var(--accent)}
+  .reading{flex:1;overflow:auto}
+  .col{max-width:720px;margin:0 auto;padding:36px 24px 24px}
+  .turn{margin-bottom:30px}
+  .role{font-family:var(--serif);font-style:italic;color:var(--ink3);font-size:13px;margin-bottom:8px}
+  .u{font-size:16px;line-height:1.6;color:var(--ink);border-left:3px solid var(--accent);padding-left:16px}
+  .a{font-size:15.5px;line-height:1.75;color:var(--ink)}
+  .steps{margin:14px 0;padding:14px 16px;background:var(--paper);border:1px solid var(--line);border-radius:12px}
+  .step{font-size:13px;color:var(--ink2);padding:3px 0;display:flex;gap:9px}
+  .step .c{color:var(--sage)}
+  .composer{margin:0 auto 26px;max-width:720px;width:calc(100% - 48px);border:1px solid var(--line2);
+    border-radius:16px;background:var(--paper);padding:14px 16px;display:flex;align-items:center;gap:12px;
+    box-shadow:0 2px 10px rgba(38,35,30,.04)}
+  .composer input{flex:1;border:none;background:none;font-size:15px;outline:none;color:var(--ink);font-family:var(--sans)}
+  .composer .m{font-size:12px;color:var(--ink3)}
+  .composer .send{width:34px;height:34px;border-radius:10px;border:none;background:var(--accent);color:#fff;cursor:pointer}
+  /* renderer slide-over */
+  .drawer{position:absolute;top:0;right:0;bottom:0;width:400px;background:var(--paper);
+    border-left:1px solid var(--line2);box-shadow:-12px 0 40px rgba(38,35,30,.08);display:flex;flex-direction:column}
+  .dh{height:60px;display:flex;align-items:center;padding:0 22px;border-bottom:1px solid var(--line);gap:10px}
+  .dh h3{font-family:var(--serif);font-size:16px;margin:0;font-weight:600}
+  .dh .x{margin-left:auto;color:var(--ink3);cursor:pointer;font-size:15px}
+  .tl{padding:20px 22px}
+  .trk{margin-bottom:14px}
+  .trk .l{font-size:11px;color:var(--ink3);margin-bottom:5px;font-weight:500}
+  .trk .b{height:36px;border-radius:9px;background:linear-gradient(90deg,#e7d3cc,#efe3d3);border:1px solid var(--line2)}
+  .trk.s .b{height:auto;padding:10px 12px;font-size:12.5px;color:var(--ink2);background:var(--bg);line-height:1.5}
+  .insp{margin:6px 22px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+  .insp h4{font-family:var(--serif);font-size:13px;margin:0 0 10px;color:var(--ink2)}
+  .kv{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;color:var(--ink2);border-bottom:1px dashed var(--line)}
+  .kv b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="nav">
+    <div class="brand"><div class="m"></div><b>Atelier</b></div>
+    <button class="new">＋  New session</button>
+    <div class="sec">Recent</div>
+    <div class="item on">Speaker diarization test</div>
+    <div class="item">Q3 revenue analysis</div>
+    <div class="item">Stem separation — podcast</div>
+    <div class="item">PDF cover-page edit</div>
+    <div class="sec">Workspace</div>
+    <div class="item">Skills &amp; workflows</div>
+    <div class="item">Gateways</div>
+    <div class="item">Jobs · <span style="color:var(--sage)">1 running</span></div>
+    <div class="navfoot">◆ Claude Sonnet 4.6 · Settings</div>
+  </div>
+
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Speaker diarization test</h1>
+        <div class="meta">Active · 3 turns · updated just now</div>
+      </div>
+      <div class="actions">
+        <span class="pill">Share</span>
+        <span class="pill render">◧ Renderer</span>
+      </div>
+    </div>
+    <div class="reading">
+      <div class="col">
+        <div class="turn"><div class="role">You asked</div>
+          <div class="u">Run a speech diarization on speech.wav and show me who spoke.</div></div>
+        <div class="turn"><div class="role">Agent replied</div>
+          <div class="a">
+            I dispatched the diarization workflow and streamed the result back.
+            <div class="steps">
+              <div class="step"><span class="c">✓</span> Dispatched to task agent</div>
+              <div class="step"><span class="c">✓</span> diarize_speech · job SUCCEEDED</div>
+              <div class="step"><span class="c">✓</span> Rendered media timeline</div>
+            </div>
+            The clip contains <b>two distinct speakers</b> across 10.7 seconds. I've placed the transcript and
+            per-speaker audio tracks in the renderer on the right.
+          </div></div>
+      </div>
+    </div>
+    <div class="composer">
+      <span class="m">◆</span>
+      <input placeholder="Continue the conversation…"/>
+      <button class="send">↑</button>
+    </div>
+
+    <div class="drawer">
+      <div class="dh"><h3>Media timeline</h3><span class="x">✕</span></div>
+      <div class="tl">
+        <div class="trk"><div class="l">SPEAKER_00</div><div class="b"></div></div>
+        <div class="trk"><div class="l">SPEAKER_01</div><div class="b"></div></div>
+        <div class="trk s"><div class="l">SUBTITLES</div>
+          <div class="b">“Hello, this is Speaker 1 testing speech diarization, and now Speaker 2 responds…”</div></div>
+      </div>
+      <div class="insp">
+        <h4>Active sentence</h4>
+        <div class="kv"><span>Speaker</span><b>SPEAKER_00</b></div>
+        <div class="kv"><span>Time</span><b>00:00.0 → 00:05.3</b></div>
+        <div class="kv" style="border:none"><span>Turn</span><b>1 of 3</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
